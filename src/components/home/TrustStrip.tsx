@@ -46,7 +46,7 @@ export const TrustStrip: React.FC = () => {
 
   return (
     <section ref={ref} className="bg-hc-bg-alt px-8 py-20">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+      <div className="max-w-content mx-auto grid grid-cols-1 md:grid-cols-3 gap-16">
         {PILLARS.map(({ icon: Icon, iconBg, iconColor, title, body }) => (
           <div key={title} className="trust-item">
             <div className={`${iconBg} w-12 h-12 rounded-full flex items-center justify-center mb-5`}>
