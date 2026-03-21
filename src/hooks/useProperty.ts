@@ -44,8 +44,8 @@ export function useProperty(slug: string | undefined) {
           .order('distance_km'),
       ]);
 
-      const amenities = amenitiesRes.data
-        ?.map((row: { amenities: Amenity | null }) => row.amenities)
+      const amenities = (amenitiesRes.data ?? [])
+        .map((row: { amenities: unknown }) => row.amenities as Amenity)
         .filter(Boolean) as Amenity[];
 
       return {
