@@ -10,7 +10,7 @@ export const SearchSection: React.FC = () => {
   const handleSearch = () => {
     const params = new URLSearchParams();
     if (location) params.set('district', location.toLowerCase());
-    navigate(`/stays?${params.toString()}`);
+    navigate(`/listings?${params.toString()}`);
   };
 
   return (
