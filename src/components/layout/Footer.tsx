@@ -7,6 +7,7 @@ const WHATSAPP_URL =
 
 const EXPLORE_LINKS = [
   { label: 'All Stays',        to: '/listings' },
+  { label: 'Packages',         to: '/packages' },
   { label: 'About Hills Camp', to: '/about' },
   { label: 'The Journal',      to: '/blog' },
   { label: 'Contact Us',       to: '/contact' },
