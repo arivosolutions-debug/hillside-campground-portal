@@ -10,8 +10,8 @@ export const HeroSection: React.FC = () => {
         <img
           src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=2000&q=85"
           alt="Luxury balcony overlooking misty Kerala mountains"
-          className="w-full h-full object-cover animate-kenburns origin-center"
-        />
+          className="w-full h-full object-cover animate-kenburns origin-center" />
+        
         <div className="absolute inset-0 bg-hc-primary/20" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-hc-bg" />
       </div>
@@ -25,7 +25,7 @@ export const HeroSection: React.FC = () => {
           </span>
 
           {/* Headline */}
-          <h1 className="font-headline text-hc-primary-deep text-6xl md:text-8xl lg:text-[96px] leading-none mb-6 animate-fade-in-2">
+          <h1 className="font-headline text-hc-primary-deep text-6xl md:text-8xl lg:text-[96px] leading-none mb-6 animate-fade-in-2 text-secondary-foreground font-bold">
             Where Nature<br />Meets Comfort
           </h1>
 
@@ -38,15 +38,15 @@ export const HeroSection: React.FC = () => {
           <div className="flex flex-wrap gap-4 animate-fade-in-4">
             <Link
               to="/listings"
-              className="inline-flex items-center gap-2 bg-hc-primary text-white px-8 py-4 rounded-xl font-bold text-sm hover:bg-hc-primary-deep transition-all active:scale-[0.97] group"
-            >
+              className="inline-flex items-center gap-2 bg-hc-primary text-white px-8 py-4 rounded-xl font-bold text-sm hover:bg-hc-primary-deep transition-all active:scale-[0.97] group">
+              
               Explore Properties
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
               to="/blog"
-              className="inline-flex items-center gap-2 border-2 border-hc-primary text-hc-primary-deep px-8 py-4 rounded-xl font-bold text-sm hover:bg-hc-primary/5 transition-all active:scale-[0.97]"
-            >
+              className="inline-flex items-center gap-2 border-2 border-hc-primary text-hc-primary-deep px-8 py-4 rounded-xl font-bold text-sm hover:bg-hc-primary/5 transition-all active:scale-[0.97]">
+              
               View Journal
             </Link>
           </div>
@@ -57,6 +57,6 @@ export const HeroSection: React.FC = () => {
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-hc-primary-deep/60 animate-bounce">
         <ChevronDown size={22} strokeWidth={1.5} />
       </div>
-    </header>
-  );
+    </header>);
+
 };
