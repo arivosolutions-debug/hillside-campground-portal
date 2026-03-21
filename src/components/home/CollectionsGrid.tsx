@@ -35,7 +35,7 @@ const COLLECTIONS = [
     title: 'Planter\'s Legacy',
     subtitle: 'A century of stories steeped in your cup.',
     image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80',
-    href: '/stays?type=tea_estate_cabin',
+    href: '/listings?type=tea_estate_cabin',
     cols: 'lg:col-span-8',
     aspect: 'aspect-[16/9]',
   },
