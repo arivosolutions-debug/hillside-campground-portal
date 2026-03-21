@@ -8,7 +8,7 @@ const COLLECTIONS = [
     title: 'Canopy Retreats',
     subtitle: 'Sleep 40 feet above the forest floor.',
     image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80',
-    href: '/stays?type=tree_house',
+    href: '/listings?type=tree_house',
     cols: 'lg:col-span-8',
     aspect: 'aspect-[16/9]',
   },
