@@ -83,9 +83,8 @@ const PropertyDetail = () => {
 
               {/* Desktop pricing / enquiry CTA */}
               <div className="mt-4 md:mt-0 text-right shrink-0">
-                <p className="text-xs text-hc-text-light uppercase tracking-wider mb-1 font-body">Starting from</p>
-                <p className="font-headline text-hc-primary text-2xl">Contact for</p>
-                <p className="font-headline text-hc-primary text-lg">Pricing</p>
+                <p className="text-xs text-hc-text-light uppercase tracking-[0.2em] mb-1 font-body">Pricing</p>
+                <p className="font-body font-bold text-hc-primary text-base">Contact for Pricing</p>
               </div>
             </div>
           </section>
@@ -138,12 +137,12 @@ const PropertyDetail = () => {
                       Every stay at Hills Camp includes a guided morning walk through our private estate,
                       led by our resident naturalist who shares the secrets of the Western Ghats' biodiversity.
                     </p>
-                    <a
-                      href="/contact"
+                    <Link
+                      to="/contact"
                       className="text-hc-primary font-bold text-sm underline decoration-hc-text-light/30 underline-offset-4 hover:decoration-hc-primary transition-colors font-body"
                     >
                       View Full Experience Guide →
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
@@ -166,8 +165,8 @@ const PropertyDetail = () => {
                 {/* Amenities */}
                 <AmenitiesSidebar amenities={property.amenities} />
 
-                {/* Sticky availability CTA */}
-                <div className="border border-hc-text-light/20 rounded-2xl p-8 sticky top-28">
+              {/* Sticky availability CTA */}
+                <div className="bg-hc-bg-alt rounded-2xl p-8 sticky top-28">
                   <h3 className="font-headline text-hc-primary text-xl mb-3">Availability</h3>
                   <p className="text-sm text-hc-text leading-relaxed mb-6 font-body">
                     This property is highly sought after. We recommend booking at least 4 weeks in advance for weekends.
@@ -176,13 +175,13 @@ const PropertyDetail = () => {
                     href={whatsappHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-hc-primary text-white w-full py-4 rounded-xl font-semibold text-center flex items-center justify-center gap-2 hover:bg-hc-primary-deep transition-colors font-body mb-3"
+                    className="bg-hc-primary text-white w-full py-4 rounded-full font-semibold text-center flex items-center justify-center gap-2 hover:bg-hc-primary-deep transition-colors font-body mb-3"
                   >
                     <MessageCircle size={18} strokeWidth={1.75} /> Enquire Now
                   </a>
                   <Link
                     to="/contact"
-                    className="flex items-center justify-center w-full font-body font-semibold text-sm text-hc-primary border border-hc-text-light/20 py-4 rounded-xl hover:bg-hc-bg-alt transition-all"
+                    className="flex items-center justify-center w-full font-body font-semibold text-sm text-hc-primary bg-white py-4 rounded-full hover:bg-hc-bg transition-all"
                   >
                     Send Email Enquiry
                   </Link>

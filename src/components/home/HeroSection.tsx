@@ -39,15 +39,13 @@ export const HeroSection: React.FC = () => {
           <div className="flex flex-wrap gap-4 animate-fade-in-4">
             <Link
               to="/listings"
-              className="inline-flex items-center gap-2 bg-hc-primary text-white px-8 py-4 rounded-xl font-bold text-sm hover:bg-hc-primary-deep transition-all active:scale-[0.97] group">
-              
+              className="inline-flex items-center gap-2 bg-hc-primary text-white px-8 py-4 rounded-full font-bold text-sm hover:bg-hc-primary-deep transition-all active:scale-[0.97] group">
               Explore Properties
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
               to="/blog"
-              className="inline-flex items-center gap-2 border-2 border-hc-primary text-hc-primary-deep px-8 py-4 rounded-xl font-bold text-sm hover:bg-hc-primary/5 transition-all active:scale-[0.97]">
-              
+              className="inline-flex items-center gap-2 border border-hc-primary/30 text-hc-primary-deep bg-white/60 backdrop-blur-sm px-8 py-4 rounded-full font-bold text-sm hover:bg-white/80 transition-all active:scale-[0.97]">
               View Journal
             </Link>
           </div>
