@@ -35,7 +35,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   'music':       Music,
 };
 
-function getIcon(name: string) {
+function getIcon(name: string): LucideIcon {
   const key = name.toLowerCase();
   for (const [k, Icon] of Object.entries(ICON_MAP)) {
     if (key.includes(k)) return Icon;

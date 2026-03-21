@@ -1,12 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { MapPin, Users, CheckCircle, ArrowLeft, MessageCircle } from 'lucide-react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { MapPin, Users, Leaf, MessageCircle, ArrowLeft } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { PageTransition } from '@/components/layout/PageTransition';
+import { PhotoGallery } from '@/components/property/PhotoGallery';
+import { AmenitiesSidebar } from '@/components/property/AmenitiesSidebar';
+import { RoomTypesList } from '@/components/property/RoomTypesList';
+import { NearbyAttractions } from '@/components/property/NearbyAttractions';
+import { MapEmbed } from '@/components/property/MapEmbed';
+import { WhatsAppWidget } from '@/components/property/WhatsAppWidget';
 import { useProperty } from '@/hooks/useProperty';
 import { DISTRICT_LABELS, PROPERTY_TYPE_LABELS } from '@/lib/types';
+
+const WHATSAPP_PHONE = '919847012345';
 
 const PropertyDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -35,140 +42,143 @@ const PropertyDetail = () => {
     );
   }
 
-  const whatsappMsg = encodeURIComponent(`Hi, I'm interested in ${property.name} at Hills Camp Kerala.`);
+  const whatsappMsg  = encodeURIComponent(`Hi, I'm interested in ${property.name} at Hills Camp Kerala.`);
+  const whatsappHref = `https://wa.me/${WHATSAPP_PHONE}?text=${whatsappMsg}`;
+  const districtLabel = DISTRICT_LABELS[property.district];
 
   return (
     <>
       <Navbar />
       <PageTransition>
-        <main>
-          {/* Hero */}
-          <div className="relative h-[70vh] min-h-[500px] overflow-hidden">
-            <img
-              src={property.cover_image ?? '/placeholder.svg'}
-              alt={property.name}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-hc-primary/30" />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-hc-bg" />
+        <main className="bg-hc-bg">
 
-            <div className="absolute bottom-0 left-0 right-0 z-10 max-w-content mx-auto px-8 pb-16">
-              <Link to="/stays" className="inline-flex items-center gap-2 font-body text-sm text-white/70 hover:text-white mb-6 transition-colors">
-                <ArrowLeft size={14} /> All Retreats
-              </Link>
-              <span className="inline-block bg-hc-bg/90 backdrop-blur-sm text-hc-primary text-xs font-bold uppercase tracking-tight px-3 py-1 rounded-full mb-4">
-                {PROPERTY_TYPE_LABELS[property.property_type]}
-              </span>
-              <h1 className="font-headline text-hc-primary-deep text-4xl md:text-6xl leading-tight mb-3">
-                {property.name}
-              </h1>
-              <div className="flex flex-wrap items-center gap-4 text-hc-text">
-                <div className="flex items-center gap-1.5"><MapPin size={14} /><span className="font-body text-sm">{DISTRICT_LABELS[property.district]}, Kerala</span></div>
-                <span>·</span>
-                <div className="flex items-center gap-1.5"><Users size={14} /><span className="font-body text-sm">Up to {property.max_guests} guests</span></div>
-                {property.price_per_night && (
-                  <>
-                    <span>·</span>
-                    <span className="font-body font-bold text-hc-secondary">₹{property.price_per_night.toLocaleString()}/night</span>
-                  </>
-                )}
+          {/* ── Property Header ───────────────────────────────────────────── */}
+          <section className="pt-28 pb-6 px-8 max-w-[1280px] mx-auto">
+            <Link
+              to="/stays"
+              className="inline-flex items-center gap-2 text-hc-text-light hover:text-hc-primary font-body text-sm mb-6 transition-colors"
+            >
+              <ArrowLeft size={14} /> All Retreats
+            </Link>
+
+            <div className="flex flex-col md:flex-row justify-between items-start gap-4">
+              <div>
+                <div className="flex flex-wrap items-center gap-3 mb-3">
+                  <span className="bg-hc-accent-light text-[#360f00] text-xs font-bold uppercase tracking-tight px-3 py-1 rounded-full font-body">
+                    {PROPERTY_TYPE_LABELS[property.property_type]}
+                  </span>
+                  <span className="text-sm text-hc-text flex items-center gap-1 font-body">
+                    <MapPin size={12} strokeWidth={1.5} /> {districtLabel}, Kerala
+                  </span>
+                </div>
+                <h1 className="font-headline text-hc-primary text-4xl md:text-6xl tracking-tight mb-3">
+                  {property.name}
+                </h1>
+                <div className="flex flex-wrap items-center gap-6 text-sm text-hc-text font-body">
+                  <span className="flex items-center gap-1.5">
+                    <Users size={16} strokeWidth={1.5} /> Up to {property.max_guests} Guests
+                  </span>
+                </div>
+              </div>
+
+              {/* Desktop pricing / enquiry CTA */}
+              <div className="mt-4 md:mt-0 text-right shrink-0">
+                <p className="text-xs text-hc-text-light uppercase tracking-wider mb-1 font-body">Starting from</p>
+                <p className="font-headline text-hc-primary text-2xl">Contact for</p>
+                <p className="font-headline text-hc-primary text-lg">Pricing</p>
               </div>
             </div>
-          </div>
+          </section>
 
-          {/* Body */}
-          <div className="bg-hc-bg py-20 px-8">
-            <div className="max-w-content mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
-              <div className="lg:col-span-8 space-y-14">
-                {property.tagline && (
-                  <p className="font-headline text-2xl text-hc-secondary italic">&ldquo;{property.tagline}&rdquo;</p>
-                )}
+          {/* ── Photo Gallery ─────────────────────────────────────────────── */}
+          <section className="px-8 max-w-[1280px] mx-auto mb-12">
+            <PhotoGallery
+              coverImage={property.cover_image}
+              images={property.property_images}
+              propertyName={property.name}
+            />
+          </section>
 
+          {/* ── Content + Sidebar ─────────────────────────────────────────── */}
+          <section className="px-8 max-w-[1280px] mx-auto mb-20">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+
+              {/* ── Main column ─────────────────────────────────────────── */}
+              <div className="lg:col-span-2">
+
+                {/* Description */}
+                <h2 className="font-headline text-hc-primary text-3xl mb-6">
+                  {property.tagline ?? 'Nature Meets Comfort'}
+                </h2>
                 {property.description && (
-                  <div>
-                    <div className="flex items-center gap-4 mb-5">
-                      <div className="h-px w-12 bg-hc-secondary" />
-                      <span className="font-label text-xs tracking-[0.4em] text-hc-secondary">About</span>
-                    </div>
-                    <p className="text-hc-text leading-relaxed text-lg">{property.description}</p>
-                  </div>
+                  <p className="text-hc-text text-lg leading-relaxed mb-10">
+                    {property.description}
+                  </p>
                 )}
 
-                {property.highlights && property.highlights.length > 0 && (
-                  <div>
-                    <div className="flex items-center gap-4 mb-5">
-                      <div className="h-px w-12 bg-hc-secondary" />
-                      <span className="font-label text-xs tracking-[0.4em] text-hc-secondary">Highlights</span>
-                    </div>
-                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {property.highlights.map(h => (
-                        <li key={h} className="flex items-start gap-3">
-                          <CheckCircle size={16} className="text-hc-secondary mt-0.5 shrink-0" />
-                          <span className="font-body text-sm text-hc-text">{h}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {property.amenities.length > 0 && (
-                  <div>
-                    <div className="flex items-center gap-4 mb-5">
-                      <div className="h-px w-12 bg-hc-secondary" />
-                      <span className="font-label text-xs tracking-[0.4em] text-hc-secondary">Amenities</span>
-                    </div>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                      {property.amenities.map(a => (
-                        <div key={a.id} className="bg-hc-bg-alt rounded-xl px-4 py-3 flex items-center gap-3">
-                          <span className="w-2 h-2 rounded-full bg-hc-secondary/60 shrink-0" />
-                          <span className="font-body text-sm text-hc-text">{a.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {property.nearby_attractions.length > 0 && (
-                  <div>
-                    <div className="flex items-center gap-4 mb-5">
-                      <div className="h-px w-12 bg-hc-secondary" />
-                      <span className="font-label text-xs tracking-[0.4em] text-hc-secondary">Nearby</span>
-                    </div>
-                    <div className="space-y-3">
-                      {property.nearby_attractions.map(a => (
-                        <div key={a.id} className="flex items-center justify-between bg-hc-bg-alt rounded-xl px-5 py-4">
-                          <span className="font-body text-sm text-hc-text">{a.name}</span>
-                          {a.distance_km && (
-                            <span className="font-label text-[10px] text-hc-secondary">{a.distance_km} km</span>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Sticky sidebar */}
-              <div className="lg:col-span-4">
-                <div className="sticky top-28 bg-white rounded-2xl p-8 shadow-card">
-                  <h3 className="font-headline text-hc-primary text-2xl mb-2">Plan Your Stay</h3>
-                  <p className="font-body text-sm text-hc-text-light mb-6">Enquire directly for availability and personalised itineraries.</p>
-                  {property.price_per_night && (
-                    <div className="mb-6 pb-6 border-b border-hc-text-light/10">
-                      <span className="font-body text-sm text-hc-text-light">Starting from</span>
-                      <div className="font-headline text-3xl text-hc-secondary">
-                        ₹{property.price_per_night.toLocaleString()}
-                        <span className="font-body text-base text-hc-text-light font-normal">/night</span>
+                {/* Highlights + Experience */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                  {property.highlights && property.highlights.length > 0 && (
+                    <div className="bg-hc-bg-alt rounded-2xl p-8">
+                      <h3 className="font-headline text-hc-primary text-xl mb-6">Highlights</h3>
+                      <div className="space-y-5">
+                        {property.highlights.map((h, i) => (
+                          <div key={i} className="flex items-start gap-3">
+                            <Leaf size={18} strokeWidth={1.5} className="text-hc-secondary mt-0.5 shrink-0" />
+                            <p className="text-sm text-hc-text font-body">{h}</p>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   )}
+
+                  <div className="bg-hc-bg-alt rounded-2xl p-8">
+                    <h3 className="font-headline text-hc-primary text-xl mb-4">The Experience</h3>
+                    <p className="text-sm text-hc-text leading-relaxed mb-4 font-body">
+                      Every stay at Hills Camp includes a guided morning walk through our private estate,
+                      led by our resident naturalist who shares the secrets of the Western Ghats' biodiversity.
+                    </p>
+                    <a
+                      href="/contact"
+                      className="text-hc-primary font-bold text-sm underline decoration-hc-text-light/30 underline-offset-4 hover:decoration-hc-primary transition-colors font-body"
+                    >
+                      View Full Experience Guide →
+                    </a>
+                  </div>
+                </div>
+
+                {/* Room Types */}
+                <RoomTypesList rooms={property.room_types} coverImage={property.cover_image} />
+
+                {/* Nearby Attractions */}
+                <NearbyAttractions attractions={property.nearby_attractions} />
+
+                {/* Map */}
+                <MapEmbed
+                  latitude={property.latitude}
+                  longitude={property.longitude}
+                  district={districtLabel}
+                />
+              </div>
+
+              {/* ── Sidebar ─────────────────────────────────────────────── */}
+              <div className="lg:col-span-1">
+                {/* Amenities */}
+                <AmenitiesSidebar amenities={property.amenities} />
+
+                {/* Sticky availability CTA */}
+                <div className="border border-hc-text-light/20 rounded-2xl p-8 sticky top-28">
+                  <h3 className="font-headline text-hc-primary text-xl mb-3">Availability</h3>
+                  <p className="text-sm text-hc-text leading-relaxed mb-6 font-body">
+                    This property is highly sought after. We recommend booking at least 4 weeks in advance for weekends.
+                  </p>
                   <a
-                    href={`https://wa.me/919876543210?text=${whatsappMsg}`}
+                    href={whatsappHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-3 w-full font-body font-bold bg-hc-secondary text-white py-4 rounded-xl mb-3 transition-all hover:brightness-110 active:scale-[0.97]"
+                    className="bg-hc-primary text-white w-full py-4 rounded-xl font-semibold text-center flex items-center justify-center gap-2 hover:bg-hc-primary-deep transition-colors font-body mb-3"
                   >
-                    <MessageCircle size={18} /> WhatsApp Enquiry
+                    <MessageCircle size={18} strokeWidth={1.75} /> Enquire Now
                   </a>
                   <Link
                     to="/contact"
@@ -179,10 +189,14 @@ const PropertyDetail = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         </main>
+
         <Footer />
       </PageTransition>
+
+      {/* Mobile WhatsApp FAB */}
+      <WhatsAppWidget propertyName={property.name} phone={WHATSAPP_PHONE} />
     </>
   );
 };
