@@ -26,7 +26,7 @@ export const HeroSection: React.FC = () => {
           </span>
 
           {/* Headline */}
-          <h1 className="font-headline text-hc-primary-deep text-6xl md:text-8xl lg:text-[96px] leading-none mb-6 animate-fade-in-2 text-secondary-foreground font-bold">
+          <h1 className="font-headline text-hc-primary-deep text-6xl md:text-8xl lg:text-[96px] leading-none mb-6 animate-fade-in-2 font-bold text-[#e2dfd0]">
             Where Nature<br />Meets Comfort
           </h1>
 
