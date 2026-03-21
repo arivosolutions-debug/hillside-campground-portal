@@ -1,130 +1,121 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { SectionLabel } from '@/components/shared/SectionLabel';
-import { HeritageBadge } from '@/components/shared/HeritageBadge';
-import { MistOverlay } from '@/components/shared/MistOverlay';
-import { useProperties } from '@/hooks/useProperties';
+
+const COLLECTIONS = [
+  {
+    label: 'Tree Houses',
+    title: 'Canopy Retreats',
+    subtitle: 'Sleep 40 feet above the forest floor.',
+    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80',
+    href: '/stays?type=tree_house',
+    cols: 'lg:col-span-8',
+    aspect: 'aspect-[16/9]',
+  },
+  {
+    label: 'Backwater Villas',
+    title: 'Floating Sanctuaries',
+    subtitle: 'Drift through liquid mirrors of Kerala.',
+    image: 'https://images.unsplash.com/photo-1605538032404-d4d84ad3abf8?w=800&q=80',
+    href: '/stays?type=backwater_villa',
+    cols: 'lg:col-span-4',
+    aspect: 'aspect-[16/9]',
+  },
+  {
+    label: 'Mountain Lookouts',
+    title: 'High-Altitude Perches',
+    subtitle: 'Wake above the cloud line.',
+    image: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=800&q=80',
+    href: '/stays?type=mountain_lookout',
+    cols: 'lg:col-span-4',
+    aspect: 'aspect-[16/9]',
+  },
+  {
+    label: 'Tea Estate Cabins',
+    title: 'Planter\'s Legacy',
+    subtitle: 'A century of stories steeped in your cup.',
+    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80',
+    href: '/stays?type=tea_estate_cabin',
+    cols: 'lg:col-span-8',
+    aspect: 'aspect-[16/9]',
+  },
+];
 
 export const CollectionsGrid: React.FC = () => {
-  const { data: properties, isLoading } = useProperties({ featured: true });
-  const sectionRef = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const section = sectionRef.current;
+    const section = ref.current;
     if (!section) return;
-
-    const items = section.querySelectorAll('.grid-item');
+    const items = section.querySelectorAll<HTMLElement>('.collection-card');
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-          }
-        });
-      },
-      { threshold: 0.1 }
+      (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); }),
+      { threshold: 0.08 }
     );
-
     items.forEach((item, i) => {
       item.classList.add('section-fade-up');
-      (item as HTMLElement).style.transitionDelay = `${i * 100}ms`;
+      item.style.transitionDelay = `${i * 90}ms`;
       observer.observe(item);
     });
-
     return () => observer.disconnect();
-  }, [properties]);
-
-  const displayProperties = properties?.slice(0, 5) ?? [];
+  }, []);
 
   return (
-    <section ref={sectionRef} className="bg-background py-32">
-      <div className="max-w-screen-2xl mx-auto px-8">
+    <section ref={ref} className="bg-hc-bg-alt py-32 px-8">
+      <div className="max-w-content mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-14">
           <div>
-            <SectionLabel className="mb-6">Featured Collection</SectionLabel>
-            <h2 className="font-headline text-4xl md:text-6xl text-on-surface leading-tight">
-              Curated for the<br />
-              <em>discerning few.</em>
+            <div className="flex items-center gap-4 mb-4">
+              <div className="h-px w-12 bg-hc-secondary" />
+              <span className="font-label text-xs tracking-[0.4em] text-hc-secondary">Curated for you</span>
+            </div>
+            <h2 className="font-headline text-hc-primary text-4xl md:text-5xl leading-tight">
+              The Collections
             </h2>
           </div>
           <Link
             to="/stays"
-            className="flex items-center gap-3 font-body text-sm font-bold text-secondary border-b-2 border-secondary/20 hover:border-secondary pb-1 transition-all duration-300 self-start md:self-end group"
+            className="flex items-center gap-2 text-hc-primary font-bold hover:gap-3 transition-all group shrink-0 text-sm"
           >
-            All Properties
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            View All Categories
+            <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
-        {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-            {[...Array(5)].map((_, i) => (
-              <div
-                key={i}
-                className={`rounded-3xl bg-surface-high animate-pulse ${
-                  i === 0 ? 'md:col-span-7 aspect-[4/3]'
-                  : i === 1 ? 'md:col-span-5 aspect-[4/3]'
-                  : 'md:col-span-4 aspect-[3/4]'
-                }`}
+        {/* Asymmetric 12-col grid — 2 rows */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {COLLECTIONS.map((c) => (
+            <Link
+              key={c.label}
+              to={c.href}
+              className={`collection-card group relative overflow-hidden rounded-3xl ${c.cols} ${c.aspect} block`}
+            >
+              <img
+                src={c.image}
+                alt={c.title}
+                className="absolute inset-0 w-full h-full object-cover brightness-75 group-hover:brightness-90 group-hover:scale-[1.04] transition-all duration-1000"
               />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-            {displayProperties.map((property, i) => {
-              const spanClass = [
-                'md:col-span-7 aspect-[4/3]',
-                'md:col-span-5 aspect-[4/3]',
-                'md:col-span-4 aspect-[3/4]',
-                'md:col-span-4 aspect-[3/4]',
-                'md:col-span-4 aspect-[3/4]',
-              ][i] ?? 'md:col-span-4 aspect-square';
 
-              return (
-                <Link
-                  key={property.id}
-                  to={`/stays/${property.slug}`}
-                  className={`grid-item group relative overflow-hidden rounded-3xl ${spanClass} block`}
-                >
-                  <img
-                    src={property.cover_image ?? '/placeholder.svg'}
-                    alt={property.name}
-                    className="w-full h-full object-cover brightness-75 group-hover:brightness-90 transition-all duration-1000 group-hover:scale-105"
-                  />
-                  <MistOverlay intensity="medium" />
+              {/* Gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-hc-primary-dark/80 via-transparent to-transparent" />
 
-                  {/* Content overlay */}
-                  <div className="absolute inset-0 p-7 flex flex-col justify-end">
-                    <HeritageBadge type={property.property_type} className="mb-3 self-start" />
-                    <h3 className="font-headline text-2xl text-on-surface leading-tight mb-1">
-                      {property.name}
-                    </h3>
-                    <p className="font-body text-sm text-on-surface-variant mb-3 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
-                      {property.tagline}
-                    </p>
-                    <div className="flex items-center gap-2 font-label text-[10px] text-on-surface-variant/70 tracking-widest">
-                      <span>{property.district.charAt(0).toUpperCase() + property.district.slice(1)}</span>
-                      <span>·</span>
-                      <span>Up to {property.max_guests} guests</span>
-                    </div>
-                  </div>
-
-                  {/* Price badge */}
-                  {property.price_per_night && (
-                    <div className="absolute top-5 right-5 bg-black/40 backdrop-blur-sm text-on-surface border border-white/10 px-3 py-1.5 rounded-full">
-                      <span className="font-label text-[10px] tracking-widest">FROM </span>
-                      <span className="font-body font-bold text-sm text-secondary">
-                        ₹{property.price_per_night.toLocaleString()}
-                      </span>
-                    </div>
-                  )}
-                </Link>
-              );
-            })}
-          </div>
-        )}
+              {/* Labels */}
+              <div className="absolute inset-0 p-7 flex flex-col justify-end">
+                <span className="inline-block bg-hc-bg/90 backdrop-blur-sm text-hc-primary text-xs font-bold uppercase tracking-tight px-3 py-1 rounded-full mb-3 self-start">
+                  {c.label}
+                </span>
+                <h3 className="font-headline text-white text-2xl md:text-3xl leading-tight mb-1">
+                  {c.title}
+                </h3>
+                {/* Hover reveal subtitle */}
+                <p className="font-body text-sm text-white/70 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+                  {c.subtitle}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );
