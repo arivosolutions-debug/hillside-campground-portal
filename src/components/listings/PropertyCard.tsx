@@ -10,7 +10,7 @@ interface PropertyCardProps {
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
   return (
-    <Link to={`/stays/${property.slug}`} className="group block">
+    <Link to={`/property/${property.slug}`} className="group block">
       {/* Image */}
       <div className="relative rounded-xl overflow-hidden mb-4">
         <img

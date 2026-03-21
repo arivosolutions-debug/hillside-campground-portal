@@ -62,7 +62,7 @@ export const BlogTeaser: React.FC = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {posts?.map((post) => (
-            <Link key={post.id} to={`/journal/${post.slug}`} className="blog-card group block">
+            <Link key={post.id} to={`/blog/${post.slug}`} className="blog-card group block">
               {/* Cover image */}
               <div className="rounded-2xl overflow-hidden mb-6 card-hover bg-hc-bg-alt">
                 {post.cover_image && (
