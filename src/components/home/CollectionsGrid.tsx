@@ -17,7 +17,7 @@ const COLLECTIONS = [
     title: 'Floating Sanctuaries',
     subtitle: 'Drift through liquid mirrors of Kerala.',
     image: 'https://images.unsplash.com/photo-1605538032404-d4d84ad3abf8?w=800&q=80',
-    href: '/stays?type=backwater_villa',
+    href: '/listings?type=backwater_villa',
     cols: 'lg:col-span-4',
     aspect: 'aspect-[16/9]',
   },
