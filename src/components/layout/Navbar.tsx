@@ -6,10 +6,10 @@ const WHATSAPP_URL =
   'https://wa.me/919847012345?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20a%20Hills%20Camp%20Kerala%20retreat.';
 
 const NAV_LINKS = [
-  { label: 'Stays',        to: '/listings' },
-  { label: 'Packages',     to: '/listings?type=tree_house' },
-  { label: 'Discover',     to: '/listings' },
-  { label: 'Journal',      to: '/blog' },
+  { label: 'Stays',    to: '/listings',  exact: ['/listings', '/'] },
+  { label: 'Packages', to: '/packages',  exact: ['/packages'] },
+  { label: 'Discover', to: '/about',     exact: ['/about'] },
+  { label: 'Journal',  to: '/blog',      exact: ['/blog', '/journal'] },
 ];
 
 export const Navbar: React.FC = () => {
@@ -25,11 +25,8 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => { setMenuOpen(false); }, [location]);
 
-  const isActive = (to: string) => {
-    if (to === '/listings') return location.pathname === '/listings' || location.pathname.startsWith('/property');
-    if (to.includes('?')) return false; // query-link, never highlight as active
-    return location.pathname === to || location.pathname.startsWith(to);
-  };
+  const isActive = (exact: string[]) =>
+    exact.includes(location.pathname);
 
   return (
     <>
@@ -53,7 +50,7 @@ export const Navbar: React.FC = () => {
                 key={link.to}
                 to={link.to}
                 className={`font-body text-sm transition-colors duration-200 ${
-                  isActive(link.to)
+                  isActive(link.exact)
                     ? 'text-hc-primary-deep font-bold border-b-2 border-hc-secondary pb-0.5'
                     : 'text-hc-primary-deep/70 font-medium hover:text-hc-primary-deep'
                 }`}
