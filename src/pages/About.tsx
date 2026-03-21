@@ -11,22 +11,22 @@ import type { TeamMember } from '@/lib/types';
 const PILLARS = [
   {
     icon: Leaf,
-    iconBg: 'bg-hc-accent-light/40',
-    iconColor: 'text-hc-primary',
+    iconBg: 'bg-[#17341e]',
+    iconColor: 'text-[#bdce89]',
     title: 'Deep Sustainability',
     body: 'Every property must demonstrate a measurable commitment to environmental preservation, from zero-waste operations to rainwater harvesting.',
   },
   {
     icon: Diamond,
-    iconBg: 'bg-hc-accent-light/50',
-    iconColor: 'text-hc-secondary',
+    iconBg: 'bg-[#924a29]',
+    iconColor: 'text-[#ffdbcd]',
     title: 'Uncompromised Luxury',
     body: 'From hand-woven linens to private chefs who source from local farms, every detail is curated for a refined experience without excess.',
   },
   {
     icon: ShieldCheck,
-    iconBg: 'bg-hc-bg-alt',
-    iconColor: 'text-hc-primary',
+    iconBg: 'bg-[#0a1f11]',
+    iconColor: 'text-[#adcfaf]',
     title: 'Absolute Privacy',
     body: 'Our estates are designed for complete seclusion. No shared walls, no public spaces — just you, your companions, and the wilderness.',
   },
