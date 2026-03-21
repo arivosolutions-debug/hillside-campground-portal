@@ -9,7 +9,7 @@ export const HeroSection: React.FC = () => {
       {/* Background */}
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=2000&q=85"
+          src={heroBg}
           alt="Luxury balcony overlooking misty Kerala mountains"
           className="w-full h-full object-cover animate-kenburns origin-center" />
         
