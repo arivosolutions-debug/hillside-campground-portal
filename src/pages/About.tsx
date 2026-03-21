@@ -11,24 +11,51 @@ import type { TeamMember } from '@/lib/types';
 const PILLARS = [
   {
     icon: Leaf,
-    iconBg: 'bg-hc-accent-light/40',
-    iconColor: 'text-hc-primary',
+    iconBg: 'bg-[#17341e]',
+    iconColor: 'text-[#bdce89]',
     title: 'Deep Sustainability',
     body: 'Every property must demonstrate a measurable commitment to environmental preservation, from zero-waste operations to rainwater harvesting.',
   },
   {
     icon: Diamond,
-    iconBg: 'bg-hc-accent-light/50',
-    iconColor: 'text-hc-secondary',
+    iconBg: 'bg-[#924a29]',
+    iconColor: 'text-[#ffdbcd]',
     title: 'Uncompromised Luxury',
     body: 'From hand-woven linens to private chefs who source from local farms, every detail is curated for a refined experience without excess.',
   },
   {
     icon: ShieldCheck,
-    iconBg: 'bg-hc-bg-alt',
-    iconColor: 'text-hc-primary',
+    iconBg: 'bg-[#0a1f11]',
+    iconColor: 'text-[#adcfaf]',
     title: 'Absolute Privacy',
     body: 'Our estates are designed for complete seclusion. No shared walls, no public spaces — just you, your companions, and the wilderness.',
+  },
+];
+
+const FALLBACK_TEAM = [
+  {
+    id: '1',
+    name: 'Rohan Nair',
+    role: 'Founder & Conservation Director',
+    bio: 'A 3rd-generation coffee planter turned conservationist with a vision for silent tourism.',
+    photo_url: null,
+    sort_order: 0,
+  },
+  {
+    id: '2',
+    name: 'Maya Iyer',
+    role: 'Head of Design & Architecture',
+    bio: 'Award-winning architect specializing in structures that dissolve into their natural surroundings.',
+    photo_url: null,
+    sort_order: 1,
+  },
+  {
+    id: '3',
+    name: 'Vikram Seth',
+    role: 'Head of Guest Experience',
+    bio: 'Former luxury hotel director who traded five-star lobbies for forest canopies.',
+    photo_url: null,
+    sort_order: 2,
   },
 ];
 
@@ -42,6 +69,8 @@ const About = () => {
     },
   });
 
+  const displayTeam = team?.length ? team : FALLBACK_TEAM;
+
   return (
     <>
       <Navbar />
@@ -52,20 +81,24 @@ const About = () => {
           <section className="relative h-[80vh] min-h-[600px] flex items-end overflow-hidden">
             <div className="absolute inset-0">
               <img
-          src="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=1600&q=80"
+                src="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=1600&q=80"
                 alt="Misty Western Ghats"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover brightness-[0.35]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-hc-bg via-hc-bg/20 to-transparent" />
+              {/* Bottom gradient blends into page bg */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050a07] via-[#050a07]/30 to-transparent" />
             </div>
-            <div className="relative z-10 max-w-[1280px] mx-auto px-8 pb-16 w-full">
-              <span className="inline-block bg-hc-accent-light text-[#360f00] px-4 py-1.5 rounded-full text-xs font-semibold mb-6 font-body">
-                OUR PHILOSOPHY
-              </span>
-              <h1 className="font-headline text-hc-primary text-5xl md:text-8xl leading-none mb-6">
-                Our Story
+            <div className="relative z-10 max-w-[1280px] mx-auto px-8 pb-20 w-full">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="h-[1px] w-10 bg-[#ffb596]" />
+                <span className="text-[#ffb596] text-xs font-bold uppercase tracking-[0.4em] font-body">
+                  Our Philosophy
+                </span>
+              </div>
+              <h1 className="font-headline text-white text-5xl md:text-8xl leading-[0.95] mb-6">
+                Our <em className="text-[#ffb596] not-italic">Story</em>
               </h1>
-              <p className="text-hc-text text-lg md:text-xl max-w-2xl leading-relaxed font-body">
+              <p className="text-white/70 text-lg md:text-xl max-w-2xl leading-relaxed font-body">
                 Where every sunrise over the Ghats becomes a private moment, curated just for you.
               </p>
             </div>
@@ -105,28 +138,38 @@ const About = () => {
           </section>
 
           {/* ── Curation Standards ────────────────────────────────────────── */}
-          <section className="py-24 px-8 max-w-[1280px] mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="font-headline text-hc-primary text-4xl md:text-5xl mb-4">
-                Our Curation Standards
-              </h2>
-              <p className="text-hc-text text-lg max-w-2xl mx-auto font-body">
-                Each property passes through our rigorous three-pillar evaluation before earning the Hills Camp seal.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {PILLARS.map(p => {
-                const Icon = p.icon;
-                return (
-                  <div key={p.title} className="bg-hc-bg-alt rounded-3xl p-10">
-                    <div className={`w-16 h-16 ${p.iconBg} rounded-full flex items-center justify-center mb-6`}>
-                      <Icon size={24} strokeWidth={1.5} className={p.iconColor} />
+          <section className="py-24 px-8 bg-hc-bg-alt">
+            <div className="max-w-[1280px] mx-auto">
+              <div className="text-center mb-16">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <div className="h-[1px] w-10 bg-hc-secondary" />
+                  <span className="text-hc-secondary text-xs font-bold uppercase tracking-[0.4em] font-body">
+                    Our Standards
+                  </span>
+                  <div className="h-[1px] w-10 bg-hc-secondary" />
+                </div>
+                <h2 className="font-headline text-hc-primary text-4xl md:text-5xl mb-4">
+                  Our Curation Standards
+                </h2>
+                <p className="text-hc-text text-lg max-w-2xl mx-auto font-body">
+                  Each property passes through our rigorous three-pillar evaluation before earning the Hills Camp seal.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {PILLARS.map(p => {
+                  const Icon = p.icon;
+                  return (
+                    <div key={p.title} className="bg-hc-bg rounded-3xl p-10">
+                      {/* Circular icon badge */}
+                      <div className={`w-14 h-14 ${p.iconBg} rounded-full flex items-center justify-center mb-6`}>
+                        <Icon size={22} strokeWidth={1.5} className={p.iconColor} />
+                      </div>
+                      <h3 className="font-headline text-hc-primary text-xl mb-4">{p.title}</h3>
+                      <p className="text-hc-text leading-relaxed font-body">{p.body}</p>
                     </div>
-                    <h3 className="font-headline text-hc-primary text-xl mb-4">{p.title}</h3>
-                    <p className="text-hc-text leading-relaxed font-body">{p.body}</p>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
           </section>
 
@@ -134,6 +177,12 @@ const About = () => {
           <section className="py-24 px-8 max-w-[1280px] mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
               <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-[1px] w-10 bg-hc-secondary" />
+                  <span className="text-hc-secondary text-xs font-bold uppercase tracking-[0.4em] font-body">
+                    The Team
+                  </span>
+                </div>
                 <h2 className="font-headline text-hc-primary text-4xl md:text-5xl mb-4">
                   The People Behind the Peaks
                 </h2>
@@ -145,13 +194,13 @@ const About = () => {
                 to="/contact"
                 className="text-hc-primary font-bold flex items-center gap-2 font-body text-sm shrink-0 hover:text-hc-secondary transition-colors"
               >
-                Meet the full team <ArrowRight size={16} />
+                Get in touch <ArrowRight size={16} />
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-              {(team ?? []).map((member, idx) => (
-                <div key={member.id} className={idx === 1 ? 'md:mt-12' : ''}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+              {displayTeam.map((member, idx) => (
+                <div key={member.id} style={{ marginTop: idx === 1 ? '48px' : '0' }}>
                   <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-hc-bg-alt mb-6">
                     {member.photo_url ? (
                       <img
@@ -161,7 +210,7 @@ const About = () => {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-hc-bg-alt">
-                        <span className="font-headline text-4xl text-hc-text-light">
+                        <span className="font-headline text-5xl text-hc-text-light">
                           {member.name.charAt(0)}
                         </span>
                       </div>
@@ -174,49 +223,42 @@ const About = () => {
                   )}
                 </div>
               ))}
-
-              {/* Fallback if no team data yet */}
-              {!team?.length && [
-                { name: 'Rohan Nair',  role: 'Founder & Conservation Director', bio: 'A 3rd-generation coffee planter turned conservationist with a vision for silent tourism.' },
-                { name: 'Maya Iyer',   role: 'Head of Design & Architecture',   bio: 'Award-winning architect specializing in structures that dissolve into their natural surroundings.' },
-                { name: 'Vikram Seth', role: 'Head of Guest Experience',        bio: 'Former luxury hotel director who traded five-star lobbies for forest canopies.' },
-              ].map((m, idx) => (
-                <div key={m.name} className={idx === 1 ? 'md:mt-12' : ''}>
-                  <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-hc-bg-alt mb-6 flex items-center justify-center">
-                    <span className="font-headline text-5xl text-hc-text-light">{m.name.charAt(0)}</span>
-                  </div>
-                  <h3 className="font-headline text-hc-primary text-xl mb-1">{m.name}</h3>
-                  <p className="text-sm text-hc-text-light mb-3 font-body">{m.role}</p>
-                  <p className="text-sm text-hc-text leading-relaxed font-body">{m.bio}</p>
-                </div>
-              ))}
             </div>
           </section>
 
-          {/* ── CTA Block ─────────────────────────────────────────────────── */}
-          <section className="px-8 max-w-[1280px] mx-auto pb-32">
-            <div className="relative rounded-3xl overflow-hidden h-[444px]">
-              <img
-                src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1600&q=80"
-                alt="Kerala tea plantation aerial"
-                className="w-full h-full object-cover brightness-50"
-              />
-              <div className="absolute inset-0 flex items-center justify-center text-center px-8">
-                <div>
-                  <h2 className="font-headline text-white text-4xl md:text-5xl mb-4">
-                    Experience the Wild in Style
-                  </h2>
-                  <p className="text-white/80 text-lg mb-8 max-w-xl mx-auto font-body">
-                    Your curated wilderness escape awaits. Let us help you find the perfect retreat.
-                  </p>
-                  <Link
-                    to="/listings"
-                    className="bg-hc-accent text-[#360f00] px-10 py-4 rounded-xl font-bold text-lg hover:brightness-110 transition-all inline-block font-body"
-                  >
-                    Explore Properties
-                  </Link>
-                </div>
+          {/* ── Full-Width CTA Banner ─────────────────────────────────────── */}
+          <section className="relative w-full h-[500px] flex items-center justify-center overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=1920&q=80"
+              alt="Western Ghats aerial"
+              className="absolute inset-0 w-full h-full object-cover brightness-[0.35]"
+            />
+            {/* Dark overlay for depth */}
+            <div className="absolute inset-0 bg-[#050a07]/50" />
+            {/* Bottom fade into footer */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#050a07] to-transparent" />
+
+            <div className="relative z-10 text-center px-8 max-w-3xl">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="h-[1px] w-10 bg-[#ffb596]" />
+                <span className="text-[#ffb596] text-xs font-bold uppercase tracking-[0.4em] font-body">
+                  The Wilderness Awaits
+                </span>
+                <div className="h-[1px] w-10 bg-[#ffb596]" />
               </div>
+              <h2 className="font-headline text-white text-4xl md:text-6xl leading-tight mb-6">
+                Experience the <em className="text-[#ffb596]">Wilderness</em>
+              </h2>
+              <p className="text-white/70 text-lg mb-10 max-w-xl mx-auto font-body leading-relaxed">
+                Twelve curated estates hidden across Kerala's Western Ghats. No two alike. All extraordinary.
+              </p>
+              <Link
+                to="/listings"
+                className="inline-flex items-center gap-3 bg-[#924a29] text-[#ffdbcd] px-10 py-5 rounded-full font-bold text-lg hover:bg-[#753414] transition-colors font-body"
+              >
+                Explore Properties
+                <ArrowRight size={20} />
+              </Link>
             </div>
           </section>
 
