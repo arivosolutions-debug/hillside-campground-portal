@@ -83,9 +83,8 @@ const PropertyDetail = () => {
 
               {/* Desktop pricing / enquiry CTA */}
               <div className="mt-4 md:mt-0 text-right shrink-0">
-                <p className="text-xs text-hc-text-light uppercase tracking-wider mb-1 font-body">Starting from</p>
-                <p className="font-headline text-hc-primary text-2xl">Contact for</p>
-                <p className="font-headline text-hc-primary text-lg">Pricing</p>
+                <p className="text-xs text-hc-text-light uppercase tracking-[0.2em] mb-1 font-body">Pricing</p>
+                <p className="font-body font-bold text-hc-primary text-base">Contact for Pricing</p>
               </div>
             </div>
           </section>
