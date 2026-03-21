@@ -89,7 +89,7 @@ export const FeaturedRetreats: React.FC = () => {
             </p>
           </div>
           <Link
-            to="/stays"
+            to="/listings"
             className="text-hc-primary font-bold flex items-center gap-2 hover:gap-3 transition-all group shrink-0"
           >
             Explore all stays
@@ -102,7 +102,7 @@ export const FeaturedRetreats: React.FC = () => {
           {cards.map((card) => (
             <Link
               key={card.slug}
-              to={`/stays/${card.slug}`}
+              to={`/property/${card.slug}`}
               className="retreat-card bg-white rounded-2xl overflow-hidden card-hover group block"
             >
               {/* Image */}

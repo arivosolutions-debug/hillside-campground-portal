@@ -15,7 +15,7 @@ export const FloatingSearch: React.FC = () => {
     if (district) params.set('district', district.toLowerCase());
     if (type) params.set('type', type.toLowerCase().replace(' ', '_'));
     if (guests) params.set('guests', guests.replace(/\D/g, ''));
-    navigate(`/stays?${params.toString()}`);
+    navigate(`/listings?${params.toString()}`);
   };
 
   return (

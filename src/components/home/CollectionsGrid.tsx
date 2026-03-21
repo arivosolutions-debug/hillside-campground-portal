@@ -75,7 +75,7 @@ export const CollectionsGrid: React.FC = () => {
             </h2>
           </div>
           <Link
-            to="/stays"
+            to="/listings"
             className="flex items-center gap-2 text-hc-primary font-bold hover:gap-3 transition-all group shrink-0 text-sm"
           >
             View All Categories

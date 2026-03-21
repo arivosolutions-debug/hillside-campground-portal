@@ -36,7 +36,7 @@ const PropertyDetail = () => {
         <Navbar />
         <div className="min-h-screen bg-hc-bg flex flex-col items-center justify-center gap-4">
           <h1 className="font-headline text-4xl text-hc-primary">Retreat not found</h1>
-          <Link to="/stays" className="font-body text-hc-secondary hover:underline">← Back to all retreats</Link>
+          <Link to="/listings" className="font-body text-hc-secondary hover:underline">← Back to all retreats</Link>
         </div>
       </>
     );
@@ -55,7 +55,7 @@ const PropertyDetail = () => {
           {/* ── Property Header ───────────────────────────────────────────── */}
           <section className="pt-28 pb-6 px-8 max-w-[1280px] mx-auto">
             <Link
-              to="/stays"
+              to="/listings"
               className="inline-flex items-center gap-2 text-hc-text-light hover:text-hc-primary font-body text-sm mb-6 transition-colors"
             >
               <ArrowLeft size={14} /> All Retreats

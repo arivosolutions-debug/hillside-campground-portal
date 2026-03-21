@@ -210,7 +210,7 @@ const About = () => {
                     Your curated wilderness escape awaits. Let us help you find the perfect retreat.
                   </p>
                   <Link
-                    to="/stays"
+                    to="/listings"
                     className="bg-hc-accent text-[#360f00] px-10 py-4 rounded-xl font-bold text-lg hover:brightness-110 transition-all inline-block font-body"
                   >
                     Explore Properties
