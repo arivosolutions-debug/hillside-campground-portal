@@ -3,11 +3,12 @@ import {
   Waves, ChefHat, Flame, Sparkles, TreePine, Wifi,
   Dumbbell, Coffee, Car, Leaf, ShieldCheck, Star,
   Wind, Umbrella, Fish, Bike, Camera, Music,
+  type LucideIcon,
 } from 'lucide-react';
 import type { Amenity } from '@/lib/types';
 
 // Map common amenity names → Lucide icons
-const ICON_MAP: Record<string, React.FC<{ size?: number; strokeWidth?: number; className?: string }>> = {
+const ICON_MAP: Record<string, LucideIcon> = {
   pool:          Waves,
   'private chef': ChefHat,
   'chef':        ChefHat,
