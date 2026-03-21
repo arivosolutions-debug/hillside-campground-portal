@@ -1,30 +1,50 @@
-import React from 'react';
-import { SectionLabel } from '@/components/shared/SectionLabel';
+import React, { useEffect, useRef } from 'react';
 
 export const ParallaxSection: React.FC = () => {
-  return (
-    <section className="relative py-0 overflow-hidden h-[65vh] min-h-[500px]">
-      <div className="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000&q=80"
-          alt="Misty Western Ghats"
-          className="w-full h-full object-cover brightness-50"
-          style={{ transform: 'scale(1.1)' }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background/70" />
-      </div>
+  const ref = useRef<HTMLElement>(null);
 
-      <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-8">
-        <SectionLabel light className="mb-10 justify-center">The Western Ghats Promise</SectionLabel>
-        <blockquote className="font-headline text-3xl md:text-5xl text-on-surface max-w-4xl leading-tight mb-8">
-          <em>
-            "The hills are not a backdrop to your stay.<br />
-            They are the entire point of it."
-          </em>
-        </blockquote>
-        <cite className="font-body text-sm text-on-surface-variant not-italic">
-          — Ananya Krishnan, Founder
-        </cite>
+  useEffect(() => {
+    const section = ref.current;
+    if (!section) return;
+    const content = section.querySelector<HTMLElement>('.parallax-content');
+    if (!content) return;
+    content.classList.add('section-fade-up');
+    const observer = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) content.classList.add('in-view'); },
+      { threshold: 0.2 }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section
+      ref={ref}
+      className="relative overflow-hidden"
+      style={{ height: '700px' }}
+    >
+      {/* Parallax background */}
+      <div
+        className="absolute inset-0 hero-parallax"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000&q=80')`,
+        }}
+      />
+      {/* Primary colour overlay at 60% */}
+      <div className="absolute inset-0 bg-hc-primary" style={{ opacity: 0.60 }} />
+
+      {/* Content */}
+      <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-8 parallax-content">
+        <p className="font-label text-xs tracking-[0.4em] text-hc-accent-light/70 mb-8">
+          THE WESTERN GHATS PROMISE
+        </p>
+        <h2 className="font-headline text-5xl md:text-6xl text-white italic leading-tight mb-6 max-w-3xl">
+          "The hills are not a backdrop to your stay. They are the entire point of it."
+        </h2>
+        <p className="text-white/70 font-body text-lg max-w-xl leading-relaxed">
+          Every retreat is chosen because it cannot be replicated anywhere else on earth.
+          The landscape is not scenery; it is the experience itself.
+        </p>
       </div>
     </section>
   );
