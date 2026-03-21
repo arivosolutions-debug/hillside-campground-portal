@@ -29,7 +29,7 @@ export const PhilosophySection: React.FC = () => {
         <div ref={leftRef} className="lg:col-span-5 relative">
           <div className="rounded-[40px] overflow-hidden aspect-[3/4]">
             <img
-              src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?w=800&q=80"
+              src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=80"
               alt="Kerala forest philosophy"
               className="w-full h-full object-cover"
             />

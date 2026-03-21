@@ -197,8 +197,8 @@ const About = () => {
           <section className="px-8 max-w-[1280px] mx-auto pb-32">
             <div className="relative rounded-3xl overflow-hidden h-[444px]">
               <img
-                src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1600&q=80"
-                alt="Aerial landscape"
+                src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1600&q=80"
+                alt="Kerala tea plantation aerial"
                 className="w-full h-full object-cover brightness-50"
               />
               <div className="absolute inset-0 flex items-center justify-center text-center px-8">
