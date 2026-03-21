@@ -1,16 +1,33 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import React from 'react';
+import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
+import { PageTransition } from '@/components/layout/PageTransition';
+import { HeroSection } from '@/components/home/HeroSection';
+import { PhilosophySection } from '@/components/home/PhilosophySection';
+import { CollectionsGrid } from '@/components/home/CollectionsGrid';
+import { ParallaxSection } from '@/components/home/ParallaxSection';
+import { SearchSection } from '@/components/home/SearchSection';
+import { TestimonialsSection } from '@/components/home/TestimonialsSection';
+import { BlogTeaser } from '@/components/home/BlogTeaser';
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
-    </div>
+    <>
+      <Navbar />
+      <PageTransition>
+        <main>
+          <HeroSection />
+          <PhilosophySection />
+          <CollectionsGrid />
+          <ParallaxSection />
+          <SearchSection />
+          <TestimonialsSection />
+          <BlogTeaser />
+        </main>
+        <Footer />
+      </PageTransition>
+    </>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
