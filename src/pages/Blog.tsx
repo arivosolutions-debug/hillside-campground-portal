@@ -250,7 +250,7 @@ export const BlogPost = () => {
                   Explore our curated collection of wilderness retreats and find the one that speaks to your soul.
                 </p>
                 <Link
-                  to="/stays"
+                  to="/listings"
                   className="bg-hc-accent text-[#360f00] px-8 py-3 rounded-xl font-bold text-sm inline-block hover:brightness-110 transition-all font-body"
                 >
                   Explore Properties

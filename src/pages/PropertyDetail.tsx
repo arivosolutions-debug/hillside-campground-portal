@@ -55,7 +55,7 @@ const PropertyDetail = () => {
           {/* ── Property Header ───────────────────────────────────────────── */}
           <section className="pt-28 pb-6 px-8 max-w-[1280px] mx-auto">
             <Link
-              to="/stays"
+              to="/listings"
               className="inline-flex items-center gap-2 text-hc-text-light hover:text-hc-primary font-body text-sm mb-6 transition-colors"
             >
               <ArrowLeft size={14} /> All Retreats
