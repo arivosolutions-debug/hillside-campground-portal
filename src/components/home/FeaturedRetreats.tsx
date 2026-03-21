@@ -76,7 +76,7 @@ export const FeaturedRetreats: React.FC = () => {
       : FALLBACK_CARDS;
 
   return (
-    <section ref={ref} className="bg-hc-bg-alt py-32 px-8">
+    <section ref={ref} className="bg-hc-bg py-32 px-8">
       <div className="max-w-content mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">
