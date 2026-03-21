@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 import type { BlogPost } from '@/lib/types';
 
 export function useBlogPosts(category?: string, limit?: number) {
