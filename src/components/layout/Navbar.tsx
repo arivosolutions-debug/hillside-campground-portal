@@ -42,7 +42,7 @@ export const Navbar: React.FC = () => {
       >
         <div className="flex justify-between items-center max-w-content mx-auto px-8 py-6">
           {/* Logo */}
-          <Link to="/" className="font-headline text-hc-primary-deep text-2xl tracking-tight">
+          <Link to="/" className="font-headline italic text-hc-primary-deep text-2xl tracking-tight">
             Hills Camp
           </Link>
 
@@ -76,7 +76,7 @@ export const Navbar: React.FC = () => {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden md:inline-flex items-center gap-2 bg-hc-secondary text-white px-6 py-2.5 rounded-xl font-bold text-sm hover:brightness-110 transition-all active:scale-[0.97]"
+              className="hidden md:inline-flex items-center gap-2 bg-hc-secondary text-white px-6 py-2.5 rounded-full font-bold text-sm hover:brightness-110 transition-all active:scale-[0.97]"
             >
               <MessageCircle size={15} />
               Book Now
@@ -117,7 +117,7 @@ export const Navbar: React.FC = () => {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 bg-hc-secondary text-white px-8 py-4 rounded-xl font-bold text-base mt-2"
+            className="inline-flex items-center justify-center gap-2 bg-hc-secondary text-white px-8 py-4 rounded-full font-bold text-base mt-2"
           >
             <MessageCircle size={18} />
             Book Now via WhatsApp

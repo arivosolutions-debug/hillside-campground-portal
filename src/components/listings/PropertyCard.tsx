@@ -47,7 +47,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
         {property.tagline ? ` · ${property.tagline}` : ''}
       </p>
 
-      <div className="border-t border-hc-text-light/10 mt-4 pt-4 flex items-center justify-between">
+      <div className="mt-4 pt-4 flex items-center justify-between">
         <span className="font-bold text-hc-primary tracking-tight font-body text-sm">
           Contact for Pricing
         </span>
