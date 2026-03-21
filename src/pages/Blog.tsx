@@ -144,7 +144,7 @@ export const BlogPost = () => {
         <Navbar />
         <div className="min-h-screen bg-hc-bg flex flex-col items-center justify-center gap-4">
           <h1 className="font-headline text-4xl text-hc-primary">Story not found</h1>
-          <Link to="/journal" className="font-body text-hc-secondary hover:underline">← Back to Journal</Link>
+          <Link to="/blog" className="font-body text-hc-secondary hover:underline">← Back to Journal</Link>
         </div>
       </>
     );
