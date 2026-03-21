@@ -1,14 +1,15 @@
 import React from 'react';
-import { SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { Minus, Plus } from 'lucide-react';
 import type { District, PropertyType } from '@/lib/types';
 
 interface FilterBarProps {
   district:       District | '';
   propertyType:   PropertyType | '';
-  maxGuests:      number;
+  guests:         number;
   onDistrict:     (v: District | '') => void;
   onPropertyType: (v: PropertyType | '') => void;
-  onMaxGuests:    (v: number) => void;
+  onGuests:       (v: number) => void;
+  totalCount?:    number;
 }
 
 const DISTRICTS: { value: District; label: string }[] = [
@@ -22,69 +23,96 @@ const DISTRICTS: { value: District; label: string }[] = [
 ];
 
 const TYPES: { value: PropertyType; label: string }[] = [
-  { value: 'tree_house',        label: 'Tree House' },
-  { value: 'backwater_villa',   label: 'Backwater Villa' },
-  { value: 'mountain_lookout',  label: 'Mountain Lookout' },
-  { value: 'tea_estate_cabin',  label: 'Tea Estate Cabin' },
-  { value: 'heritage_bungalow', label: 'Heritage Bungalow' },
-  { value: 'riverside_cottage', label: 'Riverside Cottage' },
+  { value: 'tree_house',        label: 'Treehouses' },
+  { value: 'backwater_villa',   label: 'Backwater Villas' },
+  { value: 'mountain_lookout',  label: 'Mountain Lookouts' },
+  { value: 'tea_estate_cabin',  label: 'Tea Estate Cabins' },
+  { value: 'heritage_bungalow', label: 'Heritage Bungalows' },
+  { value: 'riverside_cottage', label: 'Riverside Cottages' },
 ];
 
-const GUEST_OPTIONS = [2, 4, 6, 8];
-
 export const FilterBar: React.FC<FilterBarProps> = ({
-  district, propertyType, maxGuests,
-  onDistrict, onPropertyType, onMaxGuests,
+  district, propertyType, guests,
+  onDistrict, onPropertyType, onGuests,
+  totalCount,
 }) => {
-  const selectClass = `
-    appearance-none bg-white text-hc-primary font-body font-semibold text-sm
-    rounded-xl px-5 py-3 pr-9 outline-none cursor-pointer
-    border border-hc-text-light/20 hover:border-hc-secondary/40 transition-colors duration-200
-    focus:ring-1 focus:ring-hc-secondary/30
-  `;
-
   return (
-    <div className="flex flex-wrap items-center gap-3">
-      <div className="flex items-center gap-2 text-hc-text-light">
-        <SlidersHorizontal size={14} />
-        <span className="font-label text-[10px] tracking-widest">FILTER</span>
-      </div>
+    <div className="flex flex-wrap gap-8 items-end">
 
       {/* District */}
-      <div className="relative">
-        <select value={district} onChange={e => onDistrict(e.target.value as District | '')} className={selectClass}>
-          <option value="">All Districts</option>
-          {DISTRICTS.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
-        </select>
-        <ChevronDown size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-hc-text-light pointer-events-none" />
-      </div>
-
-      {/* Type */}
-      <div className="relative">
-        <select value={propertyType} onChange={e => onPropertyType(e.target.value as PropertyType | '')} className={selectClass}>
-          <option value="">All Types</option>
-          {TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
-        </select>
-        <ChevronDown size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-hc-text-light pointer-events-none" />
+      <div className="w-56">
+        <label className="block text-xs font-bold uppercase tracking-wider text-hc-secondary mb-3 font-body">
+          District
+        </label>
+        <div className="bg-hc-bg-alt rounded-xl">
+          <select
+            value={district}
+            onChange={e => onDistrict(e.target.value as District | '')}
+            className="w-full bg-transparent border-none px-5 py-3.5 text-hc-text rounded-xl focus:ring-0 font-body text-sm cursor-pointer"
+          >
+            <option value="">All Kerala</option>
+            {DISTRICTS.map(d => (
+              <option key={d.value} value={d.value}>{d.label}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {/* Guests */}
-      <div className="relative">
-        <select value={maxGuests} onChange={e => onMaxGuests(Number(e.target.value))} className={selectClass}>
-          <option value={1}>Any Guests</option>
-          {GUEST_OPTIONS.map(g => <option key={g} value={g}>{g}+ Guests</option>)}
-        </select>
-        <ChevronDown size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-hc-text-light pointer-events-none" />
+      <div className="w-44">
+        <label className="block text-xs font-bold uppercase tracking-wider text-hc-secondary mb-3 font-body">
+          Guests
+        </label>
+        <div className="bg-hc-bg-alt rounded-xl flex items-center px-2 py-1">
+          <button
+            onClick={() => onGuests(Math.max(1, guests - 1))}
+            className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-white transition-colors text-hc-text"
+            aria-label="Decrease guests"
+          >
+            <Minus size={14} />
+          </button>
+          <span className="flex-1 text-center font-bold text-hc-primary font-body text-sm">
+            {guests}
+          </span>
+          <button
+            onClick={() => onGuests(Math.min(12, guests + 1))}
+            className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-white transition-colors text-hc-text"
+            aria-label="Increase guests"
+          >
+            <Plus size={14} />
+          </button>
+        </div>
       </div>
 
-      {/* Clear */}
-      {(district || propertyType || maxGuests > 1) && (
-        <button
-          onClick={() => { onDistrict(''); onPropertyType(''); onMaxGuests(1); }}
-          className="font-body text-sm text-hc-text-light hover:text-hc-secondary border border-hc-text-light/20 px-4 py-2.5 rounded-xl transition-colors"
-        >
-          Clear filters
-        </button>
+      {/* Property Type */}
+      <div className="flex-1 min-w-0">
+        <label className="block text-xs font-bold uppercase tracking-wider text-hc-secondary mb-3 font-body">
+          Property Type
+        </label>
+        <div className="flex flex-wrap gap-3 items-center">
+          {TYPES.map(t => (
+            <label key={t.value} className="flex items-center gap-2 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={propertyType === t.value}
+                onChange={e => onPropertyType(e.target.checked ? t.value : '')}
+                className="rounded border-hc-text-light text-hc-primary focus:ring-hc-primary"
+              />
+              <span className="text-sm font-medium text-hc-text font-body group-hover:text-hc-primary transition-colors">
+                {t.label}
+              </span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Count */}
+      {totalCount !== undefined && (
+        <div className="text-right shrink-0">
+          <p className="font-headline italic text-sm text-hc-text">
+            Showing {totalCount} {totalCount === 1 ? 'property' : 'properties'}
+          </p>
+        </div>
       )}
     </div>
   );
