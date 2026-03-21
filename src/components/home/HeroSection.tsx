@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import heroBg from '@/assets/hero-bg.jpg';
-import { ArrowRight, ChevronDown } from 'lucide-react';
 
 export const HeroSection: React.FC = () => {
   return (
