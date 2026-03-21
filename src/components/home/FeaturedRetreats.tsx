@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Wifi, Waves, Flame } from 'lucide-react';
+import { ArrowRight, Users } from 'lucide-react';
 import { useProperties } from '@/hooks/useProperties';
 
 const FALLBACK_CARDS = [
