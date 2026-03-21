@@ -26,7 +26,7 @@ const COLLECTIONS = [
     title: 'High-Altitude Perches',
     subtitle: 'Wake above the cloud line.',
     image: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=800&q=80',
-    href: '/stays?type=mountain_lookout',
+    href: '/listings?type=mountain_lookout',
     cols: 'lg:col-span-4',
     aspect: 'aspect-[16/9]',
   },
