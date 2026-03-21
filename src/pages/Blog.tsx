@@ -166,7 +166,7 @@ export const BlogPost = () => {
 
             {/* ── Back nav ─────────────────────────────────────── */}
             <Link
-              to="/journal"
+              to="/blog"
               className="inline-flex items-center gap-2 text-hc-text-light hover:text-hc-primary font-body text-sm mb-10 transition-colors"
             >
               <ArrowLeft size={14} /> The Journal

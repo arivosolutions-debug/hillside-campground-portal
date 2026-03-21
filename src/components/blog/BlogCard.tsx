@@ -48,7 +48,7 @@ interface FeaturedPostProps {
 export const FeaturedPost: React.FC<FeaturedPostProps> = ({ post }) => (
   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
     <div className="lg:col-span-7">
-      <Link to={`/journal/${post.slug}`} className="block rounded-3xl overflow-hidden">
+      <Link to={`/blog/${post.slug}`} className="block rounded-3xl overflow-hidden">
         <img
           src={post.cover_image ?? '/placeholder.svg'}
           alt={post.title}
@@ -63,7 +63,7 @@ export const FeaturedPost: React.FC<FeaturedPostProps> = ({ post }) => (
         </span>
       )}
       <h2 className="font-headline text-hc-primary text-3xl md:text-4xl leading-tight mb-6">
-        <Link to={`/journal/${post.slug}`} className="hover:text-hc-secondary transition-colors">
+        <Link to={`/blog/${post.slug}`} className="hover:text-hc-secondary transition-colors">
           {post.title}
         </Link>
       </h2>
@@ -71,7 +71,7 @@ export const FeaturedPost: React.FC<FeaturedPostProps> = ({ post }) => (
         <p className="text-hc-text text-lg leading-relaxed mb-6 font-body">{post.excerpt}</p>
       )}
       <Link
-        to={`/journal/${post.slug}`}
+        to={`/blog/${post.slug}`}
         className="text-hc-primary font-bold flex items-center gap-2 hover:gap-3 transition-all font-body text-sm"
       >
         Read More <ArrowRight size={16} />
