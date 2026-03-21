@@ -8,7 +8,7 @@ const WHATSAPP_URL =
 const NAV_LINKS = [
   { label: 'Stays',        to: '/listings' },
   { label: 'Experiences',  to: '/listings?type=tree_house' },
-  { label: 'Discover',     to: '/about' },
+  { label: 'Discover',     to: '/listings' },
   { label: 'Journal',      to: '/blog' },
 ];
 

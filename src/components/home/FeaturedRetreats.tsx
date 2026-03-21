@@ -103,43 +103,39 @@ export const FeaturedRetreats: React.FC = () => {
             <Link
               key={card.slug}
               to={`/property/${card.slug}`}
-              className="retreat-card bg-white rounded-2xl overflow-hidden card-hover group block"
+              className="retreat-card bg-hc-bg-alt rounded-2xl overflow-hidden group block"
             >
               {/* Image */}
-              <div className="relative overflow-hidden">
+              <div className="relative overflow-hidden rounded-2xl">
                 <img
                   src={card.image}
                   alt={card.name}
-                  className="w-full h-[350px] object-cover"
+                  className="w-full h-[280px] object-cover transition-transform duration-700 group-hover:scale-105 brightness-90 group-hover:brightness-100"
                 />
-                <span className="absolute top-3 left-4 bg-hc-bg/90 backdrop-blur-sm text-hc-primary text-xs font-bold uppercase tracking-tight px-3 py-1 rounded-full">
+                <span className="absolute top-3 left-4 bg-hc-bg/90 backdrop-blur-sm text-hc-primary text-xs font-bold uppercase tracking-tight px-3 py-1 rounded-full font-body">
                   {card.badge}
                 </span>
               </div>
 
               {/* Body */}
               <div className="p-6">
-                <p className="text-hc-secondary text-sm font-bold uppercase tracking-wider mb-1">
-                  {card.district}
+                <p className="text-hc-secondary text-xs font-bold uppercase tracking-[0.2em] mb-1 font-body">
+                  {card.district}, Kerala
                 </p>
-                <h3 className="font-headline text-hc-primary text-xl mb-3 group-hover:text-hc-secondary transition-colors duration-200">
+                <h3 className="font-headline text-hc-primary text-xl mb-3 group-hover:text-hc-secondary transition-colors duration-200 leading-snug">
                   {card.name}
                 </h3>
-                <div className="flex items-center gap-4 text-sm text-hc-text mb-4">
-                  <span className="flex items-center gap-1">
-                    <Users size={14} strokeWidth={1.75} />
+                <div className="flex items-center gap-4 text-sm text-hc-text mb-4 font-body">
+                  <span className="flex items-center gap-1.5">
+                    <Users size={13} strokeWidth={1.75} />
                     {card.guests}
                   </span>
-                  <span className="flex items-center gap-1">
-                    <Wifi size={14} strokeWidth={1.75} />
-                    {card.amenity}
-                  </span>
                 </div>
-                <div className="border-t border-hc-text-light/10 pt-4 flex items-center justify-between">
-                  <span className="text-hc-primary font-bold tracking-tight text-sm">
+                <div className="pt-3 flex items-center justify-between">
+                  <span className="text-hc-primary font-bold tracking-tight text-sm font-body">
                     Contact for Pricing
                   </span>
-                  <ArrowRight size={14} className="text-hc-primary" />
+                  <ArrowRight size={14} className="text-hc-primary group-hover:translate-x-1 transition-transform duration-200" />
                 </div>
               </div>
             </Link>

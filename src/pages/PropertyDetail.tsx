@@ -137,12 +137,12 @@ const PropertyDetail = () => {
                       Every stay at Hills Camp includes a guided morning walk through our private estate,
                       led by our resident naturalist who shares the secrets of the Western Ghats' biodiversity.
                     </p>
-                    <a
-                      href="/contact"
+                    <Link
+                      to="/contact"
                       className="text-hc-primary font-bold text-sm underline decoration-hc-text-light/30 underline-offset-4 hover:decoration-hc-primary transition-colors font-body"
                     >
                       View Full Experience Guide →
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
