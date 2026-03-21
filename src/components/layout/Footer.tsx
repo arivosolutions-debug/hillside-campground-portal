@@ -19,8 +19,8 @@ const LOCATION_LINKS = [
 export const Footer: React.FC = () => {
   return (
     <footer className="bg-hc-primary-dark rounded-t-[32px]">
-      {/* Main grid */}
       <div className="max-w-content mx-auto px-12 py-20 grid grid-cols-1 md:grid-cols-4 gap-12">
+
         {/* Brand */}
         <div>
           <div className="font-headline text-emerald-50 text-3xl mb-6">Hills Camp</div>
@@ -28,22 +28,12 @@ export const Footer: React.FC = () => {
             Crafting exclusive wilderness experiences across the emerald landscapes of Kerala since 2018.
           </p>
           <div className="flex gap-4">
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors"
-            >
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+              className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
               <Instagram size={16} className="text-emerald-50" />
             </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors"
-            >
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+              className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
               <Linkedin size={16} className="text-emerald-50" />
             </a>
           </div>
@@ -53,14 +43,9 @@ export const Footer: React.FC = () => {
         <div>
           <h4 className="font-headline text-emerald-50 text-lg mb-6">Explore</h4>
           <ul className="space-y-4">
-            {EXPLORE_LINKS.map((link) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  className="text-footer-link hover:text-emerald-50 transition-colors text-sm font-body"
-                >
-                  {link.label}
-                </a>
+            {EXPLORE_LINKS.map(l => (
+              <li key={l.label}>
+                <a href={l.href} className="text-footer-link hover:text-emerald-50 transition-colors text-sm font-body">{l.label}</a>
               </li>
             ))}
           </ul>
@@ -70,14 +55,9 @@ export const Footer: React.FC = () => {
         <div>
           <h4 className="font-headline text-emerald-50 text-lg mb-6">Locations</h4>
           <ul className="space-y-4">
-            {LOCATION_LINKS.map((link) => (
-              <li key={link.label}>
-                <Link
-                  to={link.href}
-                  className="text-footer-link hover:text-emerald-50 transition-colors text-sm font-body"
-                >
-                  {link.label}
-                </Link>
+            {LOCATION_LINKS.map(l => (
+              <li key={l.label}>
+                <Link to={l.href} className="text-footer-link hover:text-emerald-50 transition-colors text-sm font-body">{l.label}</Link>
               </li>
             ))}
           </ul>
@@ -86,9 +66,7 @@ export const Footer: React.FC = () => {
         {/* Connect */}
         <div>
           <h4 className="font-headline text-emerald-50 text-lg mb-4">Connect</h4>
-          <p className="text-footer-link text-sm mb-4">
-            Have questions or want to plan a custom itinerary?
-          </p>
+          <p className="text-footer-link text-sm mb-4">Have questions or want to plan a custom itinerary?</p>
           <a
             href="https://wa.me/919847012345"
             target="_blank"
