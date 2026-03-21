@@ -39,7 +39,7 @@ export const BlogTeaser: React.FC = () => {
           </p>
         </div>
         <Link
-          to="/journal"
+          to="/blog"
           className="flex items-center gap-2 text-hc-primary font-bold hover:gap-3 transition-all group shrink-0"
         >
           All Stories
