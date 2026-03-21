@@ -42,7 +42,7 @@ export const Navbar: React.FC = () => {
       >
         <div className="flex justify-between items-center max-w-content mx-auto px-8 py-6">
           {/* Logo */}
-          <Link to="/" className="font-headline text-hc-primary-deep text-2xl tracking-tight">
+          <Link to="/" className="font-headline italic text-hc-primary-deep text-2xl tracking-tight">
             Hills Camp
           </Link>
 
