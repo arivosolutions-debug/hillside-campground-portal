@@ -292,7 +292,7 @@ const Contact = () => {
           <section className="px-8 max-w-[1280px] mx-auto pb-20">
             <div className="relative rounded-3xl overflow-hidden h-[500px] md:h-[600px]">
               <img
-                src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80"
+                src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1600&q=80"
                 alt="Aerial view of Kerala tea plantations"
                 className="w-full h-full object-cover"
               />
