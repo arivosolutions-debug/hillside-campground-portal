@@ -50,7 +50,7 @@ export const Navbar: React.FC = () => {
                 key={link.to}
                 to={link.to}
                 className={`font-body text-sm transition-colors duration-200 ${
-                  isActive(link.to)
+                  isActive(link.exact)
                     ? 'text-hc-primary-deep font-bold border-b-2 border-hc-secondary pb-0.5'
                     : 'text-hc-primary-deep/70 font-medium hover:text-hc-primary-deep'
                 }`}
