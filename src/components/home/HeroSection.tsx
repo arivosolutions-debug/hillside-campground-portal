@@ -37,7 +37,7 @@ export const HeroSection: React.FC = () => {
           {/* CTAs */}
           <div className="flex flex-wrap gap-4 animate-fade-in-4">
             <Link
-              to="/stays"
+              to="/listings"
               className="inline-flex items-center gap-2 bg-hc-primary text-white px-8 py-4 rounded-xl font-bold text-sm hover:bg-hc-primary-deep transition-all active:scale-[0.97] group"
             >
               Explore Properties
