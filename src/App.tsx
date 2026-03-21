@@ -20,14 +20,14 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/"                  element={<Index />} />
-          <Route path="/stays"             element={<Listings />} />
-          <Route path="/stays/:slug"       element={<PropertyDetail />} />
-          <Route path="/about"             element={<About />} />
-          <Route path="/contact"           element={<Contact />} />
-          <Route path="/journal"           element={<Blog />} />
-          <Route path="/journal/:slug"     element={<BlogPost />} />
-          <Route path="*"                  element={<NotFound />} />
+          <Route path="/"                element={<Index />} />
+          <Route path="/listings"        element={<Listings />} />
+          <Route path="/property/:slug"  element={<PropertyDetail />} />
+          <Route path="/about"           element={<About />} />
+          <Route path="/contact"         element={<Contact />} />
+          <Route path="/blog"            element={<Blog />} />
+          <Route path="/blog/:slug"      element={<BlogPost />} />
+          <Route path="*"               element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

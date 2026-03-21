@@ -44,7 +44,7 @@ export const HeroSection: React.FC = () => {
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
-              to="/journal"
+              to="/blog"
               className="inline-flex items-center gap-2 border-2 border-hc-primary text-hc-primary-deep px-8 py-4 rounded-xl font-bold text-sm hover:bg-hc-primary/5 transition-all active:scale-[0.97]"
             >
               View Journal
