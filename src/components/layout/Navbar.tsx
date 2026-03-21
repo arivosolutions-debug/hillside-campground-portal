@@ -76,7 +76,7 @@ export const Navbar: React.FC = () => {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden md:inline-flex items-center gap-2 bg-hc-secondary text-white px-6 py-2.5 rounded-xl font-bold text-sm hover:brightness-110 transition-all active:scale-[0.97]"
+              className="hidden md:inline-flex items-center gap-2 bg-hc-secondary text-white px-6 py-2.5 rounded-full font-bold text-sm hover:brightness-110 transition-all active:scale-[0.97]"
             >
               <MessageCircle size={15} />
               Book Now
