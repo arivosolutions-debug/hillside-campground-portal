@@ -50,13 +50,13 @@ const Contact = () => {
 
     setLoading(true);
     try {
-      const payload: Record<string, string | null> = {
-        name:    result.data.name,
-        email:   result.data.email,
-        phone:   result.data.phone   || null,
-        message: `${result.data.dates ? `Proposed dates: ${result.data.dates}\n\n` : ''}${result.data.message}`,
+      const payload = {
+        name:        result.data.name,
+        email:       result.data.email,
+        phone:       result.data.phone   || null,
+        message:     `${result.data.dates ? `Proposed dates: ${result.data.dates}\n\n` : ''}${result.data.message}`,
+        property_id: result.data.property_id || null,
       };
-      if (result.data.property_id) payload.property_id = result.data.property_id;
 
       const { error: sbError } = await supabase.from('enquiries').insert([payload]);
       if (sbError) throw sbError;
