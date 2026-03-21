@@ -1,147 +1,119 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Mail, MapPin, Phone } from 'lucide-react';
-import { SectionLabel } from '@/components/shared/SectionLabel';
-
-const STAYS_LINKS = [
-  { label: 'Tree Houses',       href: '/stays?type=tree_house' },
-  { label: 'Backwater Villas',  href: '/stays?type=backwater_villa' },
-  { label: 'Mountain Lookouts', href: '/stays?type=mountain_lookout' },
-  { label: 'Heritage Bungalows',href: '/stays?type=heritage_bungalow' },
-  { label: 'All Properties',    href: '/stays' },
-];
+import { Instagram, Linkedin, MessageCircle } from 'lucide-react';
 
 const EXPLORE_LINKS = [
-  { label: 'Wayanad',   href: '/stays?district=wayanad' },
-  { label: 'Munnar',    href: '/stays?district=munnar' },
-  { label: 'Alleppey',  href: '/stays?district=alleppey' },
-  { label: 'Thekkady',  href: '/stays?district=thekkady' },
-  { label: 'Kannur',    href: '/stays?district=kannur' },
+  { label: 'Sustainability Charter', href: '#' },
+  { label: 'Privacy Policy',         href: '#' },
+  { label: 'Terms of Service',       href: '#' },
+  { label: 'Join the Community',     href: '#' },
+];
+
+const LOCATION_LINKS = [
+  { label: 'Wayanad Reserve',     href: '/stays?district=wayanad' },
+  { label: 'Munnar Estates',      href: '/stays?district=munnar' },
+  { label: 'Alleppey Backwaters', href: '/stays?district=alleppey' },
+  { label: 'Idukki High Ranges',  href: '/stays?district=thekkady' },
 ];
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-surface-low border-t border-white/5">
-      {/* Main footer */}
-      <div className="max-w-screen-2xl mx-auto px-8 py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
-          {/* Brand column */}
-          <div className="lg:col-span-1">
-            <Link to="/" className="flex flex-col leading-none mb-6">
-              <span className="font-headline text-2xl text-on-surface">Hills Camp</span>
-              <span className="font-label text-[9px] tracking-[0.5em] text-secondary mt-1">KERALA</span>
-            </Link>
-            <p className="font-body text-sm text-on-surface-variant leading-relaxed mb-8 max-w-xs">
-              Luxury wilderness retreats woven into the fabric of Kerala's Western Ghats. 
-              Where nature meets comfort.
-            </p>
-            <div className="flex gap-4">
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 rounded-full bg-surface-high text-on-surface-variant hover:text-secondary hover:bg-surface-highest transition-all duration-300"
-                aria-label="Instagram"
-              >
-                <Instagram size={16} />
-              </a>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 rounded-full bg-surface-high text-on-surface-variant hover:text-secondary hover:bg-surface-highest transition-all duration-300"
-                aria-label="Facebook"
-              >
-                <Facebook size={16} />
-              </a>
-              <a
-                href="mailto:hello@hillscamp.in"
-                className="p-2.5 rounded-full bg-surface-high text-on-surface-variant hover:text-secondary hover:bg-surface-highest transition-all duration-300"
-                aria-label="Email"
-              >
-                <Mail size={16} />
-              </a>
-            </div>
+    <footer className="bg-hc-primary-dark rounded-t-[32px]">
+      {/* Main grid */}
+      <div className="max-w-content mx-auto px-12 py-20 grid grid-cols-1 md:grid-cols-4 gap-12">
+        {/* Brand */}
+        <div>
+          <div className="font-headline text-emerald-50 text-3xl mb-6">Hills Camp</div>
+          <p className="text-footer-link text-sm leading-relaxed mb-6">
+            Crafting exclusive wilderness experiences across the emerald landscapes of Kerala since 2018.
+          </p>
+          <div className="flex gap-4">
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors"
+            >
+              <Instagram size={16} className="text-emerald-50" />
+            </a>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors"
+            >
+              <Linkedin size={16} className="text-emerald-50" />
+            </a>
           </div>
+        </div>
 
-          {/* Stays */}
-          <div>
-            <SectionLabel className="mb-6">Our Stays</SectionLabel>
-            <ul className="space-y-3">
-              {STAYS_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="font-body text-sm text-on-surface-variant hover:text-on-surface transition-colors duration-200"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Explore */}
-          <div>
-            <SectionLabel className="mb-6">By District</SectionLabel>
-            <ul className="space-y-3">
-              {EXPLORE_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="font-body text-sm text-on-surface-variant hover:text-on-surface transition-colors duration-200"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <SectionLabel className="mb-6">Contact</SectionLabel>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <MapPin size={14} className="text-secondary mt-1 shrink-0" />
-                <span className="font-body text-sm text-on-surface-variant leading-relaxed">
-                  Vythiri, Wayanad District,<br />Kerala 673 576
-                </span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone size={14} className="text-secondary shrink-0" />
+        {/* Explore */}
+        <div>
+          <h4 className="font-headline text-emerald-50 text-lg mb-6">Explore</h4>
+          <ul className="space-y-4">
+            {EXPLORE_LINKS.map((link) => (
+              <li key={link.label}>
                 <a
-                  href="tel:+919876543210"
-                  className="font-body text-sm text-on-surface-variant hover:text-secondary transition-colors"
+                  href={link.href}
+                  className="text-footer-link hover:text-emerald-50 transition-colors text-sm font-body"
                 >
-                  +91 98765 43210
+                  {link.label}
                 </a>
               </li>
-              <li className="flex items-center gap-3">
-                <Mail size={14} className="text-secondary shrink-0" />
-                <a
-                  href="mailto:hello@hillscamp.in"
-                  className="font-body text-sm text-on-surface-variant hover:text-secondary transition-colors"
+            ))}
+          </ul>
+        </div>
+
+        {/* Locations */}
+        <div>
+          <h4 className="font-headline text-emerald-50 text-lg mb-6">Locations</h4>
+          <ul className="space-y-4">
+            {LOCATION_LINKS.map((link) => (
+              <li key={link.label}>
+                <Link
+                  to={link.href}
+                  className="text-footer-link hover:text-emerald-50 transition-colors text-sm font-body"
                 >
-                  hello@hillscamp.in
-                </a>
+                  {link.label}
+                </Link>
               </li>
-            </ul>
+            ))}
+          </ul>
+        </div>
+
+        {/* Connect */}
+        <div>
+          <h4 className="font-headline text-emerald-50 text-lg mb-4">Connect</h4>
+          <p className="text-footer-link text-sm mb-4">
+            Have questions or want to plan a custom itinerary?
+          </p>
+          <a
+            href="https://wa.me/919847012345"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-hc-accent text-[#783616] px-6 py-4 rounded-xl font-semibold flex items-center gap-3 hover:brightness-110 transition-all mb-6 w-fit"
+          >
+            <MessageCircle size={18} />
+            Contact via WhatsApp
+          </a>
+          <div className="border-t border-hc-primary-deep/50 pt-4 space-y-1">
+            <p className="text-footer-muted text-xs font-body">Email: travel@hillscampkerala.com</p>
+            <p className="text-footer-muted text-xs font-body">Phone: +91 98470 12345</p>
           </div>
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/5">
-        <div className="max-w-screen-2xl mx-auto px-8 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="font-body text-xs text-on-surface-variant">
-            © {new Date().getFullYear()} Hills Camp Kerala. All rights reserved.
-          </p>
-          <div className="flex gap-6">
-            <Link to="/about" className="font-body text-xs text-on-surface-variant hover:text-on-surface transition-colors">About</Link>
-            <Link to="/journal" className="font-body text-xs text-on-surface-variant hover:text-on-surface transition-colors">Journal</Link>
-            <Link to="/contact" className="font-body text-xs text-on-surface-variant hover:text-on-surface transition-colors">Contact</Link>
-          </div>
+      <div className="border-t border-hc-primary-deep/50 mx-12 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p className="text-footer-muted text-xs font-body">
+          © {new Date().getFullYear()} Hills Camp Kerala. All rights reserved.
+        </p>
+        <div className="flex gap-8 text-footer-muted text-xs font-label">
+          <a href="#" className="hover:text-emerald-50 transition-colors">Heritage</a>
+          <a href="#" className="hover:text-emerald-50 transition-colors">Wildlife</a>
+          <a href="#" className="hover:text-emerald-50 transition-colors">Wellness</a>
         </div>
       </div>
     </footer>
