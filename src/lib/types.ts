@@ -1,0 +1,120 @@
+export type PropertyType =
+  | 'tree_house'
+  | 'backwater_villa'
+  | 'mountain_lookout'
+  | 'tea_estate_cabin'
+  | 'heritage_bungalow'
+  | 'riverside_cottage';
+
+export type District =
+  | 'wayanad'
+  | 'munnar'
+  | 'alleppey'
+  | 'thekkady'
+  | 'vagamon'
+  | 'kozhikode'
+  | 'kannur';
+
+export interface Property {
+  id: string;
+  name: string;
+  slug: string;
+  district: District;
+  property_type: PropertyType;
+  tagline: string | null;
+  description: string | null;
+  highlights: string[] | null;
+  max_guests: number;
+  price_per_night: number | null;
+  latitude: number | null;
+  longitude: number | null;
+  cover_image: string | null;
+  is_featured: boolean;
+  is_published: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PropertyImage {
+  id: string;
+  property_id: string;
+  image_url: string;
+  alt_text: string | null;
+  sort_order: number;
+  created_at: string;
+}
+
+export interface RoomType {
+  id: string;
+  property_id: string;
+  name: string;
+  bed_type: string | null;
+  max_guests: number;
+  description: string | null;
+  created_at: string;
+}
+
+export interface Amenity {
+  id: string;
+  name: string;
+  icon: string | null;
+  category: string | null;
+}
+
+export interface NearbyAttraction {
+  id: string;
+  property_id: string;
+  name: string;
+  distance_km: number | null;
+  description: string | null;
+}
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  content: string | null;
+  cover_image: string | null;
+  category: string | null;
+  tags: string[] | null;
+  is_published: boolean;
+  published_at: string;
+  created_at: string;
+}
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  bio: string | null;
+  photo_url: string | null;
+  sort_order: number;
+}
+
+export interface Enquiry {
+  name: string;
+  email: string;
+  phone?: string;
+  message: string;
+  property_id?: string;
+}
+
+export const PROPERTY_TYPE_LABELS: Record<PropertyType, string> = {
+  tree_house:         'Tree House',
+  backwater_villa:    'Backwater Villa',
+  mountain_lookout:   'Mountain Lookout',
+  tea_estate_cabin:   'Tea Estate Cabin',
+  heritage_bungalow:  'Heritage Bungalow',
+  riverside_cottage:  'Riverside Cottage',
+};
+
+export const DISTRICT_LABELS: Record<District, string> = {
+  wayanad:   'Wayanad',
+  munnar:    'Munnar',
+  alleppey:  'Alleppey',
+  thekkady:  'Thekkady',
+  vagamon:   'Vagamon',
+  kozhikode: 'Kozhikode',
+  kannur:    'Kannur',
+};
