@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Users } from 'lucide-react';
+import { MapPin, Users, ArrowRight } from 'lucide-react';
 import { DISTRICT_LABELS, PROPERTY_TYPE_LABELS } from '@/lib/types';
 import type { Property } from '@/lib/types';
 
@@ -10,60 +10,48 @@ interface PropertyCardProps {
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
   return (
-    <Link
-      to={`/stays/${property.slug}`}
-      className="group bg-white rounded-2xl overflow-hidden card-hover shadow-card hover:shadow-card-lg transition-shadow duration-300 block"
-    >
+    <Link to={`/stays/${property.slug}`} className="group block">
       {/* Image */}
-      <div className="relative overflow-hidden">
+      <div className="relative rounded-xl overflow-hidden mb-4">
         <img
           src={property.cover_image ?? '/placeholder.svg'}
           alt={property.name}
-          className="w-full h-[280px] object-cover"
+          className="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <span className="absolute top-3 left-4 bg-hc-bg/90 backdrop-blur-sm text-hc-primary text-xs font-bold uppercase tracking-tight px-3 py-1 rounded-full">
+        {/* Type badge */}
+        <span className="absolute top-3 left-4 bg-hc-accent-light/90 backdrop-blur-sm text-[#360f00] text-[10px] font-bold uppercase tracking-tight px-3 py-1.5 rounded-full font-body">
           {PROPERTY_TYPE_LABELS[property.property_type]}
         </span>
+        {/* Featured badge */}
         {property.is_featured && (
-          <span className="absolute top-3 right-4 bg-hc-secondary text-white text-xs font-bold uppercase tracking-tight px-3 py-1 rounded-full">
-            Featured
+          <span className="absolute top-3 right-4 bg-hc-primary/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full font-body">
+            Estate Signature
           </span>
         )}
       </div>
 
       {/* Body */}
-      <div className="p-6">
-        <p className="text-hc-secondary text-sm font-bold uppercase tracking-wider mb-1">
-          {DISTRICT_LABELS[property.district]}
-        </p>
-        <h3 className="font-headline text-hc-primary text-xl mb-3 group-hover:text-hc-secondary transition-colors duration-200">
+      <div className="flex items-start justify-between mb-1">
+        <h3 className="font-headline text-hc-primary text-lg leading-snug">
           {property.name}
         </h3>
+      </div>
 
-        <div className="flex items-center gap-4 text-sm text-hc-text mb-4">
-          <span className="flex items-center gap-1">
-            <Users size={14} strokeWidth={1.75} />
-            {property.max_guests} Guests
-          </span>
-          {property.price_per_night && (
-            <span className="flex items-center gap-1 font-semibold text-hc-secondary">
-              ₹{property.price_per_night.toLocaleString()}/night
-            </span>
-          )}
-        </div>
+      <p className="text-sm text-hc-text flex items-center gap-1.5 mb-0.5 font-body">
+        <MapPin size={12} strokeWidth={1.5} />
+        {DISTRICT_LABELS[property.district]}, Kerala
+      </p>
+      <p className="text-sm text-hc-text flex items-center gap-1.5 font-body">
+        <Users size={12} strokeWidth={1.5} />
+        Up to {property.max_guests} Guests
+        {property.tagline ? ` · ${property.tagline}` : ''}
+      </p>
 
-        {property.tagline && (
-          <p className="text-hc-text text-sm leading-relaxed line-clamp-2 italic mb-4">
-            "{property.tagline}"
-          </p>
-        )}
-
-        <div className="border-t border-hc-text-light/10 pt-4 flex items-center justify-between">
-          <span className="text-hc-primary font-bold tracking-tight text-sm">
-            {property.price_per_night ? `₹${property.price_per_night.toLocaleString()}/night` : 'Contact for Pricing'}
-          </span>
-          <span className="text-hc-primary text-sm font-bold group-hover:translate-x-1 transition-transform inline-block">→</span>
-        </div>
+      <div className="border-t border-hc-text-light/10 mt-4 pt-4 flex items-center justify-between">
+        <span className="font-bold text-hc-primary tracking-tight font-body text-sm">
+          Contact for Pricing
+        </span>
+        <ArrowRight size={16} className="text-hc-primary group-hover:translate-x-1 transition-transform duration-200" />
       </div>
     </Link>
   );

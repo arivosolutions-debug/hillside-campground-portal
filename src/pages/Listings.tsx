@@ -8,65 +8,78 @@ import { PropertyGrid } from '@/components/listings/PropertyGrid';
 import { useProperties } from '@/hooks/useProperties';
 import type { District, PropertyType } from '@/lib/types';
 
+const PAGE_SIZE = 9;
+
 const Listings = () => {
   const [searchParams] = useSearchParams();
   const [district,     setDistrict]     = useState<District | ''>((searchParams.get('district') as District) ?? '');
   const [propertyType, setPropertyType] = useState<PropertyType | ''>((searchParams.get('type') as PropertyType) ?? '');
-  const [maxGuests,    setMaxGuests]    = useState<number>(Number(searchParams.get('guests')) || 1);
+  const [guests,       setGuests]       = useState<number>(Number(searchParams.get('guests')) || 2);
+  const [page,         setPage]         = useState(0);
 
   useEffect(() => {
     setDistrict((searchParams.get('district') as District) ?? '');
     setPropertyType((searchParams.get('type') as PropertyType) ?? '');
-    setMaxGuests(Number(searchParams.get('guests')) || 1);
+    setGuests(Number(searchParams.get('guests')) || 2);
+    setPage(0);
   }, [searchParams]);
 
   const { data: properties, isLoading } = useProperties({
     district:      district || undefined,
     property_type: propertyType || undefined,
-    max_guests:    maxGuests > 1 ? maxGuests : undefined,
+    max_guests:    guests > 1 ? guests : undefined,
   });
+
+  const paged = properties?.slice(0, (page + 1) * PAGE_SIZE) ?? [];
+  const hasMore = (properties?.length ?? 0) > paged.length;
 
   return (
     <>
       <Navbar />
       <PageTransition>
         <main className="min-h-screen bg-hc-bg">
-          {/* Page header */}
-          <div className="bg-hc-bg-alt pt-36 pb-16 px-8">
-            <div className="max-w-content mx-auto">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="h-px w-12 bg-hc-secondary" />
-                <span className="font-label text-xs tracking-[0.4em] text-hc-secondary">Our Retreats</span>
-              </div>
-              <h1 className="font-headline text-hc-primary-deep text-5xl md:text-7xl leading-tight mb-4">
-                Find your<br /><em className="text-hc-secondary">wilderness.</em>
-              </h1>
-              <p className="text-hc-text text-lg max-w-xl mb-10">
-                Eight luxury retreats across Kerala's most storied landscapes — from misty Wayanad
-                treehouses to Malabar Coast heritage bungalows.
-              </p>
+
+          {/* Page Header */}
+          <section className="pt-36 pb-8 px-8 max-w-[1280px] mx-auto">
+            <h1 className="font-headline text-hc-primary text-5xl md:text-7xl tracking-tight mb-4">
+              Discover Your Escape
+            </h1>
+            <p className="text-hc-text text-lg max-w-2xl font-light leading-relaxed">
+              Curated wilderness retreats across the Western Ghats, designed for luxury family immersion.
+            </p>
+          </section>
+
+          {/* Sticky Filter Bar */}
+          <section className="sticky top-[88px] z-40 bg-hc-bg/90 backdrop-blur-sm px-8">
+            <div className="max-w-[1280px] mx-auto py-4 border-b border-hc-text-light/20">
               <FilterBar
                 district={district}
                 propertyType={propertyType}
-                maxGuests={maxGuests}
-                onDistrict={setDistrict}
-                onPropertyType={setPropertyType}
-                onMaxGuests={setMaxGuests}
+                guests={guests}
+                onDistrict={(v) => { setDistrict(v); setPage(0); }}
+                onPropertyType={(v) => { setPropertyType(v); setPage(0); }}
+                onGuests={(v) => { setGuests(v); setPage(0); }}
+                totalCount={properties?.length}
               />
             </div>
-          </div>
+          </section>
 
           {/* Grid */}
-          <div className="py-16 px-8">
-            <div className="max-w-content mx-auto">
-              {!isLoading && properties && (
-                <p className="text-hc-text-light text-sm mb-8 font-body">
-                  {properties.length} {properties.length === 1 ? 'retreat' : 'retreats'} found
-                </p>
-              )}
-              <PropertyGrid properties={properties ?? []} isLoading={isLoading} />
-            </div>
-          </div>
+          <section className="px-8 max-w-[1280px] mx-auto py-12">
+            <PropertyGrid properties={paged} isLoading={isLoading} />
+
+            {/* Load More */}
+            {!isLoading && hasMore && (
+              <div className="flex justify-center mt-16">
+                <button
+                  onClick={() => setPage(p => p + 1)}
+                  className="bg-hc-primary text-white px-10 py-4 rounded-full font-semibold font-body text-sm hover:bg-hc-primary-deep transition-all"
+                >
+                  Load More Retreats
+                </button>
+              </div>
+            )}
+          </section>
         </main>
         <Footer />
       </PageTransition>
