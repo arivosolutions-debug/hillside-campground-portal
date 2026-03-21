@@ -52,7 +52,7 @@ const About = () => {
           <section className="relative h-[80vh] min-h-[600px] flex items-end overflow-hidden">
             <div className="absolute inset-0">
               <img
-                src="https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?w=1600&q=80"
+          src="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=1600&q=80"
                 alt="Misty Western Ghats"
                 className="w-full h-full object-cover"
               />
