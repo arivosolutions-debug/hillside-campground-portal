@@ -31,10 +31,14 @@ export const Blog = () => {
 
           {/* ── Header ─────────────────────────────────────────── */}
           <section className="pt-36 pb-4 px-8 max-w-[1280px] mx-auto text-center">
-            <p className="text-hc-secondary text-xs font-bold uppercase tracking-[0.3em] mb-3 font-body">
-              FROM THE WESTERN GHATS
-            </p>
-            <h1 className="font-headline text-hc-primary text-5xl md:text-8xl tracking-tight">
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <div className="h-[1px] w-10 bg-[#924a29]" />
+              <span className="text-[#924a29] text-[10px] font-bold uppercase tracking-[0.4em] font-body">
+                From the Western Ghats
+              </span>
+              <div className="h-[1px] w-10 bg-[#924a29]" />
+            </div>
+            <h1 className="font-headline text-[#17341e] text-6xl md:text-8xl tracking-tight leading-[1.0]">
               The Journal
             </h1>
           </section>
@@ -46,10 +50,10 @@ export const Blog = () => {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-5 py-2 rounded-full font-body text-sm font-semibold transition-all ${
+                  className={`px-5 py-2.5 rounded-full font-body text-sm font-semibold transition-all ${
                     activeCategory === cat
-                      ? 'bg-hc-primary text-white'
-                      : 'bg-hc-bg-alt text-hc-text hover:bg-hc-accent-light hover:text-[#360f00]'
+                      ? 'bg-[#17341e] text-white shadow-sm'
+                      : 'bg-[#f5f3f3] text-[#424842] hover:text-[#17341e] hover:bg-[#ede9e8]'
                   }`}
                 >
                   {cat}
@@ -86,9 +90,13 @@ export const Blog = () => {
               {/* ── Post Grid ─────────────────────────────────── */}
               {remaining.length > 0 && (
                 <section className="px-8 max-w-[1280px] mx-auto py-12">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                  <div className={`grid grid-cols-1 gap-12 ${
+                    remaining.length === 1 ? 'md:grid-cols-1 max-w-xl mx-auto' :
+                    remaining.length === 2 ? 'md:grid-cols-2' :
+                    'md:grid-cols-3'
+                  }`}>
                     {remaining.map((post, idx) => (
-                      <BlogCard key={post.id} post={post} offset={idx % 3 === 1} />
+                      <BlogCard key={post.id} post={post} offset={remaining.length >= 3 && idx % 3 === 1} />
                     ))}
                   </div>
                 </section>
