@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface SectionLabelProps {
+interface SectionLabelProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
   light?: boolean;
@@ -10,9 +10,10 @@ export const SectionLabel: React.FC<SectionLabelProps> = ({
   children,
   className = '',
   light = false,
+  ...rest
 }) => {
   return (
-    <div className={`flex items-center gap-4 ${className}`}>
+    <div className={`flex items-center gap-4 ${className}`} {...rest}>
       <div
         className={`h-px w-12 ${light ? 'bg-white/40' : 'bg-secondary'}`}
       />
