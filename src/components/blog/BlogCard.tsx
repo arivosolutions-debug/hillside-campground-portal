@@ -4,19 +4,17 @@ import { ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
 import type { BlogPost } from '@/lib/types';
 
+/* ── Staggered grid card ─────────────────────────────────────── */
 interface BlogCardProps {
-  post:     BlogPost;
-  offset?:  boolean; // middle card gets md:mt-20
+  post:    BlogPost;
+  offset?: boolean; // middle card gets md:mt-20
 }
 
 export const BlogCard: React.FC<BlogCardProps> = ({ post, offset }) => {
   const date = post.published_at ? format(new Date(post.published_at), 'MMM d, yyyy') : '';
 
   return (
-    <Link
-      to={`/journal/${post.slug}`}
-      className={`group block${offset ? ' md:mt-20' : ''}`}
-    >
+    <Link to={`/journal/${post.slug}`} className={`group block${offset ? ' md:mt-20' : ''}`}>
       <div className="rounded-3xl overflow-hidden mb-6 aspect-[3/4]">
         <img
           src={post.cover_image ?? '/placeholder.svg'}
@@ -31,7 +29,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post, offset }) => {
         {post.title}
       </h3>
       {post.excerpt && (
-        <p className="text-hc-text leading-relaxed font-body text-sm line-clamp-2">
+        <p className="text-hc-text leading-relaxed font-body text-sm">
           {post.excerpt}
         </p>
       )}
@@ -42,7 +40,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post, offset }) => {
   );
 };
 
-/* ── Featured large post ─────────────────────────────────────── */
+/* ── Featured hero post ──────────────────────────────────────── */
 interface FeaturedPostProps {
   post: BlogPost;
 }

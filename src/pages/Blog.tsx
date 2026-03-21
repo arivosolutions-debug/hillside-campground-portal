@@ -1,67 +1,118 @@
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Calendar } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { ArrowLeft, MessageCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { PageTransition } from '@/components/layout/PageTransition';
-import { SectionLabel } from '@/components/shared/SectionLabel';
-import { MistOverlay } from '@/components/shared/MistOverlay';
+import { BlogCard, FeaturedPost } from '@/components/blog/BlogCard';
 import { useBlogPosts } from '@/hooks/useBlogPosts';
 import { useBlogPost } from '@/hooks/useBlogPost';
 
+const CATEGORIES = ['All', 'Wayanad', 'Alleppey', 'Munnar', 'Travel Tips', 'Sustainability'];
+
+/* ═══════════════════════════════════════════════════════════════
+   Blog Listing
+════════════════════════════════════════════════════════════════ */
 export const Blog = () => {
-  const { data: posts, isLoading } = useBlogPosts();
+  const [activeCategory, setActiveCategory] = useState('All');
+  const { data: posts, isLoading } = useBlogPosts(
+    activeCategory !== 'All' ? activeCategory : undefined,
+  );
+
+  const featured  = posts?.[0];
+  const remaining = posts?.slice(1) ?? [];
 
   return (
     <>
       <Navbar />
       <PageTransition>
-        <main className="min-h-screen">
-          <div className="bg-surface-low pt-36 pb-20 px-8">
-            <div className="max-w-screen-2xl mx-auto">
-              <SectionLabel className="mb-6">Field Notes</SectionLabel>
-              <h1 className="font-headline text-5xl md:text-7xl text-on-surface leading-tight mb-4">
-                Journal
-              </h1>
-              <p className="font-body text-on-surface-variant max-w-xl">
-                Stories, observations, and dispatches from the forests, backwaters, and highlands of Kerala.
-              </p>
-            </div>
-          </div>
+        <main className="bg-hc-bg min-h-screen">
 
-          <div className="bg-background py-20 px-8">
-            <div className="max-w-screen-2xl mx-auto">
-              {isLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  {[...Array(3)].map((_, i) => (
-                    <div key={i} className="rounded-3xl bg-surface-high animate-pulse aspect-[4/5]" />
-                  ))}
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {posts?.map((post) => (
-                    <Link key={post.id} to={`/journal/${post.slug}`} className="group block">
-                      <div className="aspect-[4/3] rounded-3xl overflow-hidden mb-6 bg-surface-high">
-                        {post.cover_image && (
-                          <img src={post.cover_image} alt={post.title} className="w-full h-full object-cover brightness-80 group-hover:brightness-95 group-hover:scale-105 transition-all duration-700" />
-                        )}
-                      </div>
-                      <div className="flex items-center gap-3 mb-4">
-                        {post.category && <span className="font-label text-[10px] tracking-widest text-secondary">{post.category}</span>}
-                        <span className="w-1 h-1 rounded-full bg-on-surface-variant/30" />
-                        <span className="font-body text-xs text-on-surface-variant flex items-center gap-1.5">
-                          <Calendar size={11} />{format(new Date(post.published_at), 'MMM d, yyyy')}
-                        </span>
-                      </div>
-                      <h2 className="font-headline text-xl text-on-surface leading-snug mb-3 group-hover:text-secondary transition-colors duration-300">{post.title}</h2>
-                      {post.excerpt && <p className="font-body text-sm text-on-surface-variant leading-relaxed line-clamp-3">{post.excerpt}</p>}
-                    </Link>
-                  ))}
+          {/* ── Header ─────────────────────────────────────────── */}
+          <section className="pt-36 pb-4 px-8 max-w-[1280px] mx-auto text-center">
+            <p className="text-hc-secondary text-xs font-bold uppercase tracking-[0.3em] mb-3 font-body">
+              FROM THE WESTERN GHATS
+            </p>
+            <h1 className="font-headline text-hc-primary text-5xl md:text-8xl tracking-tight">
+              The Journal
+            </h1>
+          </section>
+
+          {/* ── Category Filter ─────────────────────────────────── */}
+          <section className="px-8 max-w-[1280px] mx-auto pt-10 pb-2">
+            <div className="flex flex-wrap justify-center gap-3">
+              {CATEGORIES.map(cat => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-5 py-2 rounded-full font-body text-sm font-semibold transition-all ${
+                    activeCategory === cat
+                      ? 'bg-hc-primary text-white'
+                      : 'bg-hc-bg-alt text-hc-text hover:bg-hc-accent-light hover:text-[#360f00]'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </section>
+
+          {/* ── Skeletons ───────────────────────────────────────── */}
+          {isLoading && (
+            <section className="px-8 max-w-[1280px] mx-auto py-16">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className={`animate-pulse${i === 1 ? ' md:mt-20' : ''}`}>
+                    <div className="rounded-3xl bg-hc-bg-alt aspect-[3/4] mb-6" />
+                    <div className="h-3 bg-hc-bg-alt rounded w-1/4 mb-3" />
+                    <div className="h-5 bg-hc-bg-alt rounded w-3/4 mb-2" />
+                    <div className="h-3 bg-hc-bg-alt rounded w-full" />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {!isLoading && (
+            <>
+              {/* ── Featured Post ─────────────────────────────── */}
+              {featured && (
+                <section className="px-8 max-w-[1280px] mx-auto py-16">
+                  <FeaturedPost post={featured} />
+                </section>
+              )}
+
+              {/* ── Post Grid ─────────────────────────────────── */}
+              {remaining.length > 0 && (
+                <section className="px-8 max-w-[1280px] mx-auto py-12">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    {remaining.map((post, idx) => (
+                      <BlogCard key={post.id} post={post} offset={idx % 3 === 1} />
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* Empty state */}
+              {!featured && !isLoading && (
+                <div className="flex flex-col items-center justify-center py-32 text-center px-8">
+                  <p className="font-headline text-4xl text-hc-primary mb-3">No stories yet</p>
+                  <p className="font-body text-hc-text-light text-sm">
+                    {activeCategory !== 'All' ? `No posts in "${activeCategory}" — try another category.` : 'Check back soon.'}
+                  </p>
                 </div>
               )}
-            </div>
-          </div>
+            </>
+          )}
+
+          {/* ── Sticky enquire FAB (desktop) ────────────────────── */}
+          <Link
+            to="/contact"
+            className="fixed bottom-8 right-8 bg-hc-primary text-white px-6 py-3 rounded-full font-semibold shadow-lg items-center gap-2 hover:bg-hc-primary-deep transition-all z-40 hidden md:flex font-body text-sm"
+          >
+            Enquire Now <MessageCircle size={18} strokeWidth={1.75} />
+          </Link>
         </main>
         <Footer />
       </PageTransition>
@@ -69,45 +120,144 @@ export const Blog = () => {
   );
 };
 
+/* ═══════════════════════════════════════════════════════════════
+   Blog Post
+════════════════════════════════════════════════════════════════ */
 export const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const { data: post, isLoading } = useBlogPost(slug);
 
-  if (isLoading) return (
-    <><Navbar /><div className="min-h-screen bg-background flex items-center justify-center"><div className="w-8 h-8 border-2 border-secondary border-t-transparent rounded-full animate-spin" /></div></>
-  );
+  if (isLoading) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-hc-bg flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-hc-secondary border-t-transparent rounded-full animate-spin" />
+        </div>
+      </>
+    );
+  }
 
-  if (!post) return (
-    <><Navbar /><div className="min-h-screen bg-background flex flex-col items-center justify-center gap-4"><h1 className="font-headline text-4xl text-on-surface">Story not found</h1><Link to="/journal" className="font-body text-secondary hover:underline">← Back to Journal</Link></div></>
-  );
+  if (!post) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-hc-bg flex flex-col items-center justify-center gap-4">
+          <h1 className="font-headline text-4xl text-hc-primary">Story not found</h1>
+          <Link to="/journal" className="font-body text-hc-secondary hover:underline">← Back to Journal</Link>
+        </div>
+      </>
+    );
+  }
+
+  const date     = post.published_at ? format(new Date(post.published_at), 'MMMM d, yyyy') : '';
+  const wordCount = (post.content ?? '').split(/\s+/).length;
+  const readMins  = Math.max(1, Math.ceil(wordCount / 200));
+
+  // Parse content into paragraphs and h2s
+  const paragraphs = (post.content ?? '').split('\n\n').filter(Boolean);
 
   return (
     <>
       <Navbar />
       <PageTransition>
-        <main>
-          <div className="relative h-[60vh] min-h-[400px] overflow-hidden">
-            {post.cover_image && <img src={post.cover_image} alt={post.title} className="w-full h-full object-cover brightness-60" />}
-            <MistOverlay intensity="strong" />
-            <div className="absolute bottom-0 left-0 right-0 z-10 max-w-screen-2xl mx-auto px-8 pb-16">
-              <Link to="/journal" className="inline-flex items-center gap-2 font-body text-sm text-on-surface-variant hover:text-secondary mb-8 transition-colors">
-                <ArrowLeft size={14} /> Journal
-              </Link>
-              {post.category && <SectionLabel className="mb-4">{post.category}</SectionLabel>}
-              <h1 className="font-headline text-3xl md:text-5xl text-on-surface leading-tight max-w-3xl">{post.title}</h1>
+        <main className="bg-hc-bg">
+          <article className="max-w-3xl mx-auto px-8 pt-36 pb-20">
+
+            {/* ── Back nav ─────────────────────────────────────── */}
+            <Link
+              to="/journal"
+              className="inline-flex items-center gap-2 text-hc-text-light hover:text-hc-primary font-body text-sm mb-10 transition-colors"
+            >
+              <ArrowLeft size={14} /> The Journal
+            </Link>
+
+            {/* ── Article Header ───────────────────────────────── */}
+            <div className="text-center mb-12">
+              <p className="text-hc-secondary text-xs font-bold uppercase tracking-[0.3em] mb-4 font-body">
+                {[post.category, `${readMins} min read`].filter(Boolean).join(' · ')}
+              </p>
+              <h1 className="font-headline text-hc-primary text-4xl md:text-6xl leading-tight mb-8">
+                {post.title}
+              </h1>
+              {date && (
+                <p className="text-sm text-hc-text-light font-body">{date}</p>
+              )}
             </div>
-          </div>
-          <div className="bg-background py-20 px-8">
-            <div className="max-w-3xl mx-auto">
-              <p className="font-body text-sm text-on-surface-variant mb-12">{format(new Date(post.published_at), 'MMMM d, yyyy')}</p>
-              {post.excerpt && <p className="font-headline text-xl text-secondary italic mb-12 leading-relaxed">"{post.excerpt}"</p>}
-              <div className="prose prose-invert prose-lg max-w-none font-body text-on-surface-variant leading-relaxed space-y-6">
-                {post.content?.split('\n\n').map((para, i) => (
-                  <p key={i}>{para.replace(/^#+\s/, '').replace(/\*\*/g, '')}</p>
-                ))}
+
+            {/* ── Cover Image ──────────────────────────────────── */}
+            {post.cover_image && (
+              <figure className="my-12 -mx-8 md:-mx-12">
+                <div className="overflow-hidden rounded-2xl">
+                  <img
+                    src={post.cover_image}
+                    alt={post.title}
+                    className="w-full h-[400px] md:h-[500px] object-cover"
+                  />
+                </div>
+                {post.category && (
+                  <figcaption className="text-center text-sm text-hc-text-light mt-4 italic font-body">
+                    Hills Camp Kerala — {post.category}
+                  </figcaption>
+                )}
+              </figure>
+            )}
+
+            {/* ── Pull Quote (excerpt) ─────────────────────────── */}
+            {post.excerpt && (
+              <div className="border-l-2 border-hc-secondary pl-8 mb-12">
+                <p className="font-headline text-hc-primary text-xl italic leading-relaxed">
+                  {post.excerpt}
+                </p>
+              </div>
+            )}
+
+            {/* ── Body Content ─────────────────────────────────── */}
+            <div className="space-y-6">
+              {paragraphs.map((para, i) => {
+                // Detect markdown h2
+                if (para.startsWith('## ')) {
+                  return (
+                    <h2 key={i} className="font-headline text-hc-primary text-3xl mt-12 mb-4">
+                      {para.replace(/^## /, '')}
+                    </h2>
+                  );
+                }
+                // Detect blockquote
+                if (para.startsWith('> ')) {
+                  return (
+                    <blockquote key={i} className="border-l-2 border-hc-secondary pl-6 my-8">
+                      <p className="font-headline text-hc-primary text-lg italic leading-relaxed">
+                        {para.replace(/^> /, '')}
+                      </p>
+                    </blockquote>
+                  );
+                }
+                return (
+                  <p key={i} className="text-hc-text text-lg leading-[1.8] font-body">
+                    {para.replace(/^#+\s/, '').replace(/\*\*/g, '')}
+                  </p>
+                );
+              })}
+            </div>
+
+            {/* ── CTA Block ────────────────────────────────────── */}
+            <div className="bg-hc-primary rounded-3xl p-12 mt-16 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-80 h-80 bg-hc-accent/10 rounded-full -mr-20 -mt-20" />
+              <div className="relative">
+                <h3 className="font-headline text-white text-2xl mb-3">Start your own story.</h3>
+                <p className="text-white/70 text-sm leading-relaxed mb-6 max-w-md font-body">
+                  Explore our curated collection of wilderness retreats and find the one that speaks to your soul.
+                </p>
+                <Link
+                  to="/stays"
+                  className="bg-hc-accent text-[#360f00] px-8 py-3 rounded-xl font-bold text-sm inline-block hover:brightness-110 transition-all font-body"
+                >
+                  Explore Properties
+                </Link>
               </div>
             </div>
-          </div>
+          </article>
         </main>
         <Footer />
       </PageTransition>
