@@ -14,7 +14,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post, offset }) => {
   const date = post.published_at ? format(new Date(post.published_at), 'MMM d, yyyy') : '';
 
   return (
-    <Link to={`/journal/${post.slug}`} className={`group block${offset ? ' md:mt-20' : ''}`}>
+    <Link to={`/blog/${post.slug}`} className={`group block${offset ? ' md:mt-20' : ''}`}>
       <div className="rounded-3xl overflow-hidden mb-6 aspect-[3/4]">
         <img
           src={post.cover_image ?? '/placeholder.svg'}
