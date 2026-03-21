@@ -14,8 +14,8 @@ const NotFound = () => {
       {/* Background atmosphere */}
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=1800&q=80"
-          alt="Misty forest"
+          src="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=1800&q=80"
+          alt="Misty Western Ghats forest"
           className="w-full h-full object-cover opacity-30"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-hc-primary/60 via-hc-primary/40 to-hc-primary/80" />
