@@ -144,7 +144,7 @@ export const BlogPost = () => {
         <Navbar />
         <div className="min-h-screen bg-hc-bg flex flex-col items-center justify-center gap-4">
           <h1 className="font-headline text-4xl text-hc-primary">Story not found</h1>
-          <Link to="/journal" className="font-body text-hc-secondary hover:underline">← Back to Journal</Link>
+          <Link to="/blog" className="font-body text-hc-secondary hover:underline">← Back to Journal</Link>
         </div>
       </>
     );
@@ -166,7 +166,7 @@ export const BlogPost = () => {
 
             {/* ── Back nav ─────────────────────────────────────── */}
             <Link
-              to="/journal"
+              to="/blog"
               className="inline-flex items-center gap-2 text-hc-text-light hover:text-hc-primary font-body text-sm mb-10 transition-colors"
             >
               <ArrowLeft size={14} /> The Journal
