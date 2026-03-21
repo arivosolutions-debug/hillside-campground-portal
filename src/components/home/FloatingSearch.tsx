@@ -19,7 +19,7 @@ export const FloatingSearch: React.FC = () => {
   };
 
   return (
-    <section className="relative -mt-24 z-20 px-8 max-w-content mx-auto mb-20">
+    <section className="relative -mt-8 z-20 px-8 max-w-content mx-auto mb-20">
       <form
         onSubmit={handleSearch}
         className="bg-white rounded-2xl shadow-[0_20px_25px_-5px_rgba(27,28,28,0.05),0_8px_10px_-6px_rgba(27,28,28,0.05)] p-2 flex items-center gap-2"
