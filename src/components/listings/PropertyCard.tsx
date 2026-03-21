@@ -12,20 +12,20 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
   return (
     <Link to={`/property/${property.slug}`} className="group block">
       {/* Image */}
-      <div className="relative rounded-xl overflow-hidden mb-4">
+      <div className="relative rounded-xl overflow-hidden mb-4 aspect-[4/5]">
         <img
           src={property.cover_image ?? '/placeholder.svg'}
           alt={property.name}
-          className="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-105"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        {/* Type badge */}
-        <span className="absolute top-3 left-4 bg-hc-accent-light/90 backdrop-blur-sm text-[#360f00] text-[10px] font-bold uppercase tracking-tight px-3 py-1.5 rounded-full font-body">
-          {PROPERTY_TYPE_LABELS[property.property_type]}
-        </span>
-        {/* Featured badge */}
-        {property.is_featured && (
-          <span className="absolute top-3 right-4 bg-hc-primary/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full font-body">
+        {/* Single badge: "Estate Signature" for featured, property type otherwise */}
+        {property.is_featured ? (
+          <span className="absolute top-3 left-4 bg-hc-primary/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full font-body">
             Estate Signature
+          </span>
+        ) : (
+          <span className="absolute top-3 left-4 bg-hc-accent-light/90 backdrop-blur-sm text-[#360f00] text-[10px] font-bold uppercase tracking-tight px-3 py-1.5 rounded-full font-body">
+            {PROPERTY_TYPE_LABELS[property.property_type]}
           </span>
         )}
       </div>
