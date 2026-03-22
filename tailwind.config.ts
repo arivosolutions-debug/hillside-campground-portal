@@ -17,7 +17,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        headline: ['"Noto Serif"', "Georgia", "serif"],
+        headline: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"],
         body:     ["Manrope", "system-ui", "sans-serif"],
         label:    ["Manrope", "system-ui", "sans-serif"],
       },
