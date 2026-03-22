@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
 
   return (
-    <footer className="bg-[#022c22] rounded-tl-[32px] rounded-tr-[32px]">
+    <footer className="relative z-10 bg-[#022c22] rounded-tl-[32px] rounded-tr-[32px]">
       <div className="max-w-content mx-auto px-8 md:px-12 py-20 grid grid-cols-1 md:grid-cols-4 gap-12">
 
         {/* Brand */}
