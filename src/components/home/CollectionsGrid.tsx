@@ -33,7 +33,7 @@ const ROW_2 = [
     image: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=900&q=85',
     href: '/listings?type=mountain_lookout',
     cols: 'lg:col-span-4',
-    aspect: 'aspect-[3/4]',
+    aspect: 'aspect-[3/4] lg:aspect-auto',
   },
   {
     label: 'Tea Estate Cabins',
