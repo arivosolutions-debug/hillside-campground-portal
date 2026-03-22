@@ -47,7 +47,7 @@ export const FloatingSearch: React.FC = () => {
 
           {/* Guests */}
           <div className="px-6 py-3 rounded-xl">
-            <label className="block text-xs font-bold uppercase tracking-wider text-hc-text-light mb-1 mx-[4px] text-secondary">
+            <label className="block text-xs font-bold uppercase tracking-wider mb-1 mx-[4px] text-accent">
               Guests
             </label>
             <select
