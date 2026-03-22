@@ -26,12 +26,12 @@ export const HeroSection: React.FC = () => {
           </span>
 
           {/* Headline */}
-          <h1 className="font-headline text-hc-primary-deep text-6xl md:text-8xl lg:text-[96px] leading-none mb-6 animate-fade-in-2 font-bold text-[#e2dfd0]">
+          <h1 className="font-headline text-white text-6xl md:text-8xl lg:text-[96px] leading-none mb-6 animate-fade-in-2 font-bold">
             Where Nature<br />Meets Comfort
           </h1>
 
           {/* Subheading */}
-          <p className="text-hc-text text-xl md:text-2xl leading-relaxed max-w-xl mb-10 animate-fade-in-3 text-muted">
+          <p className="text-white/80 text-xl md:text-2xl leading-relaxed max-w-xl mb-10 animate-fade-in-3">
             Experience the soul of Kerala through curated stays designed to vanish into the wilderness.
           </p>
 

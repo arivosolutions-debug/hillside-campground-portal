@@ -134,14 +134,14 @@ export const CollectionsGrid: React.FC = () => {
         </div>
 
         {/* Row 1 — Tree Houses (8-col wide) + Backwater Villas (4-col tall) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5 lg:h-[420px]">
           {ROW_1.map((c, i) => (
             <CollectionCard key={c.label} {...c} index={i} />
           ))}
         </div>
 
         {/* Row 2 — Mountain Lookouts (4-col tall) + Tea Estate Cabins (8-col wide) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:h-[420px]">
           {ROW_2.map((c, i) => (
             <CollectionCard key={c.label} {...c} index={i + 2} />
           ))}

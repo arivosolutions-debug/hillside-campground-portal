@@ -21,7 +21,6 @@ const Index = () => {
         <main>
           <HeroSection />
           <FloatingSearch />
-          <TrustStrip />
           <FeaturedRetreats />
           <PhilosophySection />
           <CollectionsGrid />

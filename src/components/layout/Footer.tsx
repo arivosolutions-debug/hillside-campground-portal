@@ -131,7 +131,7 @@ export const Footer: React.FC = () => {
       </div>
 
       {/* Bottom bar — subtle divider via tonal shift, no hard border */}
-      <div className="bg-[#011d17] rounded-bl-[32px] rounded-br-[32px] mx-0 px-8 md:px-12 py-7 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="bg-[#011d17] mx-0 px-8 md:px-12 py-7 flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-emerald-50/30 text-xs font-body">
           © {new Date().getFullYear()} Hills Camp Kerala. A Curated Wilderness Experience.
         </p>
