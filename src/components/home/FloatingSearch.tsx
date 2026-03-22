@@ -27,7 +27,7 @@ export const FloatingSearch: React.FC = () => {
         <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-2">
           {/* District */}
           <div className="px-6 py-3 rounded-xl">
-            <label className="block text-xs font-bold uppercase tracking-wider mb-1 mx-[4px] text-accent">
+            <label className="block text-xs font-bold uppercase tracking-wider mb-1 mx-[4px] text-[#944729]">
               District
             </label>
             <select
