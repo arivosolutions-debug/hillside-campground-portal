@@ -11,7 +11,7 @@ const ROW_1 = [
     image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1400&q=85',
     href: '/listings?type=tree_house',
     cols: 'lg:col-span-8',
-    aspect: 'aspect-[16/9]',
+    aspect: 'aspect-[16/9] lg:aspect-auto',
   },
   {
     label: 'Backwater Villas',
