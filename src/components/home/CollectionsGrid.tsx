@@ -20,7 +20,7 @@ const ROW_1 = [
     image: 'https://images.unsplash.com/photo-1587922546307-776227941871?w=900&q=85',
     href: '/listings?type=backwater_villa',
     cols: 'lg:col-span-4',
-    aspect: 'aspect-[3/4]',
+    aspect: 'aspect-[3/4] lg:aspect-auto',
   },
 ];
 
