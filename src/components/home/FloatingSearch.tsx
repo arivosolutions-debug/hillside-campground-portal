@@ -27,7 +27,7 @@ export const FloatingSearch: React.FC = () => {
         <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-2">
           {/* District */}
           <div className="px-6 py-3 rounded-xl">
-            <label className="block text-xs font-bold uppercase tracking-wider mb-1 mx-[4px] text-accent-foreground">
+            <label className="block text-xs font-bold uppercase tracking-wider text-hc-text-light mb-1 mx-[4px] text-secondary">
               District
             </label>
             <select
@@ -47,7 +47,7 @@ export const FloatingSearch: React.FC = () => {
 
           {/* Guests */}
           <div className="px-6 py-3 rounded-xl">
-            <label className="block text-xs font-bold uppercase tracking-wider mb-1 mx-[4px] text-accent-foreground">
+            <label className="block text-xs font-bold uppercase tracking-wider text-hc-text-light mb-1 mx-[4px] text-secondary">
               Guests
             </label>
             <select
@@ -63,7 +63,7 @@ export const FloatingSearch: React.FC = () => {
 
           {/* Type */}
           <div className="px-6 py-3 rounded-xl">
-            <label className="block text-xs font-bold uppercase tracking-wider mb-1 mx-[4px] text-accent-foreground">
+            <label className="block text-xs font-bold uppercase tracking-wider text-hc-text-light mb-1 mx-[4px] text-secondary">
               Type
             </label>
             <select
