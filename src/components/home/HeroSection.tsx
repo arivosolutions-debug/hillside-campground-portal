@@ -26,7 +26,7 @@ export const HeroSection: React.FC = () => {
           </h1>
 
           {/* Subheading */}
-          <p className="text-xl md:text-2xl leading-relaxed max-w-xl mb-10 animate-fade-in-3 text-primary">
+          <p className="text-xl md:text-2xl leading-relaxed max-w-xl mb-10 animate-fade-in-3 text-primary-foreground">
             Experience the soul of Kerala through curated stays designed to vanish into the wilderness.
           </p>
 
