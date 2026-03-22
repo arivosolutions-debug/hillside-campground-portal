@@ -45,7 +45,7 @@ export const HeroSection: React.FC = () => {
             </Link>
             <Link
               to="/blog"
-              className="inline-flex items-center gap-2 border border-hc-primary/30 text-hc-primary-deep bg-white/60 backdrop-blur-sm px-8 py-4 rounded-full font-bold text-sm hover:bg-white/80 transition-all active:scale-[0.97]">
+              className="inline-flex items-center gap-2 border border-white/30 text-white bg-white/10 backdrop-blur-sm px-8 py-4 rounded-full font-bold text-sm hover:bg-white/20 transition-all active:scale-[0.97]">
               View Journal
             </Link>
           </div>
