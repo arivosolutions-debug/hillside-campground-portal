@@ -20,11 +20,6 @@ export const HeroSection: React.FC = () => {
       {/* Content */}
       <div className="relative z-10 max-w-content mx-auto px-8 pt-32 w-full">
         <div className="max-w-3xl">
-          {/* Overline badge */}
-          <span className="inline-block bg-hc-accent-light text-[#360f00] px-4 py-1.5 rounded-full text-sm font-semibold mb-6 animate-fade-in-1">
-            ESTABLISHED IN THE GHATS
-          </span>
-
           {/* Headline */}
           <h1 className="font-headline text-white text-6xl md:text-8xl lg:text-[96px] leading-none mb-6 animate-fade-in-2 font-bold">
             Where Nature<br />Meets Comfort

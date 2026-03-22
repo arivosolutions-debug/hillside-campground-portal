@@ -31,7 +31,7 @@ export const ParallaxSection: React.FC = () => {
         }}
       />
       {/* Primary colour overlay at 60% */}
-      <div className="absolute inset-0 bg-hc-primary" style={{ opacity: 0.60 }} />
+      <div className="absolute inset-0 bg-[#924a29]" style={{ opacity: 0.55 }} />
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-8 parallax-content">
