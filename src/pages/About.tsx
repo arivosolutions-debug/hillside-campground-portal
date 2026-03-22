@@ -227,7 +227,7 @@ const About = () => {
           </section>
 
           {/* ── Full-Width CTA Banner ─────────────────────────────────────── */}
-          <section className="relative w-full h-[500px] flex items-center justify-center overflow-hidden">
+          <section className="relative w-full h-[500px] flex items-center justify-center overflow-hidden pb-16 -mb-16">
             <img
               src="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=1920&q=80"
               alt="Western Ghats aerial"
