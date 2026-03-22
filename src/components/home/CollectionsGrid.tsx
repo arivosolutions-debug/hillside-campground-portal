@@ -39,7 +39,7 @@ const ROW_2 = [
     label: 'Tea Estate Cabins',
     title: "Planter's Legacy",
     subtitle: 'A century of stories steeped in your cup.',
-    image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1400&q=85',
+    image: 'https://images.unsplash.com/photo-1759148539722-1bbcd7b32d1e?w=1400&q=85',
     href: '/listings?type=tea_estate_cabin',
     cols: 'lg:col-span-8',
     aspect: 'aspect-[16/9] lg:aspect-auto',
