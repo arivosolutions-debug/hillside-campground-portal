@@ -23,7 +23,7 @@ const Packages: React.FC = () => {
       <PageTransition>
         <main className="bg-hc-bg font-body">
           {/* Hero */}
-          <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+          <section className="relative min-h-screen flex items-center justify-center overflow-hidden pb-16 -mb-16">
             {/* Background image */}
             <img
               src={BG}
