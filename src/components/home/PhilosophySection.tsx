@@ -1,22 +1,22 @@
 import React, { useEffect, useRef } from 'react';
 
 const STATS = [
-  { value: '12',    label: 'Estates' },
-  { value: '100%',  label: 'Sustainable' },
-  { value: '0',     label: 'Compromises' },
-];
+{ value: '12', label: 'Estates' },
+{ value: '100%', label: 'Sustainable' },
+{ value: '0', label: 'Compromises' }];
+
 
 export const PhilosophySection: React.FC = () => {
-  const leftRef  = useRef<HTMLDivElement>(null);
+  const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); }),
+      (entries) => entries.forEach((e) => {if (e.isIntersecting) e.target.classList.add('in-view');}),
       { threshold: 0.12 }
     );
-    [leftRef, rightRef].forEach(r => {
-      if (r.current) { r.current.classList.add('section-fade-up'); observer.observe(r.current); }
+    [leftRef, rightRef].forEach((r) => {
+      if (r.current) {r.current.classList.add('section-fade-up');observer.observe(r.current);}
     });
     return () => observer.disconnect();
   }, []);
@@ -31,8 +31,8 @@ export const PhilosophySection: React.FC = () => {
             <img
               src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=80"
               alt="Kerala forest philosophy"
-              className="w-full h-full object-cover"
-            />
+              className="w-full h-full object-cover" />
+            
           </div>
 
           {/* Floating quote card — offset bottom-right */}
@@ -52,9 +52,9 @@ export const PhilosophySection: React.FC = () => {
         {/* Right — text + stats */}
         <div
           ref={rightRef}
-          className="lg:col-span-7"
-          style={{ transitionDelay: '120ms' }}
-        >
+          className="lg:col-span-7 text-left mx-[50px]"
+          style={{ transitionDelay: '120ms' }}>
+          
           {/* Section label */}
           <div className="flex items-center gap-4 mb-6">
             <div className="h-px w-12 bg-hc-secondary" />
@@ -80,8 +80,8 @@ export const PhilosophySection: React.FC = () => {
 
           {/* Stats */}
           <div className="flex flex-wrap gap-12">
-            {STATS.map((stat, i) => (
-              <div key={stat.label} className="border-l-2 border-hc-secondary/30 pl-5">
+            {STATS.map((stat, i) =>
+            <div key={stat.label} className="border-l-2 border-hc-secondary/30 pl-5">
                 <div className="font-headline text-4xl tabular-nums text-hc-primary-deep font-bold leading-none mb-1">
                   {stat.value}
                 </div>
@@ -89,10 +89,10 @@ export const PhilosophySection: React.FC = () => {
                   {stat.label}
                 </div>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };

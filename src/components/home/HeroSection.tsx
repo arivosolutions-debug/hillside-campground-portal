@@ -31,7 +31,7 @@ export const HeroSection: React.FC = () => {
           </h1>
 
           {/* Subheading */}
-          <p className="text-white/80 text-xl md:text-2xl leading-relaxed max-w-xl mb-10 animate-fade-in-3">
+          <p className="text-xl md:text-2xl leading-relaxed max-w-xl mb-10 animate-fade-in-3 text-primary">
             Experience the soul of Kerala through curated stays designed to vanish into the wilderness.
           </p>
 
@@ -45,7 +45,7 @@ export const HeroSection: React.FC = () => {
             </Link>
             <Link
               to="/blog"
-              className="inline-flex items-center gap-2 border border-white/30 text-white bg-white/10 backdrop-blur-sm px-8 py-4 rounded-full font-bold text-sm hover:bg-white/20 transition-all active:scale-[0.97]">
+              className="inline-flex items-center gap-2 border bg-white/10 backdrop-blur-sm px-8 py-4 rounded-full font-bold text-sm hover:bg-white/20 transition-all active:scale-[0.97] text-primary border-primary">
               View Journal
             </Link>
           </div>
