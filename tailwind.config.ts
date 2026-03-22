@@ -17,7 +17,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        headline: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"],
+        headline: ["Plus Jakarta Sans", "sans-serif"],
         body:     ["Manrope", "system-ui", "sans-serif"],
         label:    ["Manrope", "system-ui", "sans-serif"],
       },
