@@ -5,7 +5,7 @@ import { useProperties } from '@/hooks/useProperties';
 
 const FALLBACK_CARDS = [
   {
-    image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80',
+    image: '/lovable-uploads/d9024755-5800-41b6-9aaa-b2133b6d9f87.jpg',
     badge: 'Treehouse',
     district: 'Wayanad',
     name: 'Canopy at Vythiri',
