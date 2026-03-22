@@ -42,7 +42,7 @@ const ROW_2 = [
     image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1400&q=85',
     href: '/listings?type=tea_estate_cabin',
     cols: 'lg:col-span-8',
-    aspect: 'aspect-[16/9]',
+    aspect: 'aspect-[16/9] lg:aspect-auto',
   },
 ];
 
