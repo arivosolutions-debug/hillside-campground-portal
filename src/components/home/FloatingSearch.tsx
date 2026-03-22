@@ -27,7 +27,7 @@ export const FloatingSearch: React.FC = () => {
         <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-2">
           {/* District */}
           <div className="px-6 py-3 rounded-xl">
-            <label className="block text-xs font-bold uppercase tracking-wider text-hc-text-light mb-1 mx-[4px] text-secondary">
+            <label className="block text-xs font-bold uppercase tracking-wider mb-1 mx-[4px] text-accent">
               District
             </label>
             <select
@@ -47,7 +47,7 @@ export const FloatingSearch: React.FC = () => {
 
           {/* Guests */}
           <div className="px-6 py-3 rounded-xl">
-            <label className="block text-xs font-bold uppercase tracking-wider text-hc-text-light mb-1 mx-[4px] text-secondary">
+            <label className="block text-xs font-bold uppercase tracking-wider mb-1 mx-[4px] text-accent">
               Guests
             </label>
             <select
@@ -63,7 +63,7 @@ export const FloatingSearch: React.FC = () => {
 
           {/* Type */}
           <div className="px-6 py-3 rounded-xl">
-            <label className="block text-xs font-bold uppercase tracking-wider text-hc-text-light mb-1 mx-[4px] text-secondary">
+            <label className="block text-xs font-bold uppercase tracking-wider mb-1 mx-[4px] text-accent">
               Type
             </label>
             <select
@@ -82,7 +82,7 @@ export const FloatingSearch: React.FC = () => {
         {/* Search button */}
         <button
           type="submit"
-          className="bg-hc-primary text-white rounded-xl p-5 hover:bg-hc-primary-deep transition-colors shrink-0 active:scale-[0.97] px-[20px] mx-[8px] bg-secondary"
+          className="bg-accent text-white rounded-xl p-5 hover:brightness-110 transition-colors shrink-0 active:scale-[0.97] px-[20px] mx-[8px]"
           aria-label="Search">
           
           <Search size={20} strokeWidth={1.75} />
