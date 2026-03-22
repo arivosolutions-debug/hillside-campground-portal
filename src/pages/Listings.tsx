@@ -50,7 +50,7 @@ const Listings = () => {
           </section>
 
           {/* Sticky Filter Bar */}
-          <section className="sticky top-20 z-40 bg-hc-bg/95 backdrop-blur-sm shadow-[0_1px_0_0_rgba(23,52,30,0.06)] px-8">
+          <section className="bg-hc-bg/95 shadow-[0_1px_0_0_rgba(23,52,30,0.06)] px-8">
             <div className="max-w-[1280px] mx-auto py-4">
               <FilterBar
                 district={district}
