@@ -13,8 +13,8 @@ export const HeroSection: React.FC = () => {
           alt="Luxury balcony overlooking misty Kerala mountains"
           className="w-full h-full object-cover animate-kenburns origin-center" />
         
-        <div className="absolute inset-0 bg-hc-primary/20" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-hc-bg" />
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-hc-bg" />
       </div>
 
       {/* Content */}
