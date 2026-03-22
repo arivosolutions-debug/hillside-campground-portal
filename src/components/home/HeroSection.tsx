@@ -53,7 +53,7 @@ export const HeroSection: React.FC = () => {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-hc-primary-deep/60 animate-bounce">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white/60 animate-bounce">
         <ChevronDown size={22} strokeWidth={1.5} />
       </div>
     </header>);
