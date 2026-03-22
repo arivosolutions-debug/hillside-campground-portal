@@ -4,7 +4,7 @@ import { Footer } from '@/components/layout/Footer';
 import { PageTransition } from '@/components/layout/PageTransition';
 import { HeroSection } from '@/components/home/HeroSection';
 import { FloatingSearch } from '@/components/home/FloatingSearch';
-import { TrustStrip } from '@/components/home/TrustStrip';
+
 import { FeaturedRetreats } from '@/components/home/FeaturedRetreats';
 import { PhilosophySection } from '@/components/home/PhilosophySection';
 import { CollectionsGrid } from '@/components/home/CollectionsGrid';
@@ -21,7 +21,6 @@ const Index = () => {
         <main>
           <HeroSection />
           <FloatingSearch />
-          <TrustStrip />
           <FeaturedRetreats />
           <PhilosophySection />
           <CollectionsGrid />

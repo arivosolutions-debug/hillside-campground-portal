@@ -6,11 +6,14 @@ const WHATSAPP_URL =
   'https://wa.me/919847012345?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20a%20Hills%20Camp%20Kerala%20retreat.';
 
 const NAV_LINKS = [
-  { label: 'Stays',    to: '/listings',  exact: ['/listings', '/'] },
+  { label: 'Stays',    to: '/listings',  exact: ['/listings'] },
   { label: 'Packages', to: '/packages',  exact: ['/packages'] },
   { label: 'Discover', to: '/about',     exact: ['/about'] },
   { label: 'Journal',  to: '/blog',      exact: ['/blog', '/journal'] },
 ];
+
+/* Pages with dark hero backgrounds where navbar text should be white when not scrolled */
+const DARK_HERO_PAGES = ['/', '/packages', '/about'];
 
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled]   = useState(false);
@@ -28,18 +31,24 @@ export const Navbar: React.FC = () => {
   const isActive = (exact: string[]) =>
     exact.includes(location.pathname);
 
+  const isDarkHero = DARK_HERO_PAGES.includes(location.pathname);
+  const isLight = !scrolled && isDarkHero;
+
+  const textPrimary = isLight ? 'text-white' : 'text-hc-primary-deep';
+  const textMuted = isLight ? 'text-white/70' : 'text-hc-primary-deep/70';
+
   return (
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
             ? 'bg-hc-bg/90 backdrop-blur-xl shadow-float'
-            : 'bg-hc-bg/70 backdrop-blur-md'
+            : 'bg-transparent'
         }`}
       >
         <div className="flex justify-between items-center max-w-content mx-auto px-8 py-6">
           {/* Logo */}
-          <Link to="/" className="font-headline italic text-hc-primary-deep text-2xl tracking-tight">
+          <Link to="/" className={`font-headline italic text-2xl tracking-tight transition-colors duration-500 ${textPrimary}`}>
             Hills Camp
           </Link>
 
@@ -51,8 +60,8 @@ export const Navbar: React.FC = () => {
                 to={link.to}
                 className={`font-body text-sm transition-colors duration-200 ${
                   isActive(link.exact)
-                    ? 'text-hc-primary-deep font-bold border-b-2 border-hc-secondary pb-0.5'
-                    : 'text-hc-primary-deep/70 font-medium hover:text-hc-primary-deep'
+                    ? `${textPrimary} font-bold border-b-2 border-hc-secondary pb-0.5`
+                    : `${textMuted} font-medium hover:${textPrimary}`
                 }`}
               >
                 {link.label}
@@ -63,12 +72,11 @@ export const Navbar: React.FC = () => {
           {/* Right */}
           <div className="flex items-center gap-5">
             <button
-              className="text-hc-primary-deep hidden md:block hover:text-hc-secondary transition-colors"
+              className={`${textPrimary} hidden md:block hover:text-hc-secondary transition-colors`}
               aria-label="Search"
             >
               <Search size={20} strokeWidth={1.75} />
             </button>
-            {/* "Book Now" → WhatsApp primary CTA */}
             <a
               href={WHATSAPP_URL}
               target="_blank"
@@ -79,7 +87,7 @@ export const Navbar: React.FC = () => {
               Book Now
             </a>
             <button
-              className="md:hidden text-hc-primary-deep p-1"
+              className={`md:hidden ${textPrimary} p-1`}
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
             >

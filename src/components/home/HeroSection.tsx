@@ -13,8 +13,8 @@ export const HeroSection: React.FC = () => {
           alt="Luxury balcony overlooking misty Kerala mountains"
           className="w-full h-full object-cover animate-kenburns origin-center" />
         
-        <div className="absolute inset-0 bg-hc-primary/20" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-hc-bg" />
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-hc-bg" />
       </div>
 
       {/* Content */}
@@ -26,12 +26,12 @@ export const HeroSection: React.FC = () => {
           </span>
 
           {/* Headline */}
-          <h1 className="font-headline text-hc-primary-deep text-6xl md:text-8xl lg:text-[96px] leading-none mb-6 animate-fade-in-2 font-bold text-[#e2dfd0]">
+          <h1 className="font-headline text-white text-6xl md:text-8xl lg:text-[96px] leading-none mb-6 animate-fade-in-2 font-bold">
             Where Nature<br />Meets Comfort
           </h1>
 
           {/* Subheading */}
-          <p className="text-hc-text text-xl md:text-2xl leading-relaxed max-w-xl mb-10 animate-fade-in-3 text-muted">
+          <p className="text-white/80 text-xl md:text-2xl leading-relaxed max-w-xl mb-10 animate-fade-in-3">
             Experience the soul of Kerala through curated stays designed to vanish into the wilderness.
           </p>
 
@@ -45,7 +45,7 @@ export const HeroSection: React.FC = () => {
             </Link>
             <Link
               to="/blog"
-              className="inline-flex items-center gap-2 border border-hc-primary/30 text-hc-primary-deep bg-white/60 backdrop-blur-sm px-8 py-4 rounded-full font-bold text-sm hover:bg-white/80 transition-all active:scale-[0.97]">
+              className="inline-flex items-center gap-2 border border-white/30 text-white bg-white/10 backdrop-blur-sm px-8 py-4 rounded-full font-bold text-sm hover:bg-white/20 transition-all active:scale-[0.97]">
               View Journal
             </Link>
           </div>
@@ -53,7 +53,7 @@ export const HeroSection: React.FC = () => {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-hc-primary-deep/60 animate-bounce">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white/60 animate-bounce">
         <ChevronDown size={22} strokeWidth={1.5} />
       </div>
     </header>);

@@ -11,7 +11,7 @@ const ROW_1 = [
     image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1400&q=85',
     href: '/listings?type=tree_house',
     cols: 'lg:col-span-8',
-    aspect: 'aspect-[16/9]',
+    aspect: 'aspect-[16/9] lg:aspect-auto',
   },
   {
     label: 'Backwater Villas',
@@ -20,7 +20,7 @@ const ROW_1 = [
     image: 'https://images.unsplash.com/photo-1587922546307-776227941871?w=900&q=85',
     href: '/listings?type=backwater_villa',
     cols: 'lg:col-span-4',
-    aspect: 'aspect-[3/4]',
+    aspect: 'aspect-[3/4] lg:aspect-auto',
   },
 ];
 
@@ -33,7 +33,7 @@ const ROW_2 = [
     image: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=900&q=85',
     href: '/listings?type=mountain_lookout',
     cols: 'lg:col-span-4',
-    aspect: 'aspect-[3/4]',
+    aspect: 'aspect-[3/4] lg:aspect-auto',
   },
   {
     label: 'Tea Estate Cabins',
@@ -42,7 +42,7 @@ const ROW_2 = [
     image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1400&q=85',
     href: '/listings?type=tea_estate_cabin',
     cols: 'lg:col-span-8',
-    aspect: 'aspect-[16/9]',
+    aspect: 'aspect-[16/9] lg:aspect-auto',
   },
 ];
 
@@ -134,14 +134,14 @@ export const CollectionsGrid: React.FC = () => {
         </div>
 
         {/* Row 1 — Tree Houses (8-col wide) + Backwater Villas (4-col tall) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5 lg:h-[420px]">
           {ROW_1.map((c, i) => (
             <CollectionCard key={c.label} {...c} index={i} />
           ))}
         </div>
 
         {/* Row 2 — Mountain Lookouts (4-col tall) + Tea Estate Cabins (8-col wide) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:h-[420px]">
           {ROW_2.map((c, i) => (
             <CollectionCard key={c.label} {...c} index={i + 2} />
           ))}
