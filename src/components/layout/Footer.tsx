@@ -102,27 +102,27 @@ export const Footer: React.FC = () => {
           <p className="text-[rgba(167,243,208,0.6)] text-sm mb-4 leading-relaxed">
             Join our seasonal mailing list for mountain stories.
           </p>
-          <div className="flex gap-2 mb-6">
+          <div className="relative w-full mb-6">
             <input
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="Email"
-              className="flex-1 bg-white/5 rounded-xl px-4 py-3 text-sm text-emerald-50 placeholder:text-emerald-50/30 focus:outline-none focus:ring-1 focus:ring-emerald-50/20 border-none"
+              className="w-full bg-white/5 rounded-xl px-4 py-3 pr-12 text-sm text-emerald-50 placeholder:text-emerald-50/30 focus:outline-none focus:ring-1 focus:ring-emerald-50/20 border-none"
             />
             <button
-              className="bg-white/10 text-emerald-50 px-4 py-3 rounded-xl hover:bg-white/20 transition-colors"
+              className={`absolute right-2 top-1/2 -translate-y-1/2 bg-white/10 text-emerald-50 p-2 rounded-lg hover:bg-white/20 transition-all ${email.length > 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'}`}
               aria-label="Subscribe"
             >
               <ArrowRight size={16} />
             </button>
           </div>
-          {/* Terracotta WhatsApp CTA */}
+          {/* WhatsApp CTA — matches Book Now button color */}
           <a
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#ffa279] text-[#3b1408] px-5 py-3 rounded-full font-bold text-sm hover:brightness-105 active:scale-[0.97] transition-all font-body"
+            className="w-full inline-flex items-center justify-center gap-2 bg-hc-primary text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-hc-primary-deep active:scale-[0.97] transition-all font-body"
           >
             <MessageCircle size={16} />
             Contact via WhatsApp

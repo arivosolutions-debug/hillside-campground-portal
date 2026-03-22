@@ -103,7 +103,7 @@ export const FeaturedRetreats: React.FC = () => {
             <Link
               key={card.slug}
               to={`/property/${card.slug}`}
-              className="retreat-card bg-hc-bg-alt rounded-2xl overflow-hidden group block"
+              className="retreat-card bg-hc-bg-alt rounded-2xl overflow-hidden group block flex flex-col"
             >
               {/* Image */}
               <div className="relative overflow-hidden rounded-2xl">
@@ -118,7 +118,7 @@ export const FeaturedRetreats: React.FC = () => {
               </div>
 
               {/* Body */}
-              <div className="p-6">
+              <div className="p-6 flex flex-col flex-1">
                 <p className="text-hc-secondary text-xs font-bold uppercase tracking-[0.2em] mb-1 font-body">
                   {card.district}, Kerala
                 </p>
@@ -131,7 +131,7 @@ export const FeaturedRetreats: React.FC = () => {
                     {card.guests}
                   </span>
                 </div>
-                <div className="pt-3 flex items-center justify-between">
+                <div className="mt-auto pt-3 flex items-center justify-between">
                   <span className="text-hc-primary font-bold tracking-tight text-sm font-body">
                     Contact for Pricing
                   </span>
