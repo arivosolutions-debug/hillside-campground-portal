@@ -198,4 +198,8 @@
 
   /* tabular nums */
   .tabular-nums { font-variant-numeric: tabular-nums; }
+
+  /* Hide scrollbar for carousels */
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
+  .hide-scrollbar { scrollbar-width: none; }
 }
