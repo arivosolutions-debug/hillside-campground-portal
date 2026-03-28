@@ -160,7 +160,7 @@ export const FeaturedRetreats: React.FC = () => {
             style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
           >
             {cards.map((card) => (
-              <div key={card.slug} className="min-w-[85vw] snap-start">
+              <div key={card.slug} className="min-w-[85vw] snap-start" style={{ scrollSnapStop: 'always' }}>
                 <CardContent card={card} />
               </div>
             ))}

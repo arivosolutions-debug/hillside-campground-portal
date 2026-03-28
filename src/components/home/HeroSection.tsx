@@ -5,7 +5,7 @@ import heroBg from '@/assets/hero-bg.jpg';
 
 export const HeroSection: React.FC = () => {
   return (
-    <header className="relative min-h-screen flex items-end md:items-center overflow-hidden">
+    <header className="relative min-h-screen md:min-h-screen h-[70vh] md:h-auto flex items-end md:items-center overflow-hidden rounded-b-[32px] md:rounded-b-none">
       {/* Background */}
       <div className="absolute inset-0">
         <img
@@ -13,19 +13,20 @@ export const HeroSection: React.FC = () => {
           alt="Luxury balcony overlooking misty Kerala mountains"
           className="w-full h-full object-cover animate-kenburns origin-center" />
         <div className="absolute inset-0 bg-black/30" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-hc-bg" />
+        {/* Desktop only gradient */}
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-hc-bg" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-content mx-auto px-5 md:px-8 pb-28 md:pb-0 pt-32 w-full">
+      <div className="relative z-10 max-w-content mx-auto px-6 md:px-8 pb-10 md:pb-0 pt-32 w-full">
         <div className="max-w-3xl">
           {/* Headline */}
-          <h1 className="font-headline text-white text-4xl md:text-8xl lg:text-[96px] leading-none mb-4 md:mb-6 animate-fade-in-2 font-bold">
+          <h1 className="font-headline text-white text-3xl md:text-8xl lg:text-[96px] leading-none mb-2 md:mb-6 animate-fade-in-2 font-bold">
             Where Nature<br />Meets Comfort
           </h1>
 
           {/* Subheading */}
-          <p className="text-base md:text-2xl leading-relaxed max-w-xl mb-8 md:mb-10 animate-fade-in-3 text-white/80 md:text-primary-foreground">
+          <p className="text-sm md:text-2xl leading-relaxed max-w-xl mb-6 md:mb-10 animate-fade-in-3 text-white/80 md:text-primary-foreground">
             <span className="md:hidden">A curated experience made just for you!</span>
             <span className="hidden md:inline">Experience the soul of Kerala through curated stays designed to vanish into the wilderness.</span>
           </p>
@@ -35,12 +36,12 @@ export const HeroSection: React.FC = () => {
             {/* Mobile buttons */}
             <Link
               to="/listings"
-              className="md:hidden inline-flex items-center gap-2 bg-white text-hc-primary px-8 py-3 rounded-full font-bold text-sm active:scale-[0.97]">
+              className="md:hidden flex-1 inline-flex items-center justify-center gap-2 bg-white text-hc-primary px-8 py-3 rounded-full font-semibold text-sm active:scale-[0.97]">
               Stays
             </Link>
             <Link
               to="/packages"
-              className="md:hidden inline-flex items-center gap-2 bg-white text-hc-primary px-8 py-3 rounded-full font-bold text-sm active:scale-[0.97]">
+              className="md:hidden flex-1 inline-flex items-center justify-center gap-2 bg-white text-hc-primary px-8 py-3 rounded-full font-semibold text-sm active:scale-[0.97]">
               Packages
             </Link>
             {/* Desktop buttons */}

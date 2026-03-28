@@ -102,7 +102,7 @@ export const TestimonialsSection: React.FC = () => {
             style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
           >
             {TESTIMONIALS.map((t) => (
-              <div key={t.name} className="min-w-[85vw] snap-start">
+              <div key={t.name} className="min-w-[85vw] snap-start" style={{ scrollSnapStop: 'always' }}>
                 <div className="testimonial-card bg-white/80 backdrop-blur-xl rounded-2xl p-6 relative">
                   {/* Avatar peeking from top-right */}
                   <img

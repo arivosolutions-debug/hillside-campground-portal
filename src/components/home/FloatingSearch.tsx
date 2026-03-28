@@ -1,52 +1,132 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search } from 'lucide-react';
+
+const SEARCH_KEYWORDS = [
+  'for Wayanad...',
+  'for Treehouse...',
+  'for Munnar...',
+  'for Alleppey...',
+  'for lakeside cabin...',
+  'for Mountainview...',
+  'for House Boat...',
+];
+
+const AnimatedSearchBar: React.FC<{ onSubmit: (value: string) => void }> = ({ onSubmit }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [direction, setDirection] = useState<'in' | 'out'>('in');
+  const [isFocused, setIsFocused] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isFocused) return;
+
+    const cycle = () => {
+      // Fade out
+      setDirection('out');
+      setIsAnimating(true);
+
+      setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % SEARCH_KEYWORDS.length);
+        setDirection('in');
+        setTimeout(() => setIsAnimating(false), 20);
+      }, 300);
+    };
+
+    const interval = setInterval(cycle, 2800);
+    return () => clearInterval(interval);
+  }, [isFocused]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (inputValue.trim()) onSubmit(inputValue);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="bg-[#ffdbcd]/25 rounded-2xl mx-5 mt-4 px-4 py-3 md:hidden">
+      <div className="relative">
+        <input
+          ref={inputRef}
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => {
+            if (!inputValue) setIsFocused(false);
+          }}
+          className="w-full bg-white/60 rounded-full px-5 py-3 pr-12 text-sm text-hc-primary font-body border-0 shadow-sm focus:outline-none focus:ring-2 focus:ring-hc-secondary/30"
+        />
+
+        {/* Animated placeholder overlay */}
+        {!isFocused && !inputValue && (
+          <div
+            className="absolute inset-0 flex items-center px-5 pointer-events-none"
+            onClick={() => inputRef.current?.focus()}
+          >
+            <span className="text-sm text-[#8b938a] font-body">Search </span>
+            <span
+              className="text-sm font-bold text-hc-secondary font-body inline-block transition-all duration-300 ease-out"
+              style={{
+                opacity: isAnimating && direction === 'out' ? 0 : 1,
+                transform:
+                  isAnimating && direction === 'out'
+                    ? 'translateY(-6px)'
+                    : isAnimating && direction === 'in'
+                    ? 'translateY(6px)'
+                    : 'translateY(0)',
+              }}
+            >
+              {SEARCH_KEYWORDS[currentIndex]}
+            </span>
+          </div>
+        )}
+
+        <button
+          type="submit"
+          className="absolute right-2 top-1/2 -translate-y-1/2 bg-hc-secondary text-white p-2.5 rounded-full"
+          aria-label="Search"
+        >
+          <Search size={16} strokeWidth={2} />
+        </button>
+      </div>
+    </form>
+  );
+};
 
 export const FloatingSearch: React.FC = () => {
   const navigate = useNavigate();
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearch = (value: string) => {
+    const params = new URLSearchParams();
+    params.set('district', value.toLowerCase());
+    navigate(`/listings?${params.toString()}`);
+  };
+
+  const handleDesktopSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const params = new URLSearchParams();
     const district = data.get('district') as string;
     const type = data.get('type') as string;
     const guests = data.get('guests') as string;
-    const searchText = data.get('search') as string;
     if (district) params.set('district', district.toLowerCase());
     if (type) params.set('type', type.toLowerCase().replace(' ', '_'));
     if (guests) params.set('guests', guests.replace(/\D/g, ''));
-    if (searchText) params.set('district', searchText.toLowerCase());
     navigate(`/listings?${params.toString()}`);
   };
 
   return (
-    <section className="relative -mt-8 z-20 px-5 md:px-8 max-w-content mx-auto mb-16 md:mb-20">
-      {/* Mobile: simplified search */}
-      <form onSubmit={handleSearch} className="md:hidden bg-[#fef2ee] rounded-2xl p-5">
-        <div className="relative">
-          <input
-            name="search"
-            type="text"
-            placeholder="Search for Wayanad..."
-            className="w-full bg-white/80 rounded-full px-6 py-4 pr-12 text-sm text-hc-primary placeholder:text-hc-text-light border border-hc-text-light/20 focus:outline-none focus:ring-2 focus:ring-hc-secondary/30 font-body"
-          />
-          <button
-            type="submit"
-            className="absolute right-3 top-1/2 -translate-y-1/2 bg-[#944729] text-white p-2.5 rounded-full"
-            aria-label="Search"
-          >
-            <Search size={16} strokeWidth={2} />
-          </button>
-        </div>
-      </form>
+    <section className="relative z-20 md:px-8 md:max-w-content md:mx-auto mb-8 md:mb-20 md:-mt-8">
+      {/* Mobile: animated search */}
+      <AnimatedSearchBar onSubmit={handleSearch} />
 
       {/* Desktop: full search bar */}
       <form
-        onSubmit={handleSearch}
+        onSubmit={handleDesktopSearch}
         className="hidden md:flex bg-white rounded-2xl shadow-[0_20px_25px_-5px_rgba(27,28,28,0.05),0_8px_10px_-6px_rgba(27,28,28,0.05)] p-2 items-center gap-2">
         <div className="flex-1 grid grid-cols-3 gap-2">
-          {/* District */}
           <div className="px-6 py-3 rounded-xl">
             <label className="block text-xs font-bold uppercase tracking-wider mb-1 mx-[4px] text-[#944729]">
               District
@@ -64,8 +144,6 @@ export const FloatingSearch: React.FC = () => {
               <option>Kannur</option>
             </select>
           </div>
-
-          {/* Guests */}
           <div className="px-6 py-3 rounded-xl">
             <label className="block text-xs font-bold uppercase tracking-wider mb-1 mx-[4px] text-[#944729]">
               Guests
@@ -79,8 +157,6 @@ export const FloatingSearch: React.FC = () => {
               <option value="8">8+ Adults</option>
             </select>
           </div>
-
-          {/* Type */}
           <div className="px-6 py-3 rounded-xl">
             <label className="block text-xs font-bold uppercase tracking-wider mb-1 mx-[4px] text-[#944729]">
               Type
@@ -96,8 +172,6 @@ export const FloatingSearch: React.FC = () => {
             </select>
           </div>
         </div>
-
-        {/* Search button */}
         <button
           type="submit"
           className="bg-[#944729] text-white rounded-xl p-5 hover:brightness-110 transition-colors shrink-0 active:scale-[0.97] px-[20px] mx-[8px]"
