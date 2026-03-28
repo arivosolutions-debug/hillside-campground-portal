@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Linkedin, MessageCircle, ArrowRight } from 'lucide-react';
+import { Logo } from '@/components/shared/Logo';
 
 const WHATSAPP_URL =
   'https://wa.me/919847012345?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20a%20Hills%20Camp%20Kerala%20retreat.';
@@ -16,11 +17,10 @@ const EXPLORE_LINKS = [
 const LOCATION_LINKS = [
   { label: 'Wayanad Reserve',     to: '/listings?district=wayanad' },
   { label: 'Munnar Estates',      to: '/listings?district=munnar' },
+  { label: 'Ooty Hills',          to: '/listings?district=vagamon' },
   { label: 'Alleppey Backwaters', to: '/listings?district=alleppey' },
-  { label: 'Idukki High Ranges',  to: '/listings?district=thekkady' },
 ];
 
-/* Muted link color: rgba(167,243,208,0.6) = emerald-200 at 60% */
 const linkCls = 'text-[rgba(167,243,208,0.6)] hover:text-emerald-100 transition-colors text-sm font-body';
 
 export const Footer: React.FC = () => {
@@ -28,16 +28,13 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="relative z-10 bg-[#022c22] rounded-tl-[32px] rounded-tr-[32px]">
-      <div className="max-w-content mx-auto px-8 md:px-12 py-20 grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div className="max-w-content mx-auto px-5 md:px-12 py-16 md:py-20 grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-12">
 
         {/* Brand */}
         <div>
-          <Link
-            to="/"
-            className="font-headline italic text-emerald-50 text-3xl mb-6 block hover:opacity-80 transition-opacity"
-          >
-            Hills Camp
-          </Link>
+          <div className="mb-6">
+            <Logo variant="light" />
+          </div>
           <p className="text-[rgba(167,243,208,0.6)] text-sm leading-relaxed mb-6">
             An editorial retreat experience nestled in the verdant peaks of Kerala's high ranges.
           </p>
@@ -52,15 +49,6 @@ export const Footer: React.FC = () => {
               <Instagram size={16} className="text-emerald-50" />
             </a>
             <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors"
-            >
-              <Linkedin size={16} className="text-emerald-50" />
-            </a>
-            <a
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
@@ -68,6 +56,15 @@ export const Footer: React.FC = () => {
               className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors"
             >
               <MessageCircle size={16} className="text-emerald-50" />
+            </a>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors"
+            >
+              <Linkedin size={16} className="text-emerald-50" />
             </a>
           </div>
         </div>
@@ -117,12 +114,12 @@ export const Footer: React.FC = () => {
               <ArrowRight size={16} />
             </button>
           </div>
-          {/* WhatsApp CTA — matches Book Now button color */}
+          {/* WhatsApp CTA */}
           <a
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full inline-flex items-center justify-center gap-2 bg-hc-primary text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-hc-primary-deep active:scale-[0.97] transition-all font-body"
+            className="w-full inline-flex items-center justify-center gap-2 bg-hc-secondary text-white px-5 py-3 rounded-xl font-bold text-sm hover:brightness-110 active:scale-[0.97] transition-all font-body"
           >
             <MessageCircle size={16} />
             Contact via WhatsApp
@@ -130,14 +127,19 @@ export const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* Bottom bar — subtle divider via tonal shift, no hard border */}
-      <div className="bg-[#011d17] mx-0 px-8 md:px-12 py-7 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-emerald-50/30 text-xs font-body">
-          © {new Date().getFullYear()} Hills Camp Kerala. A Curated Wilderness Experience.
+      {/* Bottom bar */}
+      <div className="bg-[#011d17] mx-0 px-5 md:px-12 py-7 flex flex-col items-center gap-4">
+        <p className="text-emerald-50/40 text-xs font-body">
+          Powered by <span className="font-bold text-emerald-50/60">Arivo</span>
         </p>
-        <div className="flex gap-6">
-          <Link to="/about" className="text-emerald-50/30 text-xs hover:text-emerald-50/60 transition-colors font-body">Privacy Policy</Link>
-          <Link to="/about" className="text-emerald-50/30 text-xs hover:text-emerald-50/60 transition-colors font-body">Terms of Service</Link>
+        <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6">
+          <p className="text-emerald-50/30 text-xs font-body">
+            © {new Date().getFullYear()} Hills Camp Kerala. A Curated Wilderness Experience.
+          </p>
+          <div className="flex gap-6">
+            <Link to="/about" className="text-emerald-50/30 text-xs hover:text-emerald-50/60 transition-colors font-body">Privacy Policy</Link>
+            <Link to="/about" className="text-emerald-50/30 text-xs hover:text-emerald-50/60 transition-colors font-body">Terms of Service</Link>
+          </div>
         </div>
       </div>
     </footer>

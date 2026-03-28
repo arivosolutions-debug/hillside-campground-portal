@@ -101,10 +101,10 @@ export interface Enquiry {
 }
 
 export const PROPERTY_TYPE_LABELS: Record<PropertyType, string> = {
-  tree_house:         'Tree House',
-  backwater_villa:    'Backwater Villa',
-  mountain_lookout:   'Mountain Lookout',
-  tea_estate_cabin:   'Tea Estate Cabin',
+  tree_house:         'Canopy Retreat',
+  backwater_villa:    'Floating Villa',
+  mountain_lookout:   'High Range',
+  tea_estate_cabin:   "Planter's Legacy",
   heritage_bungalow:  'Heritage Bungalow',
   riverside_cottage:  'Riverside Cottage',
 };
