@@ -93,7 +93,7 @@ export const Navbar: React.FC = () => {
               Book Now
             </a>
             <button
-              className={`md:hidden ${textPrimary} p-1`}
+              className="md:hidden text-hc-primary-deep p-1"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
             >
