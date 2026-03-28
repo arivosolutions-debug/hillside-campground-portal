@@ -5,7 +5,7 @@ import heroBg from '@/assets/hero-bg.jpg';
 
 export const HeroSection: React.FC = () => {
   return (
-    <header className="relative md:min-h-screen h-[55vh] md:h-auto flex items-end md:items-center overflow-hidden rounded-[24px] md:rounded-none mx-3 md:mx-0">
+    <header className="relative md:min-h-screen h-[55vh] md:h-auto flex items-end md:items-center overflow-hidden rounded-b-[24px] md:rounded-none">
       {/* Background */}
       <div className="absolute inset-0">
         <img
