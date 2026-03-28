@@ -135,13 +135,6 @@ export const BlogTeaser: React.FC = () => {
                 </div>
               ))}
             </div>
-            {/* Progress indicator */}
-            <div className="mt-4 mx-auto w-32 h-[2px] bg-gray-200 rounded-full relative">
-              <div
-                className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-hc-secondary rounded-full transition-all duration-150"
-                style={{ left: `${scrollProgress * 100}%`, transform: `translate(-50%, -50%)` }}
-              />
-            </div>
           </div>
         </>
       )}
