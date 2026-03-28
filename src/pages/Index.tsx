@@ -4,7 +4,6 @@ import { Footer } from '@/components/layout/Footer';
 import { PageTransition } from '@/components/layout/PageTransition';
 import { HeroSection } from '@/components/home/HeroSection';
 import { FloatingSearch } from '@/components/home/FloatingSearch';
-
 import { FeaturedRetreats } from '@/components/home/FeaturedRetreats';
 import { PhilosophySection } from '@/components/home/PhilosophySection';
 import { CollectionsGrid } from '@/components/home/CollectionsGrid';

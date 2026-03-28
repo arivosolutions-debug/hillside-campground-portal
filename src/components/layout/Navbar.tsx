@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Search, Menu, X, MessageCircle } from 'lucide-react';
+import { Logo } from '@/components/shared/Logo';
 
 const WHATSAPP_URL =
   'https://wa.me/919847012345?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20a%20Hills%20Camp%20Kerala%20retreat.';
@@ -10,6 +11,11 @@ const NAV_LINKS = [
   { label: 'Packages', to: '/packages',  exact: ['/packages'] },
   { label: 'Discover', to: '/about',     exact: ['/about'] },
   { label: 'Journal',  to: '/blog',      exact: ['/blog', '/journal'] },
+];
+
+const MOBILE_NAV_LINKS = [
+  ...NAV_LINKS,
+  { label: 'Contact Us', to: '/contact', exact: ['/contact'] },
 ];
 
 /* Pages with dark hero backgrounds where navbar text should be white when not scrolled */
@@ -46,11 +52,9 @@ export const Navbar: React.FC = () => {
             : 'bg-transparent'
         }`}
       >
-        <div className="flex justify-between items-center max-w-content mx-auto px-8 py-6">
+        <div className="flex justify-between items-center max-w-content mx-auto px-5 md:px-8 py-4 md:py-6">
           {/* Logo */}
-          <Link to="/" className={`font-headline italic text-2xl tracking-tight transition-colors duration-500 ${textPrimary}`}>
-            Hills Camp
-          </Link>
+          <Logo variant={isLight ? 'light' : 'dark'} />
 
           {/* Desktop nav */}
           <div className="hidden md:flex gap-10 items-center">
@@ -97,23 +101,27 @@ export const Navbar: React.FC = () => {
         </div>
       </nav>
 
-      {/* Mobile drawer */}
+      {/* Mobile full-screen overlay */}
       <div
         className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ${
           menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
-        <div
-          className="absolute inset-0 bg-hc-bg/95 backdrop-blur-2xl"
+        <div className="absolute inset-0 bg-[#022c22]" />
+        {/* Close button */}
+        <button
+          className="absolute top-5 right-5 text-white p-2 z-50"
           onClick={() => setMenuOpen(false)}
-        />
-        <nav className="absolute top-24 left-8 right-8 flex flex-col gap-7">
-          {NAV_LINKS.map((link, i) => (
+          aria-label="Close menu"
+        >
+          <X size={24} />
+        </button>
+        <nav className="absolute inset-0 flex flex-col items-center justify-center gap-8">
+          {MOBILE_NAV_LINKS.map((link) => (
             <Link
               key={link.to}
               to={link.to}
-              style={{ transitionDelay: `${i * 55}ms` }}
-              className="font-headline text-3xl text-hc-primary-deep hover:text-hc-secondary transition-colors duration-200"
+              className="font-headline text-2xl text-white hover:text-hc-accent transition-colors duration-200"
             >
               {link.label}
             </Link>
@@ -122,10 +130,10 @@ export const Navbar: React.FC = () => {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 bg-hc-secondary text-white px-8 py-4 rounded-full font-bold text-base mt-2"
+            className="mt-4 w-64 inline-flex items-center justify-center gap-2 bg-hc-secondary text-white px-8 py-4 rounded-full font-bold text-base"
           >
             <MessageCircle size={18} />
-            Book Now via WhatsApp
+            Book Now
           </a>
         </nav>
       </div>

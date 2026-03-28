@@ -20,6 +20,7 @@ export default {
         headline: ["Plus Jakarta Sans", "sans-serif"],
         body:     ["Manrope", "system-ui", "sans-serif"],
         label:    ["Manrope", "system-ui", "sans-serif"],
+        logo:     ["Sacramento", "cursive"],
       },
       colors: {
         /* ── Hills Camp brand tokens ── */

@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { WhatsAppWidget } from "@/components/property/WhatsAppWidget";
 import Index from "./pages/Index";
 import Listings from "./pages/Listings";
 import PropertyDetail from "./pages/PropertyDetail";
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/journal/:slug"   element={<BlogPost />} />
           <Route path="*"               element={<NotFound />} />
         </Routes>
+        <WhatsAppWidget />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
