@@ -55,7 +55,8 @@ export const Navbar: React.FC = () => {
       >
         <div className="flex justify-between items-center max-w-content mx-auto px-5 md:px-8 py-4 md:py-6">
           {/* Logo */}
-          <Logo variant={isLight ? 'light' : 'dark'} />
+          <div className="md:hidden"><Logo variant="dark" /></div>
+          <div className="hidden md:block"><Logo variant={isLight ? 'light' : 'dark'} /></div>
 
           {/* Desktop nav */}
           <div className="hidden md:flex gap-10 items-center">
