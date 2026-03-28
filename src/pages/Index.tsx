@@ -7,8 +7,6 @@ import { FloatingSearch } from '@/components/home/FloatingSearch';
 import { FeaturedRetreats } from '@/components/home/FeaturedRetreats';
 import { PhilosophySection } from '@/components/home/PhilosophySection';
 import { CollectionsGrid } from '@/components/home/CollectionsGrid';
-import { ParallaxSection } from '@/components/home/ParallaxSection';
-import { SearchSection } from '@/components/home/SearchSection';
 import { TestimonialsSection } from '@/components/home/TestimonialsSection';
 import { BlogTeaser } from '@/components/home/BlogTeaser';
 
@@ -23,8 +21,6 @@ const Index = () => {
           <FeaturedRetreats />
           <PhilosophySection />
           <CollectionsGrid />
-          <ParallaxSection />
-          <SearchSection />
           <TestimonialsSection />
           <BlogTeaser />
         </main>
