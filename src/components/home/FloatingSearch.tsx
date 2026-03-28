@@ -45,7 +45,7 @@ const AnimatedSearchBar: React.FC<{ onSubmit: (value: string) => void }> = ({ on
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[#ffdbcd]/25 rounded-2xl mx-5 mt-4 px-4 py-3 md:hidden">
+    <form onSubmit={handleSubmit} className="bg-[#ffdbcd]/25 rounded-2xl mx-5 mt-4 px-4 py-3 hidden">
       <div className="relative">
         <input
           ref={inputRef}
