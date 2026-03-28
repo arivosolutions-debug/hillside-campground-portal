@@ -94,7 +94,7 @@ export const TestimonialsSection: React.FC = () => {
         </div>
 
         {/* Mobile carousel */}
-        <div className="md:hidden">
+        <div className="md:hidden -mr-5">
           <div
             ref={scrollRef}
             onScroll={handleScroll}
