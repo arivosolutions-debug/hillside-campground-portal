@@ -11,7 +11,6 @@ import { ParallaxSection } from '@/components/home/ParallaxSection';
 import { SearchSection } from '@/components/home/SearchSection';
 import { TestimonialsSection } from '@/components/home/TestimonialsSection';
 import { BlogTeaser } from '@/components/home/BlogTeaser';
-import { WhatsAppWidget } from '@/components/property/WhatsAppWidget';
 
 const Index = () => {
   return (
@@ -31,7 +30,6 @@ const Index = () => {
         </main>
         <Footer />
       </PageTransition>
-      <WhatsAppWidget />
     </>
   );
 };
