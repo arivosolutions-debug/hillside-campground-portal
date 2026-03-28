@@ -29,7 +29,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`lg:hidden fixed bottom-6 right-6 z-50 w-16 h-16 bg-[#25D366] rounded-full flex flex-col items-center justify-center shadow-[0_8px_24px_rgba(37,211,102,0.35)] hover:scale-110 active:scale-95 transition-transform ${pulsed ? 'animate-pulse' : ''}`}
+      className={`lg:hidden fixed bottom-6 right-6 z-50 w-16 h-16 bg-hc-secondary rounded-full flex flex-col items-center justify-center shadow-[0_8px_24px_rgba(148,71,41,0.35)] hover:scale-110 active:scale-95 transition-transform ${pulsed ? 'animate-pulse' : ''}`}
       aria-label="Enquire via WhatsApp"
     >
       <span className="font-logo text-white text-[11px] leading-none">Enquire</span>
