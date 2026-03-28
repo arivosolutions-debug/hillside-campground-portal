@@ -152,7 +152,7 @@ export const FeaturedRetreats: React.FC = () => {
         </div>
 
         {/* Mobile Carousel */}
-        <div className="md:hidden">
+        <div className="md:hidden -mr-5">
           <div
             ref={scrollRef}
             onScroll={handleScroll}
