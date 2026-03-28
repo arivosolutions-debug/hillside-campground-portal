@@ -126,9 +126,9 @@ export const FeaturedRetreats: React.FC = () => {
     <section ref={ref} className="bg-hc-bg md:py-32 px-5 md:px-8 py-0">
       <div className="max-w-content mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 md:gap-6 mb-10 md:mb-16">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-2 md:gap-6 mb-10 md:mb-16">
           <div>
-            <h2 className="font-headline text-hc-primary text-3xl md:text-5xl mb-2 md:mb-4">
+            <h2 className="font-headline text-hc-primary text-3xl md:text-5xl mb-1 md:mb-4">
               Featured Retreats
             </h2>
             <p className="text-hc-text text-base md:text-lg max-w-xl hidden md:block">

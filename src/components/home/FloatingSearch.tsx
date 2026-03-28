@@ -85,10 +85,10 @@ const AnimatedSearchBar: React.FC<{ onSubmit: (value: string) => void }> = ({ on
 
         <button
           type="submit"
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-hc-secondary text-white p-2.5 rounded-full"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-hc-secondary p-2"
           aria-label="Search"
         >
-          <Search size={16} strokeWidth={2} />
+          <Search size={20} strokeWidth={1.75} />
         </button>
       </div>
     </form>
