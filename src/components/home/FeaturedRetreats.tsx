@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users } from 'lucide-react';
 import { useProperties } from '@/hooks/useProperties';
@@ -6,7 +6,7 @@ import { useProperties } from '@/hooks/useProperties';
 const FALLBACK_CARDS = [
   {
     image: '/lovable-uploads/d9024755-5800-41b6-9aaa-b2133b6d9f87.jpg',
-    badge: 'Treehouse',
+    badge: 'Canopy Retreat',
     district: 'Wayanad',
     name: 'Canopy at Vythiri',
     guests: '2 Guests',
@@ -15,7 +15,7 @@ const FALLBACK_CARDS = [
   },
   {
     image: 'https://images.unsplash.com/photo-1587922546307-776227941871?w=800&q=80',
-    badge: 'Houseboat',
+    badge: 'Floating Villa',
     district: 'Alleppey',
     name: 'Kettuvallam on the Backwaters',
     guests: '4 Guests',
@@ -24,7 +24,7 @@ const FALLBACK_CARDS = [
   },
   {
     image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80',
-    badge: 'Tea Estate',
+    badge: "Planter's Legacy",
     district: 'Munnar',
     name: 'Silver Oak Estate',
     guests: '2 Guests',
@@ -33,7 +33,7 @@ const FALLBACK_CARDS = [
   },
   {
     image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
-    badge: 'Heritage',
+    badge: 'Heritage Bungalow',
     district: 'Kannur',
     name: 'Pallikkunnu Bungalow',
     guests: '6 Guests',
@@ -45,6 +45,8 @@ const FALLBACK_CARDS = [
 export const FeaturedRetreats: React.FC = () => {
   const { data: properties } = useProperties({ featured: true });
   const ref = useRef<HTMLElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const section = ref.current;
@@ -62,6 +64,13 @@ export const FeaturedRetreats: React.FC = () => {
     return () => observer.disconnect();
   }, [properties]);
 
+  const handleScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    setScrollProgress(max > 0 ? el.scrollLeft / max : 0);
+  };
+
   const cards =
     properties && properties.length > 0
       ? properties.slice(0, 4).map(p => ({
@@ -75,71 +84,94 @@ export const FeaturedRetreats: React.FC = () => {
         }))
       : FALLBACK_CARDS;
 
+  const CardContent = ({ card }: { card: typeof cards[0] }) => (
+    <Link
+      to={`/property/${card.slug}`}
+      className="retreat-card bg-hc-bg-alt rounded-2xl overflow-hidden group block flex flex-col"
+    >
+      <div className="relative overflow-hidden rounded-2xl">
+        <img
+          src={card.image}
+          alt={card.name}
+          className="w-full h-[280px] md:h-[280px] aspect-[4/3] md:aspect-auto object-cover transition-transform duration-700 group-hover:scale-105 brightness-90 group-hover:brightness-100"
+        />
+        <span className="absolute top-3 left-4 bg-hc-bg/90 backdrop-blur-sm text-hc-primary text-xs font-bold uppercase tracking-tight px-3 py-1 rounded-full font-body">
+          {card.badge}
+        </span>
+      </div>
+      <div className="p-5 md:p-6 flex flex-col flex-1">
+        <p className="text-hc-secondary text-xs font-bold uppercase tracking-[0.2em] mb-1 font-body">
+          {card.district}, Kerala
+        </p>
+        <h3 className="font-headline text-hc-primary text-lg md:text-xl mb-3 group-hover:text-hc-secondary transition-colors duration-200 leading-snug">
+          {card.name}
+        </h3>
+        <div className="flex items-center gap-4 text-sm text-hc-text mb-4 font-body">
+          <span className="flex items-center gap-1.5">
+            <Users size={13} strokeWidth={1.75} />
+            {card.guests}
+          </span>
+        </div>
+        <div className="mt-auto pt-3 flex items-center justify-between">
+          <span className="text-hc-primary font-bold tracking-tight text-sm font-body">
+            Contact for Pricing
+          </span>
+          <ArrowRight size={14} className="text-hc-primary group-hover:translate-x-1 transition-transform duration-200" />
+        </div>
+      </div>
+    </Link>
+  );
+
   return (
-    <section ref={ref} className="bg-hc-bg py-32 px-8">
+    <section ref={ref} className="bg-hc-bg py-16 md:py-32 px-5 md:px-8">
       <div className="max-w-content mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 md:gap-6 mb-10 md:mb-16">
           <div>
-            <h2 className="font-headline text-hc-primary text-4xl md:text-5xl mb-4">
-              Our Featured Retreats
+            <h2 className="font-headline text-hc-primary text-3xl md:text-5xl mb-2 md:mb-4">
+              Featured Retreats
             </h2>
-            <p className="text-hc-text text-lg max-w-xl">
+            <p className="text-hc-text text-base md:text-lg max-w-xl hidden md:block">
               From the heights of Wayanad to the tranquil backwaters, find your perfect escape.
             </p>
           </div>
           <Link
             to="/listings"
-            className="text-hc-primary font-bold flex items-center gap-2 hover:gap-3 transition-all group shrink-0"
+            className="text-hc-secondary md:text-hc-primary font-bold flex items-center gap-2 hover:gap-3 transition-all group shrink-0 text-sm"
           >
-            Explore all stays
+            View More
             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Desktop Grid */}
+        <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-8">
           {cards.map((card) => (
-            <Link
-              key={card.slug}
-              to={`/property/${card.slug}`}
-              className="retreat-card bg-hc-bg-alt rounded-2xl overflow-hidden group block flex flex-col"
-            >
-              {/* Image */}
-              <div className="relative overflow-hidden rounded-2xl">
-                <img
-                  src={card.image}
-                  alt={card.name}
-                  className="w-full h-[280px] object-cover transition-transform duration-700 group-hover:scale-105 brightness-90 group-hover:brightness-100"
-                />
-                <span className="absolute top-3 left-4 bg-hc-bg/90 backdrop-blur-sm text-hc-primary text-xs font-bold uppercase tracking-tight px-3 py-1 rounded-full font-body">
-                  {card.badge}
-                </span>
-              </div>
-
-              {/* Body */}
-              <div className="p-6 flex flex-col flex-1">
-                <p className="text-hc-secondary text-xs font-bold uppercase tracking-[0.2em] mb-1 font-body">
-                  {card.district}, Kerala
-                </p>
-                <h3 className="font-headline text-hc-primary text-xl mb-3 group-hover:text-hc-secondary transition-colors duration-200 leading-snug">
-                  {card.name}
-                </h3>
-                <div className="flex items-center gap-4 text-sm text-hc-text mb-4 font-body">
-                  <span className="flex items-center gap-1.5">
-                    <Users size={13} strokeWidth={1.75} />
-                    {card.guests}
-                  </span>
-                </div>
-                <div className="mt-auto pt-3 flex items-center justify-between">
-                  <span className="text-hc-primary font-bold tracking-tight text-sm font-body">
-                    Contact for Pricing
-                  </span>
-                  <ArrowRight size={14} className="text-hc-primary group-hover:translate-x-1 transition-transform duration-200" />
-                </div>
-              </div>
-            </Link>
+            <CardContent key={card.slug} card={card} />
           ))}
+        </div>
+
+        {/* Mobile Carousel */}
+        <div className="md:hidden">
+          <div
+            ref={scrollRef}
+            onScroll={handleScroll}
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4"
+            style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
+          >
+            {cards.map((card) => (
+              <div key={card.slug} className="min-w-[85vw] snap-start">
+                <CardContent card={card} />
+              </div>
+            ))}
+          </div>
+          {/* Progress indicator */}
+          <div className="mt-4 mx-auto w-32 h-[2px] bg-gray-200 rounded-full relative">
+            <div
+              className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-hc-secondary rounded-full transition-all duration-150"
+              style={{ left: `${scrollProgress * 100}%`, transform: `translate(-50%, -50%)` }}
+            />
+          </div>
         </div>
       </div>
     </section>

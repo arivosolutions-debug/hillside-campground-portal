@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 
 const STATS = [
-  { value: '12', label: 'Estates' },
-  { value: '100%', label: 'Sustainable' },
+  { value: '15', label: 'Estates' },
+  { value: '100%', label: 'Unique' },
   { value: '0', label: 'Compromises' },
 ];
 
@@ -36,35 +36,34 @@ export const PhilosophySection: React.FC = () => {
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-content mx-auto px-8 py-32 philosophy-content">
+      <div className="relative z-10 max-w-content mx-auto px-5 md:px-8 py-16 md:py-32 philosophy-content">
         {/* Section label */}
         <div className="flex items-center gap-4 mb-6">
           <div className="h-px w-12 bg-hc-accent" />
-          <span className="font-label text-xs tracking-[0.4em] text-hc-accent-light">Our Philosophy</span>
+          <span className="font-label text-xs tracking-[0.4em] text-hc-secondary">Our Philosophy</span>
         </div>
 
-        <h2 className="font-headline text-white text-4xl md:text-6xl leading-tight mb-6 max-w-2xl">
-          Where <em className="text-hc-accent-light not-italic">Luxury</em><br />
-          meets the wild.
+        <h2 className="font-headline text-white text-3xl md:text-6xl leading-tight mb-6 max-w-2xl">
+          Luxury meets<br className="md:hidden" /> the <em className="italic">wild.</em>
         </h2>
 
-        <p className="text-white/80 text-lg leading-relaxed mb-4 max-w-xl">
+        <p className="text-white/80 text-base md:text-lg leading-relaxed mb-4 max-w-xl">
           Hills Camp was born from a simple conviction: that the most profound luxury is not
           what you add to a landscape, but what you preserve within it. Every retreat is designed
           to dissolve the boundary between shelter and wilderness.
         </p>
 
-        <p className="text-white/60 leading-relaxed mb-12 max-w-xl">
+        <p className="text-white/60 leading-relaxed mb-10 md:mb-12 max-w-xl hidden md:block">
           We work with local families, conservation biologists, and traditional craftspeople
           to create stays that are acts of ecological stewardship — beautiful precisely because
           they tread lightly on this ancient land.
         </p>
 
-        {/* Stats */}
-        <div className="flex flex-wrap gap-12">
-          {STATS.map((stat) => (
-            <div key={stat.label} className="border-l-2 border-hc-accent-light/40 pl-5">
-              <div className="font-headline text-4xl tabular-nums text-white font-bold leading-none mb-1">
+        {/* Stats — mobile: 2+1 layout, desktop: row */}
+        <div className="grid grid-cols-2 md:flex md:flex-wrap gap-8 md:gap-12">
+          {STATS.map((stat, i) => (
+            <div key={stat.label} className={`border-l-2 border-hc-accent-light/40 pl-5 ${i === 2 ? 'col-span-1' : ''}`}>
+              <div className="font-headline text-4xl md:text-4xl tabular-nums text-white font-bold leading-none mb-1">
                 {stat.value}
               </div>
               <div className="font-label text-[10px] text-white/50 tracking-widest">
