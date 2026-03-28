@@ -39,6 +39,7 @@ export const Navbar: React.FC = () => {
 
   const isDarkHero = DARK_HERO_PAGES.includes(location.pathname);
   const isLight = !scrolled && isDarkHero;
+  const isMobileAlwaysDark = true; // navbar always has solid bg on mobile
 
   const textPrimary = isLight ? 'text-white' : 'text-hc-primary-deep';
   const textMuted = isLight ? 'text-white/70' : 'text-hc-primary-deep/70';
@@ -49,12 +50,13 @@ export const Navbar: React.FC = () => {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
             ? 'bg-hc-bg/90 backdrop-blur-xl shadow-float'
-            : 'bg-transparent'
+            : 'bg-hc-bg md:bg-transparent'
         }`}
       >
         <div className="flex justify-between items-center max-w-content mx-auto px-5 md:px-8 py-4 md:py-6">
           {/* Logo */}
-          <Logo variant={isLight ? 'light' : 'dark'} />
+          <div className="md:hidden"><Logo variant="dark" /></div>
+          <div className="hidden md:block"><Logo variant={isLight ? 'light' : 'dark'} /></div>
 
           {/* Desktop nav */}
           <div className="hidden md:flex gap-10 items-center">
@@ -91,7 +93,7 @@ export const Navbar: React.FC = () => {
               Book Now
             </a>
             <button
-              className={`md:hidden ${textPrimary} p-1`}
+              className="md:hidden text-hc-primary-deep p-1"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
             >
