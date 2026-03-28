@@ -94,17 +94,15 @@ export const TestimonialsSection: React.FC = () => {
         </div>
 
         {/* Mobile carousel */}
-        <div className="md:hidden">
+        <div className="md:hidden -mx-5">
           <div
             ref={scrollRef}
-            onScroll={handleScroll}
-            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4"
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 pl-5"
             style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
           >
             {TESTIMONIALS.map((t) => (
               <div key={t.name} className="min-w-[85vw] snap-start" style={{ scrollSnapStop: 'always' }}>
                 <div className="testimonial-card bg-white/80 backdrop-blur-xl rounded-2xl p-6 relative">
-                  {/* Avatar peeking from top-right */}
                   <img
                     src={t.image}
                     alt={t.name}
@@ -119,13 +117,6 @@ export const TestimonialsSection: React.FC = () => {
                 </div>
               </div>
             ))}
-          </div>
-          {/* Progress indicator */}
-          <div className="mt-4 mx-auto w-32 h-[2px] bg-white/20 rounded-full relative">
-            <div
-              className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-hc-secondary rounded-full transition-all duration-150"
-              style={{ left: `${scrollProgress * 100}%`, transform: `translate(-50%, -50%)` }}
-            />
           </div>
         </div>
       </div>
