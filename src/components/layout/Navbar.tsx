@@ -39,6 +39,7 @@ export const Navbar: React.FC = () => {
 
   const isDarkHero = DARK_HERO_PAGES.includes(location.pathname);
   const isLight = !scrolled && isDarkHero;
+  const isMobileAlwaysDark = true; // navbar always has solid bg on mobile
 
   const textPrimary = isLight ? 'text-white' : 'text-hc-primary-deep';
   const textMuted = isLight ? 'text-white/70' : 'text-hc-primary-deep/70';
