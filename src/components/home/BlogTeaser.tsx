@@ -130,7 +130,7 @@ export const BlogTeaser: React.FC = () => {
               style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
             >
               {posts?.map((post) => (
-                <div key={post.id} className="min-w-[85vw] snap-start">
+                <div key={post.id} className="min-w-[85vw] snap-start" style={{ scrollSnapStop: 'always' }}>
                   <CardContent post={post} />
                 </div>
               ))}
