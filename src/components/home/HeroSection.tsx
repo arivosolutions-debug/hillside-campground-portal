@@ -55,7 +55,7 @@ const MobileHeroSearch: React.FC<{ onSubmit: (value: string) => void }> = ({ onS
         />
         {!isFocused && !inputValue && (
           <div className="absolute inset-0 flex items-center px-5 pointer-events-none" onClick={() => inputRef.current?.focus()}>
-            <span className="text-sm text-white/70 font-body">Search </span>
+            <span className="text-sm text-white/70 font-body">Search&nbsp;</span>
             <span
               className="text-sm font-bold text-white font-body inline-block transition-all duration-300 ease-out"
               style={{
