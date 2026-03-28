@@ -123,7 +123,7 @@ export const FeaturedRetreats: React.FC = () => {
   );
 
   return (
-    <section ref={ref} className="bg-hc-bg py-16 md:py-32 px-5 md:px-8">
+    <section ref={ref} className="bg-hc-bg md:py-32 px-5 md:px-8 py-0">
       <div className="max-w-content mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 md:gap-6 mb-10 md:mb-16">
