@@ -116,7 +116,7 @@ className="absolute inset-0 w-full h-full object-cover scale-[1.6]"
           )}
 
           {/* Spacer for filter bar overlap */}
-          <div className="h-12 md:h-14" />
+          
 
           {/* Showing count */}
           {!isLoading && properties && (
