@@ -29,7 +29,7 @@ export const BookNowModal: React.FC<BookNowModalProps> = ({ propertyName, phone,
       <div className="px-5 mt-8">
         <button
           onClick={() => setOpen(true)}
-          className="w-full bg-hc-secondary text-white rounded-full py-4 text-lg font-bold font-body hover:bg-hc-secondary/90 transition-colors"
+          className="w-full bg-[#1C341F] text-white rounded-full py-4 text-lg font-bold font-body hover:bg-[#1C341F]/90 transition-colors"
         >
           Book Now
         </button>
@@ -37,7 +37,7 @@ export const BookNowModal: React.FC<BookNowModalProps> = ({ propertyName, phone,
 
       {open && (
         <div
-          className="fixed inset-0 z-[100] bg-black/50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] bg-black/50 flex items-end md:items-center justify-center p-4 pb-24 md:pb-4"
           onClick={() => setOpen(false)}
         >
           <div
