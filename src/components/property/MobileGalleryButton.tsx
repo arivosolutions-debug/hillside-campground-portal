@@ -48,7 +48,7 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
 
       {/* Fullscreen lightbox */}
       {open && (
-        <div className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center">
+        <div className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center" style={{ maxHeight: '800px', margin: 'auto', top: 0, bottom: 0, left: 0, right: 0 }}>
           <button
             onClick={() => setOpen(false)}
             className="absolute top-[calc(1.25rem+45px)] right-5 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center z-10"
