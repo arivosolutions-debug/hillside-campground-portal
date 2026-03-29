@@ -3,17 +3,17 @@ import { PropertyCard } from './PropertyCard';
 import type { Property } from '@/lib/types';
 
 interface PropertyGridProps {
-  properties: Property[];
-  isLoading:  boolean;
+  properties: (Property & { amenity_names?: string[] })[];
+  isLoading: boolean;
 }
 
 export const PropertyGrid: React.FC<PropertyGridProps> = ({ properties, isLoading }) => {
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
         {[...Array(6)].map((_, i) => (
           <div key={i} className="animate-pulse">
-            <div className="rounded-xl bg-hc-bg-alt aspect-[4/5] mb-4" />
+            <div className="rounded-2xl bg-hc-bg-alt aspect-[4/3] md:aspect-[4/5] mb-3" />
             <div className="h-5 bg-hc-bg-alt rounded w-3/4 mb-2" />
             <div className="h-3 bg-hc-bg-alt rounded w-1/2 mb-1.5" />
             <div className="h-3 bg-hc-bg-alt rounded w-2/3" />
@@ -36,7 +36,7 @@ export const PropertyGrid: React.FC<PropertyGridProps> = ({ properties, isLoadin
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
       {properties.map(p => (
         <PropertyCard key={p.id} property={p} />
       ))}

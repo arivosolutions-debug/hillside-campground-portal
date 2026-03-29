@@ -1,5 +1,5 @@
 import React from 'react';
-import { Minus, Plus } from 'lucide-react';
+import { Minus, Plus, ChevronDown } from 'lucide-react';
 import type { District, PropertyType } from '@/lib/types';
 
 interface FilterBarProps {
@@ -10,9 +10,10 @@ interface FilterBarProps {
   onPropertyType: (v: PropertyType | '') => void;
   onGuests: (v: number) => void;
   totalCount?: number;
+  isSticky?: boolean;
 }
 
-const DISTRICTS: {value: District;label: string;}[] = [
+const DISTRICTS: { value: District; label: string }[] = [
   { value: 'wayanad', label: 'Wayanad' },
   { value: 'munnar', label: 'Munnar' },
   { value: 'alleppey', label: 'Alleppey' },
@@ -22,93 +23,95 @@ const DISTRICTS: {value: District;label: string;}[] = [
   { value: 'kannur', label: 'Kannur' },
 ];
 
-const TYPES: {value: PropertyType;label: string;}[] = [
-  { value: 'tree_house', label: 'Canopy Retreats' },
-  { value: 'backwater_villa', label: 'Floating Villas' },
-  { value: 'mountain_lookout', label: 'High Range' },
-  { value: 'tea_estate_cabin', label: "Planter's Legacy" },
-  { value: 'heritage_bungalow', label: 'Heritage Bungalows' },
-  { value: 'riverside_cottage', label: 'Riverside Cottages' },
+const TYPES: { value: PropertyType; label: string }[] = [
+  { value: 'tree_house', label: 'Treehouse' },
+  { value: 'backwater_villa', label: 'Backwater' },
+  { value: 'mountain_lookout', label: 'Mountain' },
+  { value: 'tea_estate_cabin', label: 'Tea Estate' },
+  { value: 'heritage_bungalow', label: 'Heritage' },
+  { value: 'riverside_cottage', label: 'Riverside' },
 ];
 
 export const FilterBar: React.FC<FilterBarProps> = ({
   district, propertyType, guests,
   onDistrict, onPropertyType, onGuests,
-  totalCount
+  isSticky = false,
 }) => {
   return (
-    <div className="flex flex-wrap gap-6 md:gap-8 items-end">
-      {/* District */}
-      <div className="w-full md:w-56">
-        <label className="block text-xs font-bold uppercase tracking-wider text-hc-secondary mb-3 font-body">
-          ​LOCATIONS
-        </label>
-        <div className="bg-hc-bg-alt rounded-xl">
-          <select
-            value={district}
-            onChange={(e) => onDistrict(e.target.value as District | '')}
-            className="w-full bg-transparent border-none px-5 py-3.5 text-hc-text rounded-xl focus:ring-0 font-body text-sm cursor-pointer">
-            <option value="">All Kerala</option>
-            {DISTRICTS.map((d) =>
-              <option key={d.value} value={d.value}>{d.label}</option>
-            )}
-          </select>
+    <div
+      className={`rounded-2xl overflow-hidden transition-all duration-300 ${
+        isSticky
+          ? 'bg-[#17341e]/80 backdrop-blur-xl shadow-lg'
+          : 'bg-[#17341e]'
+      }`}
+    >
+      <div className="grid grid-cols-3 gap-2 md:gap-4 p-4 md:p-6">
+        {/* LOCATIONS */}
+        <div>
+          <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest text-white/60 mb-2 font-body">
+            Locations
+          </label>
+          <div className="relative">
+            <select
+              value={district}
+              onChange={(e) => onDistrict(e.target.value as District | '')}
+              className="w-full appearance-none bg-white/15 text-white text-xs md:text-sm rounded-full px-3 md:px-4 py-2 md:py-2.5 pr-8 border-none focus:ring-0 font-body cursor-pointer"
+            >
+              <option value="" className="text-black">All Kerala</option>
+              {DISTRICTS.map((d) => (
+                <option key={d.value} value={d.value} className="text-black">{d.label}</option>
+              ))}
+            </select>
+            <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/60 pointer-events-none" />
+          </div>
+        </div>
+
+        {/* GUESTS */}
+        <div>
+          <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest text-white/60 mb-2 font-body">
+            Guests
+          </label>
+          <div className="flex items-center bg-white/15 rounded-full px-1 md:px-2 py-1 md:py-1.5">
+            <button
+              onClick={() => onGuests(Math.max(1, guests - 1))}
+              className="w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center text-white/70 hover:bg-white/10 transition-colors"
+              aria-label="Decrease guests"
+            >
+              <Minus size={12} />
+            </button>
+            <span className="flex-1 text-center text-white font-bold text-xs md:text-sm font-body">
+              {guests}
+            </span>
+            <button
+              onClick={() => onGuests(Math.min(12, guests + 1))}
+              className="w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center text-white/70 hover:bg-white/10 transition-colors"
+              aria-label="Increase guests"
+            >
+              <Plus size={12} />
+            </button>
+          </div>
+        </div>
+
+        {/* PROPERTY TYPE */}
+        <div>
+          <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest text-white/60 mb-2 font-body">
+            Property Type
+          </label>
+          <div className="relative">
+            <select
+              value={propertyType}
+              onChange={(e) => onPropertyType(e.target.value as PropertyType | '')}
+              className="w-full appearance-none bg-white/15 text-white text-xs md:text-sm rounded-full px-3 md:px-4 py-2 md:py-2.5 pr-8 border-none focus:ring-0 font-body cursor-pointer"
+            >
+              <option value="" className="text-black">All Types</option>
+              {TYPES.map((t) => (
+                <option key={t.value} value={t.value} className="text-black">{t.label}</option>
+              ))}
+            </select>
+            <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/60 pointer-events-none" />
+          </div>
         </div>
       </div>
-
-      {/* Guests */}
-      <div className="w-full md:w-44">
-        <label className="block text-xs font-bold uppercase tracking-wider text-hc-secondary mb-3 font-body">
-          Guests
-        </label>
-        <div className="bg-hc-bg-alt rounded-xl flex items-center px-2 py-1">
-          <button
-            onClick={() => onGuests(Math.max(1, guests - 1))}
-            className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-white transition-colors text-hc-text"
-            aria-label="Decrease guests">
-            <Minus size={14} />
-          </button>
-          <span className="flex-1 text-center font-bold text-hc-primary font-body text-sm">
-            {guests}
-          </span>
-          <button
-            onClick={() => onGuests(Math.min(12, guests + 1))}
-            className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-white transition-colors text-hc-text"
-            aria-label="Increase guests">
-            <Plus size={14} />
-          </button>
-        </div>
-      </div>
-
-      {/* Property Type */}
-      <div className="flex-1 min-w-0">
-        <label className="block text-xs font-bold uppercase tracking-wider text-hc-secondary mb-3 font-body">
-          Property Type
-        </label>
-        <div className="flex flex-wrap gap-3 items-center">
-          {TYPES.map((t) =>
-            <label key={t.value} className="flex items-center gap-2 cursor-pointer group">
-              <input
-                type="checkbox"
-                checked={propertyType === t.value}
-                onChange={(e) => onPropertyType(e.target.checked ? t.value : '')}
-                className="rounded border-hc-text-light text-hc-primary focus:ring-hc-primary" />
-              <span className="text-sm font-medium text-hc-text font-body group-hover:text-hc-primary transition-colors">
-                {t.label}
-              </span>
-            </label>
-          )}
-        </div>
-      </div>
-
-      {/* Count */}
-      {totalCount !== undefined &&
-        <div className="text-right shrink-0">
-          <p className="font-headline italic text-sm text-hc-text">
-            Showing {totalCount} {totalCount === 1 ? 'property' : 'properties'}
-          </p>
-        </div>
-      }
     </div>
   );
 };
