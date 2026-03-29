@@ -79,7 +79,7 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
       {open && fullscreenIndex === null && (
         <div className="fixed inset-0 z-[200] bg-hc-bg flex flex-col">
           {/* Header */}
-          <div className="flex items-center justify-between px-5 pt-[calc(1rem+env(safe-area-inset-top))] pb-3 bg-hc-bg/90 backdrop-blur-md sticky top-0 z-10">
+          <div className="flex items-center justify-between px-5 pt-[calc(3.5rem+30px)] pb-3 bg-hc-bg/90 backdrop-blur-md sticky top-0 z-10">
             <button
               onClick={() => setOpen(false)}
               className="flex items-center gap-2 text-hc-primary font-body text-sm"
@@ -88,9 +88,18 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
               <ArrowLeft size={18} strokeWidth={1.5} />
               <span>Back</span>
             </button>
-            <span className="text-hc-text-light font-body text-sm">
-              {allImages.length} photos
-            </span>
+            <div className="flex items-center gap-3">
+              <span className="text-hc-text-light font-body text-sm">
+                {allImages.length} photos
+              </span>
+              <button
+                onClick={() => setOpen(false)}
+                className="w-8 h-8 rounded-full bg-hc-primary/10 flex items-center justify-center"
+                aria-label="Close gallery"
+              >
+                <X size={16} className="text-hc-primary" />
+              </button>
+            </div>
           </div>
 
           {/* Mosaic Grid */}
