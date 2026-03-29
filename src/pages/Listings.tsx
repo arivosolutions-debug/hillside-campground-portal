@@ -120,7 +120,7 @@ className="absolute inset-0 w-full h-full object-cover scale-[1.6]"
 
           {/* Showing count */}
           {!isLoading && properties && (
-            <p className="text-center font-headline italic text-sm text-hc-secondary underline mt-4 mb-6">
+            <p className="text-center font-headline italic text-sm text-hc-secondary underline mt-4 mb-6 text-primary">
               Showing {properties.length} {properties.length === 1 ? 'property' : 'properties'}
             </p>
           )}
