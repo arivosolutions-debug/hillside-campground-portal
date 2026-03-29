@@ -69,7 +69,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         {/* GUESTS */}
         <div>
           <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest text-white/60 mb-2 font-body">
-            Guests
+            &nbsp; GUESTS
           </label>
           <div className="flex items-center bg-white/15 rounded-full px-1 md:px-2 py-1 md:py-1.5">
             <button
