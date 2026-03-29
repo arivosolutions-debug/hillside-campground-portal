@@ -60,6 +60,7 @@ const Listings = () => {
               src={listingsHeroBg}
               alt="Misty Kerala mountains"
               className="absolute inset-0 w-full h-full object-cover"
+              style={{ objectPosition: 'calc(50% + 50px) calc(50% - 50px)' }}
               width={1920}
               height={1080}
             />
