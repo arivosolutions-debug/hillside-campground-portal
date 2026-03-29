@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { LayoutGrid, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { LayoutGrid, X, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 import type { PropertyImage } from '@/lib/types';
 
 interface MobileGalleryButtonProps {
@@ -7,6 +7,19 @@ interface MobileGalleryButtonProps {
   images: PropertyImage[];
   propertyName: string;
 }
+
+// Tile size pattern that repeats for varied mosaic look
+const TILE_PATTERNS = [
+  'col-span-2 row-span-2', // large
+  'col-span-1 row-span-1', // small
+  'col-span-1 row-span-1', // small
+  'col-span-1 row-span-2', // tall
+  'col-span-1 row-span-1', // small
+  'col-span-2 row-span-1', // wide
+  'col-span-1 row-span-1', // small
+  'col-span-1 row-span-1', // small
+  'col-span-1 row-span-2', // tall
+];
 
 export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
   coverImage, images, propertyName,
@@ -17,42 +30,113 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
   ].filter(Boolean);
 
   const [open, setOpen] = useState(false);
-  const [index, setIndex] = useState(0);
+  const [fullscreenIndex, setFullscreenIndex] = useState<number | null>(null);
 
-  const prev = useCallback(() => setIndex(i => (i - 1 + allImages.length) % allImages.length), [allImages.length]);
-  const next = useCallback(() => setIndex(i => (i + 1) % allImages.length), [allImages.length]);
+  const prev = useCallback(() =>
+    setFullscreenIndex(i => (i === null ? 0 : (i - 1 + allImages.length) % allImages.length)),
+    [allImages.length]
+  );
+  const next = useCallback(() =>
+    setFullscreenIndex(i => (i === null ? 0 : (i + 1) % allImages.length)),
+    [allImages.length]
+  );
 
   useEffect(() => {
-    if (!open) return;
+    if (fullscreenIndex === null) return;
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') prev();
       if (e.key === 'ArrowRight') next();
-      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Escape') setFullscreenIndex(null);
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [open, prev, next]);
+  }, [fullscreenIndex, prev, next]);
+
+  // Lock body scroll when gallery is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [open]);
 
   return (
     <>
       {/* Gallery icon button */}
       <div className="md:hidden flex justify-end px-5 relative z-10 -mt-5">
         <button
-          onClick={() => { setIndex(0); setOpen(true); }}
-          className="w-10 h-10 rounded-full bg-[#17341e] flex items-center justify-center shadow-lg"
+          onClick={() => { setOpen(true); setFullscreenIndex(null); }}
+          className="w-10 h-10 rounded-full bg-hc-primary flex items-center justify-center shadow-lg"
           aria-label="View all photos"
         >
           <LayoutGrid size={18} className="text-white" />
         </button>
       </div>
 
-      {/* Fullscreen lightbox */}
-      {open && (
-        <div className="fixed inset-0 z-[200] bg-black/95 flex flex-col">
-          {/* Top bar with close button */}
-          <div className="flex justify-end px-5 pt-[calc(1.25rem+45px)] pb-3">
+      {/* ── Grid Gallery View ───────────────────────────────── */}
+      {open && fullscreenIndex === null && (
+        <div className="fixed inset-0 z-[200] bg-hc-bg flex flex-col">
+          {/* Header */}
+          <div className="flex items-center justify-between px-5 pt-[calc(1rem+env(safe-area-inset-top))] pb-3 bg-hc-bg/90 backdrop-blur-md sticky top-0 z-10">
             <button
               onClick={() => setOpen(false)}
+              className="flex items-center gap-2 text-hc-primary font-body text-sm"
+              aria-label="Close gallery"
+            >
+              <ArrowLeft size={18} strokeWidth={1.5} />
+              <span>Back</span>
+            </button>
+            <span className="text-hc-text-light font-body text-sm">
+              {allImages.length} photos
+            </span>
+          </div>
+
+          {/* Mosaic Grid */}
+          <div className="flex-1 overflow-y-auto px-2 pb-8">
+            <div className="grid grid-cols-3 gap-1.5 auto-rows-[120px]">
+              {allImages.map((src, i) => {
+                const pattern = TILE_PATTERNS[i % TILE_PATTERNS.length];
+                return (
+                  <div
+                    key={i}
+                    className={`${pattern} relative overflow-hidden rounded-lg cursor-pointer group`}
+                    onClick={() => setFullscreenIndex(i)}
+                  >
+                    <img
+                      src={src}
+                      alt={`${propertyName} — ${i + 1}`}
+                      className="w-full h-full object-cover group-active:scale-95 transition-transform duration-200"
+                      draggable={false}
+                      loading="lazy"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Fullscreen Single Photo View ────────────────────── */}
+      {fullscreenIndex !== null && (
+        <div
+          className="fixed inset-0 z-[210] bg-black/95 flex flex-col"
+          onClick={() => setFullscreenIndex(null)}
+        >
+          {/* Top bar */}
+          <div className="flex items-center justify-between px-5 pt-[calc(1.25rem+45px)] pb-3">
+            <button
+              onClick={(e) => { e.stopPropagation(); setFullscreenIndex(null); }}
+              className="flex items-center gap-2 text-white/80 font-body text-sm"
+              aria-label="Back to grid"
+            >
+              <ArrowLeft size={18} strokeWidth={1.5} />
+              <span>All photos</span>
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); setFullscreenIndex(null); setOpen(false); }}
               className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center"
               aria-label="Close gallery"
             >
@@ -60,33 +144,42 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
             </button>
           </div>
 
-          {/* Swipeable container — takes remaining space, max 85vh */}
-          <div
-            className="flex-1 flex items-center overflow-x-auto snap-x snap-mandatory hide-scrollbar"
-            style={{ scrollBehavior: 'smooth', maxHeight: '85vh' }}
-            onScroll={(e) => {
-              const el = e.currentTarget;
-              const newIndex = Math.round(el.scrollLeft / el.clientWidth);
-              if (newIndex !== index) setIndex(newIndex);
-            }}
-          >
-            {allImages.map((src, i) => (
-              <div key={i} className="w-full flex-shrink-0 snap-start snap-always flex items-center justify-center px-4" style={{ minWidth: '100%' }}>
-                <img
-                  src={src}
-                  alt={`${propertyName} — ${i + 1}`}
-                  className="max-w-full object-contain rounded-xl"
-                  style={{ maxHeight: '75vh' }}
-                  draggable={false}
-                />
-              </div>
-            ))}
+          {/* Image */}
+          <div className="flex-1 flex items-center justify-center px-4" style={{ maxHeight: '85vh' }}>
+            <img
+              src={allImages[fullscreenIndex]}
+              alt={`${propertyName} — ${fullscreenIndex + 1}`}
+              className="max-w-full object-contain rounded-xl"
+              style={{ maxHeight: '75vh' }}
+              draggable={false}
+              onClick={(e) => e.stopPropagation()}
+            />
           </div>
+
+          {/* Nav arrows */}
+          {allImages.length > 1 && (
+            <>
+              <button
+                onClick={(e) => { e.stopPropagation(); prev(); }}
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center"
+                aria-label="Previous photo"
+              >
+                <ChevronLeft size={20} className="text-white" />
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); next(); }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center"
+                aria-label="Next photo"
+              >
+                <ChevronRight size={20} className="text-white" />
+              </button>
+            </>
+          )}
 
           {/* Counter */}
           <div className="py-4 text-center">
             <span className="text-white/60 font-body text-sm tabular-nums">
-              {index + 1} / {allImages.length}
+              {fullscreenIndex + 1} / {allImages.length}
             </span>
           </div>
         </div>
