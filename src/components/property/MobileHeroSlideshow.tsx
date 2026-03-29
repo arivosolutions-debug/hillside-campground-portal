@@ -52,7 +52,7 @@ export const MobileHeroSlideshow: React.FC<MobileHeroSlideshowProps> = ({
       {/* Breadcrumb */}
       <Link
         to="/listings"
-        className="absolute top-14 left-5 flex items-center gap-1.5 text-white/70 text-xs font-body z-10"
+        className="absolute top-[calc(3.5rem+30px)] left-5 flex items-center gap-1.5 text-white/70 text-xs font-body z-10"
       >
         <ArrowLeft size={12} /> All Stays
       </Link>
