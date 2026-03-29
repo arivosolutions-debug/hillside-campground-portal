@@ -59,7 +59,7 @@ const Listings = () => {
             <img
               src={listingsHeroBg}
               alt="Misty Kerala mountains"
-              className="absolute inset-0 w-full h-full object-cover brightness-[0.4]"
+              className="absolute inset-0 w-full h-full object-cover"
               width={1920}
               height={1080}
             />
