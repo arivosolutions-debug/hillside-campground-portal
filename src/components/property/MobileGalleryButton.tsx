@@ -48,10 +48,10 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
 
       {/* Fullscreen lightbox */}
       {open && (
-        <div className="fixed inset-0 z-[200] bg-black/95 flex flex-col items-center justify-center">
+        <div className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center">
           <button
             onClick={() => setOpen(false)}
-            className="absolute top-[calc(1.25rem+20px)] right-5 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center z-10"
+            className="absolute top-[calc(1.25rem+45px)] right-5 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center z-10"
             aria-label="Close gallery"
           >
             <X size={18} className="text-white" />
@@ -59,15 +59,20 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
 
           {/* Swipeable container */}
           <div
-            className="w-full h-full flex items-center overflow-x-auto snap-x snap-mandatory hide-scrollbar"
+            className="w-full flex items-center overflow-x-auto snap-x snap-mandatory hide-scrollbar"
             style={{ scrollBehavior: 'smooth' }}
+            onScroll={(e) => {
+              const el = e.currentTarget;
+              const newIndex = Math.round(el.scrollLeft / el.clientWidth);
+              if (newIndex !== index) setIndex(newIndex);
+            }}
           >
             {allImages.map((src, i) => (
-              <div key={i} className="w-full h-full flex-shrink-0 snap-start snap-always flex items-center justify-center p-4">
+              <div key={i} className="w-full flex-shrink-0 snap-start snap-always flex items-center justify-center px-4" style={{ minWidth: '100%' }}>
                 <img
                   src={src}
                   alt={`${propertyName} — ${i + 1}`}
-                  className="max-h-[85vh] max-w-full object-contain rounded-xl"
+                  className="max-h-[75vh] max-w-full object-contain rounded-xl"
                   draggable={false}
                 />
               </div>
