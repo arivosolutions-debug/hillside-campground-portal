@@ -80,7 +80,7 @@ const Listings = () => {
 
             {/* Filter bar inside hero, overlapping bottom */}
             {!isSticky && (
-              <div className="absolute bottom-0 left-0 right-0 translate-y-1/2 z-30 px-5 md:px-8">
+              <div className="absolute bottom-[35px] left-0 right-0 translate-y-1/2 z-30 px-5 md:px-8">
                 <div className="max-w-[1280px] mx-auto">
                   <FilterBar
                     district={district}
