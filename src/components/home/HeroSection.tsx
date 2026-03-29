@@ -102,10 +102,10 @@ export const HeroSection: React.FC = () => {
       {/* Content */}
       <div className="relative z-10 max-w-content mx-auto px-6 md:px-8 pb-6 md:pb-0 pt-32 w-full">
         <div className="max-w-3xl">
-          <h1 className="font-headline text-white text-3xl md:text-8xl lg:text-[96px] leading-none mb-2 md:mb-6 animate-fade-in-2 font-bold">
+          <h1 className="font-headline text-white md:text-8xl lg:text-[96px] leading-none mb-2 md:mb-6 animate-fade-in-2 font-bold text-4xl">
             Where Nature<br />Meets Comfort
           </h1>
-          <p className="text-sm md:text-2xl leading-relaxed max-w-xl mb-4 md:mb-10 animate-fade-in-3 text-white/80 md:text-primary-foreground">
+          <p className="md:text-2xl leading-relaxed max-w-xl mb-4 md:mb-10 animate-fade-in-3 text-white/80 md:text-primary-foreground text-base">
             <span className="md:hidden">A curated experience made just for you!</span>
             <span className="hidden md:inline">Experience the soul of Kerala through curated stays designed to vanish into the wilderness.</span>
           </p>
