@@ -46,8 +46,28 @@ export const MobileHeroSlideshow: React.FC<MobileHeroSlideshowProps> = ({
         />
       ))}
 
+      {/* Navigation arrows */}
+      {allImages.length > 1 && (
+        <>
+          <button
+            onClick={() => setCurrent(i => (i - 1 + allImages.length) % allImages.length)}
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center active:scale-90 transition-transform"
+            aria-label="Previous image"
+          >
+            <ChevronLeft size={18} className="text-white" />
+          </button>
+          <button
+            onClick={() => setCurrent(i => (i + 1) % allImages.length)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center active:scale-90 transition-transform"
+            aria-label="Next image"
+          >
+            <ChevronRight size={18} className="text-white" />
+          </button>
+        </>
+      )}
+
       {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none" />
 
       {/* Breadcrumb */}
       <Link
