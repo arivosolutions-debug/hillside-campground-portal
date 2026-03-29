@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, MapPin, Users } from 'lucide-react';
+import { ArrowLeft, MapPin, Users, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { PropertyImage } from '@/lib/types';
 
 interface MobileHeroSlideshowProps {
