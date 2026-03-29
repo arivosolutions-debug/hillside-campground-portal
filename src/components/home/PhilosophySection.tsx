@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 const STATS = [
-  { value: '15', label: 'Estates' },
+  { value: '15', label: 'PROPERTIES' },
   { value: '100%', label: 'Unique' },
   { value: '0', label: 'Compromises' },
 ];
