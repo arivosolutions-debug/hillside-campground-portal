@@ -48,19 +48,22 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
 
       {/* Fullscreen lightbox */}
       {open && (
-        <div className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center">
-          <button
-            onClick={() => setOpen(false)}
-            className="absolute top-[calc(1.25rem+45px)] right-5 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center z-10"
-            aria-label="Close gallery"
-          >
-            <X size={18} className="text-white" />
-          </button>
+        <div className="fixed inset-0 z-[200] bg-black/95 flex flex-col">
+          {/* Top bar with close button */}
+          <div className="flex justify-end px-5 pt-[calc(1.25rem+45px)] pb-3">
+            <button
+              onClick={() => setOpen(false)}
+              className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center"
+              aria-label="Close gallery"
+            >
+              <X size={18} className="text-white" />
+            </button>
+          </div>
 
-          {/* Swipeable container */}
+          {/* Swipeable container — takes remaining space, max 85vh */}
           <div
-            className="w-full flex items-center overflow-x-auto snap-x snap-mandatory hide-scrollbar"
-            style={{ scrollBehavior: 'smooth', maxHeight: '800px' }}
+            className="flex-1 flex items-center overflow-x-auto snap-x snap-mandatory hide-scrollbar"
+            style={{ scrollBehavior: 'smooth', maxHeight: '85vh' }}
             onScroll={(e) => {
               const el = e.currentTarget;
               const newIndex = Math.round(el.scrollLeft / el.clientWidth);
@@ -73,7 +76,7 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
                   src={src}
                   alt={`${propertyName} — ${i + 1}`}
                   className="max-w-full object-contain rounded-xl"
-                  style={{ maxHeight: '800px' }}
+                  style={{ maxHeight: '75vh' }}
                   draggable={false}
                 />
               </div>
@@ -81,9 +84,11 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
           </div>
 
           {/* Counter */}
-          <span className="absolute bottom-6 text-white/60 font-body text-sm tabular-nums">
-            {index + 1} / {allImages.length}
-          </span>
+          <div className="py-4 text-center">
+            <span className="text-white/60 font-body text-sm tabular-nums">
+              {index + 1} / {allImages.length}
+            </span>
+          </div>
         </div>
       )}
     </>
