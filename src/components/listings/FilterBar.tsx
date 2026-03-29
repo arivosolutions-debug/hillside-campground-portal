@@ -48,14 +48,14 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       <div className="grid grid-cols-3 gap-2 md:gap-4 p-4 md:p-6">
         {/* LOCATIONS */}
         <div>
-          <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest text-white/60 mb-2 font-body">
+          <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest mb-2 font-body text-white">
             Locations
           </label>
           <div className="relative">
             <select
               value={district}
               onChange={(e) => onDistrict(e.target.value as District | '')}
-              className="w-full appearance-none bg-white/15 text-white text-xs md:text-sm rounded-full px-3 md:px-4 py-2 md:py-2.5 pr-8 border-none focus:ring-0 font-body cursor-pointer"
+              className="w-full appearance-none bg-white/15 text-xs md:text-sm rounded-full px-3 md:px-4 py-2 md:py-2.5 pr-8 border-none focus:ring-0 font-body cursor-pointer text-white opacity-100"
             >
               <option value="" className="text-black">All Kerala</option>
               {DISTRICTS.map((d) => (
@@ -68,10 +68,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
         {/* GUESTS */}
         <div>
-          <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest text-white/60 mb-2 font-body">
+          <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest mb-2 font-body text-white">
             &nbsp; GUESTS
           </label>
-          <div className="flex items-center bg-white/15 rounded-full px-1 md:px-2 py-1 md:py-1.5">
+          <div className="flex items-center bg-white/15 rounded-full px-1 md:px-2 py-1 md:py-1.5 opacity-100">
             <button
               onClick={() => onGuests(Math.max(1, guests - 1))}
               className="w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center text-white/70 hover:bg-white/10 transition-colors"
@@ -94,14 +94,14 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
         {/* PROPERTY TYPE */}
         <div>
-          <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest text-white/60 mb-2 font-body">
+          <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest mb-2 font-body text-white">
             Property Type
           </label>
           <div className="relative">
             <select
               value={propertyType}
               onChange={(e) => onPropertyType(e.target.value as PropertyType | '')}
-              className="w-full appearance-none bg-white/15 text-white text-xs md:text-sm rounded-full px-3 md:px-4 py-2 md:py-2.5 pr-8 border-none focus:ring-0 font-body cursor-pointer"
+              className="w-full appearance-none bg-white/15 text-xs md:text-sm rounded-full px-3 md:px-4 py-2 md:py-2.5 pr-8 border-none focus:ring-0 font-body cursor-pointer text-white opacity-100"
             >
               <option value="" className="text-black">All Types</option>
               {TYPES.map((t) => (

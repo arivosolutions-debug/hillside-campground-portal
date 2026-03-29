@@ -82,7 +82,7 @@ className="absolute inset-0 w-full h-full object-cover scale-[1.6]"
             {/* Filter bar inside hero, overlapping bottom */}
             {!isSticky && (
               <div className="absolute bottom-[70px] left-0 right-0 translate-y-1/2 z-30 px-5 md:px-8">
-                <div className="max-w-[1280px] mx-auto">
+                <div className="max-w-[1280px] mx-auto opacity-80">
                   <FilterBar
                     district={district}
                     propertyType={propertyType}
