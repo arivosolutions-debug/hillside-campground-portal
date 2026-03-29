@@ -26,7 +26,7 @@ export const MobileHeroSlideshow: React.FC<MobileHeroSlideshowProps> = ({
     if (allImages.length <= 1) return;
     const timer = setInterval(() => {
       setCurrent(prev => (prev + 1) % allImages.length);
-    }, 4000);
+    }, 5000);
     return () => clearInterval(timer);
   }, [allImages.length]);
 
