@@ -71,7 +71,7 @@ export const MobileHeroSlideshow: React.FC<MobileHeroSlideshowProps> = ({
           </span>
         </div>
         {pills.length > 0 && (
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mb-3">
             {pills.map(p => (
               <span
                 key={p}
@@ -79,6 +79,23 @@ export const MobileHeroSlideshow: React.FC<MobileHeroSlideshowProps> = ({
               >
                 {p}
               </span>
+            ))}
+          </div>
+        )}
+        {/* Instagram-style dots */}
+        {allImages.length > 1 && (
+          <div className="flex items-center justify-center gap-[6px]">
+            {allImages.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={`rounded-full transition-all duration-300 ${
+                  i === current
+                    ? 'w-[7px] h-[7px] bg-white'
+                    : 'w-[6px] h-[6px] bg-white/40'
+                }`}
+                aria-label={`Go to image ${i + 1}`}
+              />
             ))}
           </div>
         )}
