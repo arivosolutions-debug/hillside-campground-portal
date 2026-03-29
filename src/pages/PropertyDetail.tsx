@@ -249,8 +249,7 @@ const PropertyDetail = () => {
         <Footer />
       </PageTransition>
 
-      {/* Mobile WhatsApp FAB */}
-      <WhatsAppWidget propertyName={property.name} phone={WHATSAPP_PHONE} />
+
     </>
   );
 };
