@@ -10,6 +10,14 @@ import { RoomTypesList } from '@/components/property/RoomTypesList';
 import { NearbyAttractions } from '@/components/property/NearbyAttractions';
 import { MapEmbed } from '@/components/property/MapEmbed';
 import { WhatsAppWidget } from '@/components/property/WhatsAppWidget';
+import { MobileHeroSlideshow } from '@/components/property/MobileHeroSlideshow';
+import { MobileGalleryButton } from '@/components/property/MobileGalleryButton';
+import { MobileRoomCards } from '@/components/property/MobileRoomCards';
+import { BookNowModal } from '@/components/property/BookNowModal';
+import { AmenitiesGrid } from '@/components/property/AmenitiesGrid';
+import { GettingThereMobile } from '@/components/property/GettingThereMobile';
+import { HighlightsAccordion, TermsAccordion } from '@/components/property/PropertyAccordion';
+import { SimilarStays } from '@/components/property/SimilarStays';
 import { useProperty } from '@/hooks/useProperty';
 import { DISTRICT_LABELS, PROPERTY_TYPE_LABELS } from '@/lib/types';
 
@@ -42,9 +50,10 @@ const PropertyDetail = () => {
     );
   }
 
-  const whatsappMsg  = encodeURIComponent(`Hi, I'm interested in ${property.name} at Hills Camp Kerala.`);
+  const whatsappMsg = encodeURIComponent(`Hi, I'm interested in ${property.name} at Hills Camp Kerala.`);
   const whatsappHref = `https://wa.me/${WHATSAPP_PHONE}?text=${whatsappMsg}`;
   const districtLabel = DISTRICT_LABELS[property.district];
+  const amenityNames = property.amenities.map(a => a.name);
 
   return (
     <>
@@ -52,8 +61,71 @@ const PropertyDetail = () => {
       <PageTransition>
         <main className="bg-hc-bg">
 
-          {/* ── Property Header ───────────────────────────────────────────── */}
-          <section className="pt-28 pb-6 px-8 max-w-[1280px] mx-auto">
+          {/* ═══════════════════ MOBILE LAYOUT ═══════════════════ */}
+
+          {/* 1. Mobile Hero Slideshow */}
+          <MobileHeroSlideshow
+            coverImage={property.cover_image}
+            images={property.property_images}
+            propertyName={property.name}
+            district={districtLabel}
+            maxGuests={property.max_guests}
+            amenityNames={amenityNames}
+          />
+
+          {/* 2. Gallery Icon Button */}
+          <MobileGalleryButton
+            coverImage={property.cover_image}
+            images={property.property_images}
+            propertyName={property.name}
+          />
+
+          {/* 3. Description (mobile) */}
+          <div className="md:hidden px-5 mt-6">
+            {property.description && (
+              <p className="text-base text-[#424842] leading-relaxed font-body">
+                {property.description}
+              </p>
+            )}
+          </div>
+
+          {/* 4. Rooms (mobile) */}
+          <MobileRoomCards rooms={property.room_types} coverImage={property.cover_image} />
+
+          {/* 5. Book Now (both) */}
+          <BookNowModal propertyName={property.name} phone={WHATSAPP_PHONE} />
+
+          {/* 6. Amenities (both — mobile uses grid, desktop uses sidebar in its own section) */}
+          <div className="md:hidden">
+            <AmenitiesGrid amenities={property.amenities} />
+          </div>
+
+          {/* 7. Getting There (mobile) */}
+          <GettingThereMobile
+            latitude={property.latitude}
+            longitude={property.longitude}
+            district={districtLabel}
+          />
+
+          {/* 8 & 9. Accordions (both) */}
+          <div className="mt-10 md:px-8 md:max-w-[1280px] md:mx-auto">
+            <HighlightsAccordion highlights={property.highlights} />
+            <TermsAccordion />
+          </div>
+
+          {/* 10. Similar Stays */}
+          <div className="mb-16">
+            <SimilarStays
+              currentSlug={property.slug}
+              district={property.district}
+              propertyType={property.property_type}
+            />
+          </div>
+
+          {/* ═══════════════════ DESKTOP LAYOUT ═══════════════════ */}
+
+          {/* Desktop Header */}
+          <section className="hidden md:block pt-28 pb-6 px-8 max-w-[1280px] mx-auto">
             <Link
               to="/listings"
               className="inline-flex items-center gap-2 text-hc-text-light hover:text-hc-primary font-body text-sm mb-6 transition-colors"
@@ -80,8 +152,6 @@ const PropertyDetail = () => {
                   </span>
                 </div>
               </div>
-
-              {/* Desktop pricing / enquiry CTA */}
               <div className="mt-4 md:mt-0 text-right shrink-0">
                 <p className="text-xs text-hc-text-light uppercase tracking-[0.2em] mb-1 font-body">Pricing</p>
                 <p className="font-body font-bold text-hc-primary text-base">Contact for Pricing</p>
@@ -89,8 +159,8 @@ const PropertyDetail = () => {
             </div>
           </section>
 
-          {/* ── Photo Gallery ─────────────────────────────────────────────── */}
-          <section className="px-8 max-w-[1280px] mx-auto mb-12">
+          {/* Desktop Photo Gallery */}
+          <section className="hidden md:block px-8 max-w-[1280px] mx-auto mb-12">
             <PhotoGallery
               coverImage={property.cover_image}
               images={property.property_images}
@@ -98,14 +168,10 @@ const PropertyDetail = () => {
             />
           </section>
 
-          {/* ── Content + Sidebar ─────────────────────────────────────────── */}
-          <section className="px-8 max-w-[1280px] mx-auto mb-20">
+          {/* Desktop Content + Sidebar */}
+          <section className="hidden md:block px-8 max-w-[1280px] mx-auto mb-20">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-
-              {/* ── Main column ─────────────────────────────────────────── */}
               <div className="lg:col-span-2">
-
-                {/* Description */}
                 <h2 className="font-headline text-hc-primary text-3xl mb-6">
                   {property.tagline ?? 'Nature Meets Comfort'}
                 </h2>
@@ -115,7 +181,6 @@ const PropertyDetail = () => {
                   </p>
                 )}
 
-                {/* Highlights + Experience */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
                   {property.highlights && property.highlights.length > 0 && (
                     <div className="bg-hc-bg-alt rounded-2xl p-8">
@@ -130,7 +195,6 @@ const PropertyDetail = () => {
                       </div>
                     </div>
                   )}
-
                   <div className="bg-hc-bg-alt rounded-2xl p-8">
                     <h3 className="font-headline text-hc-primary text-xl mb-4">The Experience</h3>
                     <p className="text-sm text-hc-text leading-relaxed mb-4 font-body">
@@ -146,13 +210,8 @@ const PropertyDetail = () => {
                   </div>
                 </div>
 
-                {/* Room Types */}
                 <RoomTypesList rooms={property.room_types} coverImage={property.cover_image} />
-
-                {/* Nearby Attractions */}
                 <NearbyAttractions attractions={property.nearby_attractions} />
-
-                {/* Map */}
                 <MapEmbed
                   latitude={property.latitude}
                   longitude={property.longitude}
@@ -160,12 +219,8 @@ const PropertyDetail = () => {
                 />
               </div>
 
-              {/* ── Sidebar ─────────────────────────────────────────────── */}
               <div className="lg:col-span-1">
-                {/* Amenities */}
                 <AmenitiesSidebar amenities={property.amenities} />
-
-              {/* Sticky availability CTA */}
                 <div className="bg-hc-bg-alt rounded-2xl p-8 sticky top-28">
                   <h3 className="font-headline text-hc-primary text-xl mb-3">Availability</h3>
                   <p className="text-sm text-hc-text leading-relaxed mb-6 font-body">
