@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const DEFAULT_PHONE = '919847012345';
 
@@ -12,10 +13,15 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
   phone = DEFAULT_PHONE,
 }) => {
   const [pulsed, setPulsed] = useState(true);
+  const { pathname } = useLocation();
+
   useEffect(() => {
     const t = setTimeout(() => setPulsed(false), 2500);
     return () => clearTimeout(t);
   }, []);
+
+  // Hide on listings and property detail pages
+  if (pathname === '/listings' || pathname.startsWith('/property/')) return null;
 
   const msg = encodeURIComponent(
     propertyName
