@@ -67,7 +67,7 @@ className="absolute inset-0 w-full h-full object-cover scale-[1.4]"
 
             {/* Hero Content */}
             <div className="relative z-10 h-full flex flex-col justify-center px-6 md:px-8 max-w-[1280px] mx-auto pb-20 md:pb-24 pt-[5px]">
-              <h1 className="font-headline text-white text-3xl md:text-7xl leading-none mb-2">
+              <h1 className="font-headline text-3xl md:text-7xl leading-none mb-2 font-bold text-primary">
                 Discover<br />
                 <span className="italic">Your Escape</span>
               </h1>
