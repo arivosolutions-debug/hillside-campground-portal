@@ -109,14 +109,6 @@ export const Navbar: React.FC = () => {
         }`}
       >
         <div className="absolute inset-0 bg-[#022c22]" />
-        {/* Close button */}
-        <button
-          className="absolute top-5 right-5 text-white p-2 z-50"
-          onClick={() => setMenuOpen(false)}
-          aria-label="Close menu"
-        >
-          <X size={24} />
-        </button>
         <nav className="absolute inset-0 flex flex-col items-center justify-center gap-8">
           {MOBILE_NAV_LINKS.map((link) => (
             <Link
