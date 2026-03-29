@@ -15,19 +15,27 @@ export function useProperties(filters: PropertyFilters = {}) {
     queryFn: async () => {
       let query = supabase
         .from('properties')
-        .select('*')
+        .select('*, property_amenities(amenity_id, amenities(name))')
         .eq('is_published', true)
         .order('is_featured', { ascending: false })
         .order('created_at', { ascending: false });
 
-      if (filters.district)       query = query.eq('district', filters.district);
-      if (filters.property_type)  query = query.eq('property_type', filters.property_type);
-      if (filters.max_guests)     query = query.gte('max_guests', filters.max_guests);
-      if (filters.featured)       query = query.eq('is_featured', true);
+      if (filters.district) query = query.eq('district', filters.district);
+      if (filters.property_type) query = query.eq('property_type', filters.property_type);
+      if (filters.max_guests) query = query.gte('max_guests', filters.max_guests);
+      if (filters.featured) query = query.eq('is_featured', true);
 
       const { data, error } = await query;
       if (error) throw error;
-      return data as Property[];
+
+      // Flatten amenity names onto each property
+      return (data as any[]).map((p) => {
+        const amenity_names: string[] = (p.property_amenities ?? [])
+          .map((pa: any) => pa.amenities?.name)
+          .filter(Boolean);
+        const { property_amenities, ...rest } = p;
+        return { ...rest, amenity_names } as Property & { amenity_names: string[] };
+      });
     },
   });
 }

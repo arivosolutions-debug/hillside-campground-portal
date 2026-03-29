@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
@@ -7,15 +7,19 @@ import { FilterBar } from '@/components/listings/FilterBar';
 import { PropertyGrid } from '@/components/listings/PropertyGrid';
 import { useProperties } from '@/hooks/useProperties';
 import type { District, PropertyType } from '@/lib/types';
+import listingsHeroBg from '@/assets/listings-hero-bg.jpg';
 
-const PAGE_SIZE = 9;
+const PAGE_SIZE = 6;
 
 const Listings = () => {
   const [searchParams] = useSearchParams();
-  const [district,     setDistrict]     = useState<District | ''>((searchParams.get('district') as District) ?? '');
+  const [district, setDistrict] = useState<District | ''>((searchParams.get('district') as District) ?? '');
   const [propertyType, setPropertyType] = useState<PropertyType | ''>((searchParams.get('type') as PropertyType) ?? '');
-  const [guests,       setGuests]       = useState<number>(Number(searchParams.get('guests')) || 2);
-  const [page,         setPage]         = useState(0);
+  const [guests, setGuests] = useState<number>(Number(searchParams.get('guests')) || 2);
+  const [page, setPage] = useState(0);
+  const [isSticky, setIsSticky] = useState(false);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const filterSentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setDistrict((searchParams.get('district') as District) ?? '');
@@ -24,59 +28,123 @@ const Listings = () => {
     setPage(0);
   }, [searchParams]);
 
+  // Intersection observer for sticky filter bar
+  useEffect(() => {
+    const sentinel = filterSentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsSticky(!entry.isIntersecting),
+      { threshold: 0, rootMargin: '-72px 0px 0px 0px' }
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, []);
+
   const { data: properties, isLoading } = useProperties({
-    district:      district || undefined,
+    district: district || undefined,
     property_type: propertyType || undefined,
-    max_guests:    guests > 1 ? guests : undefined,
+    max_guests: guests > 1 ? guests : undefined,
   });
 
-  const paged = properties?.slice(0, (page + 1) * PAGE_SIZE) ?? [];
-  const hasMore = (properties?.length ?? 0) > paged.length;
+  const totalPages = Math.ceil((properties?.length ?? 0) / PAGE_SIZE);
+  const paged = properties?.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE) ?? [];
 
   return (
     <>
       <Navbar />
       <PageTransition>
         <main className="min-h-screen bg-hc-bg">
+          {/* Hero Section */}
+          <section ref={heroRef} className="relative h-[40vh] md:h-[50vh] overflow-hidden">
+            <img
+              src={listingsHeroBg}
+              alt="Misty Kerala mountains"
+              className="absolute inset-0 w-full h-full object-cover brightness-[0.4]"
+              width={1920}
+              height={1080}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#17341e] via-[#17341e]/60 to-transparent" />
 
-          {/* Page Header */}
-          <section className="pt-36 pb-8 px-8 max-w-[1280px] mx-auto">
-            <h1 className="font-headline text-hc-primary text-5xl md:text-7xl tracking-tight mb-4">
-              Discover Your Escape
-            </h1>
-            <p className="text-hc-text text-lg max-w-2xl font-light leading-relaxed">
-              Curated wilderness retreats across the Western Ghats, designed for luxury family immersion.
-            </p>
-          </section>
-
-          {/* Sticky Filter Bar */}
-          <section className="bg-hc-bg/95 shadow-[0_1px_0_0_rgba(23,52,30,0.06)] px-8">
-            <div className="max-w-[1280px] mx-auto py-4">
-              <FilterBar
-                district={district}
-                propertyType={propertyType}
-                guests={guests}
-                onDistrict={(v) => { setDistrict(v); setPage(0); }}
-                onPropertyType={(v) => { setPropertyType(v); setPage(0); }}
-                onGuests={(v) => { setGuests(v); setPage(0); }}
-                totalCount={properties?.length}
-              />
+            {/* Hero Content */}
+            <div className="relative z-10 h-full flex flex-col justify-center px-6 md:px-8 max-w-[1280px] mx-auto pb-20 md:pb-24">
+              <h1 className="font-headline text-white text-3xl md:text-7xl leading-none mb-2">
+                Discover<br />
+                <span className="italic">Your Escape</span>
+              </h1>
+              <p className="text-sm md:text-base text-white/70 mt-2 font-body">
+                A curated experience made just for you!
+              </p>
             </div>
+
+            {/* Filter bar sentinel — marks where filter bar originally sits */}
+            <div ref={filterSentinelRef} className="absolute bottom-0 left-0 right-0 h-1" />
+
+            {/* Filter bar inside hero, overlapping bottom */}
+            {!isSticky && (
+              <div className="absolute bottom-0 left-0 right-0 translate-y-1/2 z-30 px-5 md:px-8">
+                <div className="max-w-[1280px] mx-auto">
+                  <FilterBar
+                    district={district}
+                    propertyType={propertyType}
+                    guests={guests}
+                    onDistrict={(v) => { setDistrict(v); setPage(0); }}
+                    onPropertyType={(v) => { setPropertyType(v); setPage(0); }}
+                    onGuests={(v) => { setGuests(v); setPage(0); }}
+                    totalCount={properties?.length}
+                  />
+                </div>
+              </div>
+            )}
           </section>
+
+          {/* Sticky filter bar */}
+          {isSticky && (
+            <div className="sticky top-[72px] z-40 px-5 md:px-8">
+              <div className="max-w-[1280px] mx-auto">
+                <FilterBar
+                  district={district}
+                  propertyType={propertyType}
+                  guests={guests}
+                  onDistrict={(v) => { setDistrict(v); setPage(0); }}
+                  onPropertyType={(v) => { setPropertyType(v); setPage(0); }}
+                  onGuests={(v) => { setGuests(v); setPage(0); }}
+                  totalCount={properties?.length}
+                  isSticky
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Spacer for filter bar overlap */}
+          <div className="h-12 md:h-14" />
+
+          {/* Showing count */}
+          {!isLoading && properties && (
+            <p className="text-center font-headline italic text-sm text-hc-secondary underline mt-4 mb-6">
+              Showing {properties.length} {properties.length === 1 ? 'property' : 'properties'}
+            </p>
+          )}
 
           {/* Grid */}
-          <section className="px-8 max-w-[1280px] mx-auto py-12">
+          <section className="px-5 md:px-8 max-w-[1280px] mx-auto pb-12">
             <PropertyGrid properties={paged} isLoading={isLoading} />
 
-            {/* Load More */}
-            {!isLoading && hasMore && (
-              <div className="flex justify-center mt-16">
-                <button
-                  onClick={() => setPage(p => p + 1)}
-                  className="bg-hc-primary text-white px-10 py-4 rounded-full font-semibold font-body text-sm hover:bg-hc-primary-deep transition-all"
-                >
-                  Load More Retreats
-                </button>
+            {/* Pagination */}
+            {!isLoading && totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-12">
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => { setPage(i); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                    className={`w-10 h-10 rounded-full text-sm font-medium transition-colors ${
+                      page === i
+                        ? 'bg-hc-primary text-white'
+                        : 'bg-transparent text-hc-primary border border-hc-text-light/30 hover:bg-hc-bg-alt'
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
               </div>
             )}
           </section>

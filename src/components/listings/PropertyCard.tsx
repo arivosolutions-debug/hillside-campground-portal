@@ -5,53 +5,60 @@ import { DISTRICT_LABELS, PROPERTY_TYPE_LABELS } from '@/lib/types';
 import type { Property } from '@/lib/types';
 
 interface PropertyCardProps {
-  property: Property;
+  property: Property & { amenity_names?: string[] };
 }
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
+  // Use amenities if available, otherwise fallback to property_type
+  const tags = property.amenity_names && property.amenity_names.length > 0
+    ? property.amenity_names.slice(0, 3)
+    : [PROPERTY_TYPE_LABELS[property.property_type]];
+
   return (
     <Link to={`/property/${property.slug}`} className="group block">
       {/* Image */}
-      <div className="relative rounded-xl overflow-hidden mb-4 aspect-[4/5]">
+      <div className="relative rounded-2xl overflow-hidden mb-3 aspect-[4/3] md:aspect-[4/5]">
         <img
           src={property.cover_image ?? '/placeholder.svg'}
           alt={property.name}
+          loading="lazy"
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        {/* Single badge: "Estate Signature" for featured, property type otherwise */}
-        {property.is_featured ? (
-          <span className="absolute top-3 left-4 bg-hc-primary/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full font-body">
-            Estate Signature
-          </span>
-        ) : (
-          <span className="absolute top-3 left-4 bg-hc-accent-light/90 backdrop-blur-sm text-[#360f00] text-[10px] font-bold uppercase tracking-tight px-3 py-1.5 rounded-full font-body">
-            {PROPERTY_TYPE_LABELS[property.property_type]}
-          </span>
-        )}
       </div>
 
       {/* Body */}
-      <div className="flex items-start justify-between mb-1">
-        <h3 className="font-headline text-hc-primary text-lg leading-snug">
+      <div className="px-1 md:px-0 py-2">
+        <h3 className="font-headline text-hc-primary text-xl md:text-lg leading-snug mb-1">
           {property.name}
         </h3>
-      </div>
 
-      <p className="text-sm text-hc-text flex items-center gap-1.5 mb-0.5 font-body">
-        <MapPin size={12} strokeWidth={1.5} />
-        {DISTRICT_LABELS[property.district]}, Kerala
-      </p>
-      <p className="text-sm text-hc-text flex items-center gap-1.5 font-body">
-        <Users size={12} strokeWidth={1.5} />
-        Up to {property.max_guests} Guests
-        {property.tagline ? ` · ${property.tagline}` : ''}
-      </p>
+        <p className="text-sm text-hc-text flex items-center gap-1.5 mb-0.5 font-body">
+          <MapPin size={13} strokeWidth={1.5} />
+          {DISTRICT_LABELS[property.district]}, Kerala
+        </p>
+        <p className="text-sm text-hc-text flex items-center gap-1.5 font-body">
+          <Users size={13} strokeWidth={1.5} />
+          Up to {property.max_guests} Guests
+        </p>
 
-      <div className="mt-4 pt-4 flex items-center justify-between">
-        <span className="font-bold text-hc-primary tracking-tight font-body text-sm">
-          Contact for Pricing
-        </span>
-        <ArrowRight size={16} className="text-hc-primary group-hover:translate-x-1 transition-transform duration-200" />
+        {/* Tag pills */}
+        <div className="flex flex-wrap gap-1.5 mt-3">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="bg-hc-primary text-white text-[10px] uppercase tracking-wider font-bold px-3 py-1 rounded-full font-body"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-4 flex items-center justify-between">
+          <span className="font-bold text-hc-primary text-sm font-body">
+            Contact for Pricing
+          </span>
+          <ArrowRight size={16} className="text-hc-primary group-hover:translate-x-1 transition-transform duration-200" />
+        </div>
       </div>
     </Link>
   );
