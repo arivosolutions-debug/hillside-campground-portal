@@ -93,7 +93,7 @@ const PropertyDetail = () => {
           <MobileRoomCards rooms={property.room_types} coverImage={property.cover_image} />
 
           {/* 5. Book Now (both) */}
-          <BookNowModal propertyName={property.name} phone={WHATSAPP_PHONE} />
+          <BookNowModal propertyName={property.name} phone={WHATSAPP_PHONE} rooms={property.room_types} />
 
           {/* 6. Amenities (both — mobile uses grid, desktop uses sidebar in its own section) */}
           <div className="md:hidden">
