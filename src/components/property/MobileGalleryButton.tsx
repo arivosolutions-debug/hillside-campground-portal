@@ -60,7 +60,7 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
           {/* Swipeable container */}
           <div
             className="w-full flex items-center overflow-x-auto snap-x snap-mandatory hide-scrollbar"
-            style={{ scrollBehavior: 'smooth' }}
+            style={{ scrollBehavior: 'smooth', maxHeight: '800px' }}
             onScroll={(e) => {
               const el = e.currentTarget;
               const newIndex = Math.round(el.scrollLeft / el.clientWidth);
@@ -72,7 +72,8 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
                 <img
                   src={src}
                   alt={`${propertyName} — ${i + 1}`}
-                  className="max-h-[75vh] max-w-full object-contain rounded-xl"
+                  className="max-w-full object-contain rounded-xl"
+                  style={{ maxHeight: '800px' }}
                   draggable={false}
                 />
               </div>
