@@ -47,14 +47,17 @@ const Contact = () => {
     }
     setLoading(true);
     try {
-      const { error: sbError } = await supabase.from('enquiries').insert([{
-        name:        result.data.name,
-        email:       result.data.email,
-        phone:       result.data.phone || null,
-        message:     `${result.data.dates ? `Proposed dates: ${result.data.dates}\n\n` : ''}${result.data.message}`,
-        property_id: result.data.property_id || null,
-      }]);
-      if (sbError) throw sbError;
+      const { data: fnData, error: fnError } = await supabase.functions.invoke('submit-enquiry', {
+        body: {
+          name:        result.data.name,
+          email:       result.data.email,
+          phone:       result.data.phone || null,
+          message:     `${result.data.dates ? `Proposed dates: ${result.data.dates}\n\n` : ''}${result.data.message}`,
+          property_id: result.data.property_id || null,
+        },
+      });
+      if (fnError) throw fnError;
+      if (fnData?.error) throw new Error(fnData.error);
       toast({ title: 'Message sent!', description: "We'll be in touch within 24 hours to help plan your stay." });
       setForm({ name: '', email: '', phone: '', dates: '', message: '', property_id: '' });
       setErrors({});
