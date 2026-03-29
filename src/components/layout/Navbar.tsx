@@ -109,7 +109,6 @@ export const Navbar: React.FC = () => {
         }`}
       >
         <div className="absolute inset-0 bg-[#022c22]" />
-        </button>
         <nav className="absolute inset-0 flex flex-col items-center justify-center gap-8">
           {MOBILE_NAV_LINKS.map((link) => (
             <Link
