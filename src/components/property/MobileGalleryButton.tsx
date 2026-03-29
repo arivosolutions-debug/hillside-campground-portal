@@ -31,6 +31,8 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
 
   const [open, setOpen] = useState(false);
   const [fullscreenIndex, setFullscreenIndex] = useState<number | null>(null);
+  const touchStartX = React.useRef<number | null>(null);
+  const touchStartY = React.useRef<number | null>(null);
 
   const prev = useCallback(() =>
     setFullscreenIndex(i => (i === null ? 0 : (i - 1 + allImages.length) % allImages.length)),
