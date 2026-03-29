@@ -31,6 +31,8 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
 
   const [open, setOpen] = useState(false);
   const [fullscreenIndex, setFullscreenIndex] = useState<number | null>(null);
+  const touchStartX = React.useRef<number | null>(null);
+  const touchStartY = React.useRef<number | null>(null);
 
   const prev = useCallback(() =>
     setFullscreenIndex(i => (i === null ? 0 : (i - 1 + allImages.length) % allImages.length)),
@@ -133,6 +135,20 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
         <div
           className="fixed inset-0 z-[210] bg-black/95 flex flex-col"
           onClick={() => setFullscreenIndex(null)}
+          onTouchStart={(e) => {
+            touchStartX.current = e.touches[0].clientX;
+            touchStartY.current = e.touches[0].clientY;
+          }}
+          onTouchEnd={(e) => {
+            if (touchStartX.current === null || touchStartY.current === null) return;
+            const dx = e.changedTouches[0].clientX - touchStartX.current;
+            const dy = e.changedTouches[0].clientY - touchStartY.current;
+            touchStartX.current = null;
+            touchStartY.current = null;
+            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+              if (dx < 0) next(); else prev();
+            }
+          }}
         >
           {/* Top bar */}
           <div className="flex items-center justify-between px-5 pt-[calc(1.25rem+45px)] pb-3">
