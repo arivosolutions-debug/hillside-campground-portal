@@ -10,6 +10,8 @@ interface MobileHeroSlideshowProps {
   district: string;
   maxGuests: number;
   amenityNames?: string[];
+  backLink?: string;
+  backLabel?: string;
 }
 
 export const MobileHeroSlideshow: React.FC<MobileHeroSlideshowProps> = ({
