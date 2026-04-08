@@ -91,24 +91,14 @@ const Packages: React.FC = () => {
             {/* Filter bar sentinel */}
             <div ref={filterSentinelRef} className="absolute bottom-0 left-0 right-0 h-1" />
 
-            {/* Filter bar inside hero, overlapping bottom */}
-            {!isSticky && (
-              <div className="absolute bottom-[70px] left-0 right-0 translate-y-1/2 z-30 px-5 md:px-8">
-                <div className="max-w-[1280px] mx-auto opacity-80">
-                  {filterBar}
-                </div>
-              </div>
-            )}
           </section>
 
-          {/* Sticky filter bar */}
-          {isSticky && (
-            <div className="sticky top-[72px] z-40 px-5 md:px-8">
-              <div className="max-w-[1280px] mx-auto">
-                {filterBar}
-              </div>
+          {/* Filter bar — overlaps hero bottom from outside so rounded corners stay visible */}
+          <div className={`${isSticky ? 'sticky top-[72px]' : '-mt-[28px]'} z-40 px-5 md:px-8`}>
+            <div className={`max-w-[1280px] mx-auto ${!isSticky ? 'opacity-80' : ''}`}>
+              {filterBar}
             </div>
-          )}
+          </div>
 
           {/* Showing count */}
           {!isLoading && packages && (
