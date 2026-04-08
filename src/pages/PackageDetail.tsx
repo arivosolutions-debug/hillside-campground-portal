@@ -129,23 +129,8 @@ const PackageDetail: React.FC = () => {
             />
           </section>
 
-          {/* Info Bar (desktop) */}
-          <div className="hidden md:flex items-center justify-center gap-8 py-5 px-8 max-w-[1280px] mx-auto">
-            {pkg.location && (
-              <span className="flex items-center gap-1.5 text-hc-text text-sm font-body">
-                <MapPin size={14} strokeWidth={1.5} className="text-hc-secondary" />
-                {pkg.location}
-              </span>
-            )}
-            <span className="w-px h-5 bg-hc-text-light/30" />
-            {pkg.duration_days && pkg.duration_nights && (
-              <span className="text-hc-text text-sm font-body">
-                {pkg.duration_days} D / {pkg.duration_nights} N
-              </span>
-            )}
-          </div>
 
-          {/* Stats Section */}
+          {/* Stats Section */
           <section className="px-5 md:px-8 max-w-[1280px] mx-auto py-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <StatCard
