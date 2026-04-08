@@ -15,7 +15,7 @@ interface MobileHeroSlideshowProps {
 }
 
 export const MobileHeroSlideshow: React.FC<MobileHeroSlideshowProps> = ({
-  coverImage, images, propertyName, district, maxGuests, amenityNames = [],
+  coverImage, images, propertyName, district, maxGuests, amenityNames = [], backLink = '/listings', backLabel = 'All Stays',
 }) => {
   const allImages: string[] = [
     coverImage ?? '/placeholder.svg',
