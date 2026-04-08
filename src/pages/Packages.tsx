@@ -79,7 +79,7 @@ const Packages: React.FC = () => {
 
             {/* Hero Content */}
             <div className="relative z-10 h-full flex flex-col justify-center px-6 md:px-8 max-w-[1280px] mx-auto pb-20 md:pb-24 pt-[55px]">
-              <h1 className="font-headline text-3xl md:text-7xl leading-none mb-2 font-bold text-primary">
+              <h1 className="font-headline text-3xl md:text-7xl leading-none mb-2 font-bold text-secondary-foreground">
                 Discover<br />
                 <span className="italic font-normal">Your Experience</span>
               </h1>
