@@ -41,7 +41,7 @@ const Packages: React.FC = () => {
   const filterBar = (
     <div className={`bg-[#17341e]/80 backdrop-blur-xl rounded-2xl px-6 py-4 flex items-center justify-between gap-4 ${isSticky ? '' : ''}`}>
       <div className="flex items-center gap-6">
-        <span className="text-white/40 text-[10px] font-body uppercase tracking-[0.2em]">Locations</span>
+        <span className="text-[10px] font-body uppercase tracking-[0.2em] text-secondary-foreground">Locations</span>
         <select
           value={region}
           onChange={(e) => setRegion(e.target.value)}
@@ -54,7 +54,7 @@ const Packages: React.FC = () => {
         </select>
       </div>
       {!isLoading && packages && (
-        <span className="text-white/50 text-xs font-body">
+        <span className="text-xs font-body text-secondary-foreground">
           Showing {packages.length} {packages.length === 1 ? 'package' : 'packages'}
         </span>
       )}
