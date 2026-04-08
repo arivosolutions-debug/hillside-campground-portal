@@ -100,7 +100,12 @@ const PropertyDetail = () => {
             <AmenitiesGrid amenities={property.amenities} />
           </div>
 
-          {/* 7. Getting There (mobile) */}
+          {/* 7a. Nearby Attractions (mobile) */}
+          <div className="md:hidden">
+            <NearbyAttractions attractions={property.nearby_attractions} />
+          </div>
+
+          {/* 7b. Getting There (mobile) */}
           <GettingThereMobile
             latitude={property.latitude}
             longitude={property.longitude}
