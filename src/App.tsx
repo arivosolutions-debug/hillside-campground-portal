@@ -9,7 +9,7 @@ import Listings from "./pages/Listings";
 import PropertyDetail from "./pages/PropertyDetail";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Packages from "./pages/Packages";
+import Experiences from "./pages/Packages";
 import { Blog, BlogPost } from "./pages/Blog";
 import NotFound from "./pages/NotFound";
 
@@ -27,7 +27,8 @@ const App = () => (
           <Route path="/property/:slug"  element={<PropertyDetail />} />
           <Route path="/about"           element={<About />} />
           <Route path="/contact"         element={<Contact />} />
-          <Route path="/packages"        element={<Packages />} />
+          <Route path="/experiences"     element={<Experiences />} />
+          <Route path="/packages"        element={<Experiences />} />
           <Route path="/blog"            element={<Blog />} />
           <Route path="/blog/:slug"      element={<BlogPost />} />
           <Route path="/journal"         element={<Blog />} />
