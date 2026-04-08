@@ -16,6 +16,7 @@ const Packages: React.FC = () => {
   const [region, setRegion] = useState('');
   const [page, setPage] = useState(0);
   const [isSticky, setIsSticky] = useState(false);
+  const heroRef = useRef<HTMLDivElement>(null);
   const filterSentinelRef = useRef<HTMLDivElement>(null);
 
   const { data: packages, isLoading } = usePackages({
