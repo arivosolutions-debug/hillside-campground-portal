@@ -233,9 +233,10 @@ const PackageCard: React.FC<PackageCardProps> = ({ pkg }) => {
       )}
 
       {/* Learn More */}
-      <span className="inline-flex items-center gap-1 text-hc-secondary text-xs font-body font-medium group-hover:underline">
-        Learn More <ArrowRight size={12} />
-      </span>
+      <div className="flex items-center justify-between mt-1">
+        <span className="text-hc-text text-xs font-body font-medium">Learn More</span>
+        <ArrowRight size={14} className="text-hc-secondary" />
+      </div>
     </Link>
   );
 };
