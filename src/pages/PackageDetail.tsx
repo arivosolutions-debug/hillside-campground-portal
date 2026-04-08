@@ -59,6 +59,17 @@ const PackageDetail: React.FC = () => {
     ...(pkg.gallery ?? []).map(g => g.image_url),
   ].filter(Boolean);
 
+  // Adapt images for property components: first image as cover, rest as PropertyImage[]
+  const coverImage = allImages[0] ?? null;
+  const propertyImages: PropertyImage[] = allImages.slice(1).map((url, i) => ({
+    id: `pkg-img-${i}`,
+    image_url: url,
+    alt_text: `${pkg.name} — ${i + 2}`,
+    sort_order: i,
+    property_id: null,
+    created_at: null,
+  }));
+
   const coords = pkg.coordinates as { lat?: number; lng?: number } | null;
   const lat = coords?.lat ?? 10.0;
   const lng = coords?.lng ?? 76.5;
@@ -69,12 +80,54 @@ const PackageDetail: React.FC = () => {
       <Navbar />
       <PageTransition>
         <main className="bg-hc-bg">
-          {/* Hero Slideshow */}
-          <HeroSlideshow
-            images={allImages}
-            packageName={pkg.name}
-            location={pkg.location}
+
+          {/* ═══ MOBILE LAYOUT ═══ */}
+          <MobileHeroSlideshow
+            coverImage={coverImage}
+            images={propertyImages}
+            propertyName={pkg.name}
+            district={pkg.location ?? ''}
+            maxGuests={0}
+            amenityNames={pkg.tags ?? []}
           />
+          <MobileGalleryButton
+            coverImage={coverImage}
+            images={propertyImages}
+            propertyName={pkg.name}
+          />
+
+          {/* ═══ DESKTOP LAYOUT ═══ */}
+          {/* Desktop Header */}
+          <section className="hidden md:block pt-28 pb-6 px-8 max-w-[1280px] mx-auto">
+            <Link
+              to="/packages"
+              className="inline-flex items-center gap-2 text-hc-text-light hover:text-hc-primary font-body text-sm mb-6 transition-colors"
+            >
+              <ArrowLeft size={14} /> All Experiences
+            </Link>
+            <h1 className="font-headline text-hc-primary text-4xl md:text-6xl tracking-tight mb-3">
+              {pkg.name}
+            </h1>
+            <div className="flex flex-wrap items-center gap-6 text-sm text-hc-text font-body">
+              {pkg.location && (
+                <span className="flex items-center gap-1.5">
+                  <MapPin size={14} strokeWidth={1.5} className="text-hc-secondary" /> {pkg.location}
+                </span>
+              )}
+              {pkg.duration_days && pkg.duration_nights && (
+                <span>{pkg.duration_days} Days / {pkg.duration_nights} Nights</span>
+              )}
+            </div>
+          </section>
+
+          {/* Desktop Photo Gallery */}
+          <section className="hidden md:block px-8 max-w-[1280px] mx-auto mb-12">
+            <PhotoGallery
+              coverImage={coverImage}
+              images={propertyImages}
+              propertyName={pkg.name}
+            />
+          </section>
 
           {/* Info Bar (desktop) */}
           <div className="hidden md:flex items-center justify-center gap-8 py-5 px-8 max-w-[1280px] mx-auto">
