@@ -10,10 +10,12 @@ interface MobileHeroSlideshowProps {
   district: string;
   maxGuests: number;
   amenityNames?: string[];
+  backLink?: string;
+  backLabel?: string;
 }
 
 export const MobileHeroSlideshow: React.FC<MobileHeroSlideshowProps> = ({
-  coverImage, images, propertyName, district, maxGuests, amenityNames = [],
+  coverImage, images, propertyName, district, maxGuests, amenityNames = [], backLink = '/listings', backLabel = 'All Stays',
 }) => {
   const allImages: string[] = [
     coverImage ?? '/placeholder.svg',
@@ -80,10 +82,10 @@ export const MobileHeroSlideshow: React.FC<MobileHeroSlideshowProps> = ({
 
       {/* Breadcrumb */}
       <Link
-        to="/listings"
+        to={backLink}
         className="absolute top-[calc(3.5rem+30px)] left-5 flex items-center gap-1.5 text-white text-xs font-body z-10 bg-white/15 backdrop-blur-xl px-3 py-1.5 rounded-full"
       >
-        <ArrowLeft size={12} /> All Stays
+        <ArrowLeft size={12} /> {backLabel}
       </Link>
 
       {/* Overlaid content */}
@@ -95,9 +97,11 @@ export const MobileHeroSlideshow: React.FC<MobileHeroSlideshowProps> = ({
           <span className="flex items-center gap-1">
             <MapPin size={13} strokeWidth={1.5} /> {district}, Keralam
           </span>
-          <span className="flex items-center gap-1">
-            <Users size={13} strokeWidth={1.5} /> Up to {maxGuests} Guests
-          </span>
+          {maxGuests > 0 && (
+            <span className="flex items-center gap-1">
+              <Users size={13} strokeWidth={1.5} /> Up to {maxGuests} Guests
+            </span>
+          )}
         </div>
         {pills.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-3">

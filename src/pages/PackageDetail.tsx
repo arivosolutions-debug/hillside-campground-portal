@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MapPin, Clock, IndianRupee, Route, Plus, X, ChevronLeft, ChevronRight, Images, MessageCircle, Instagram, ArrowRight } from 'lucide-react';
+import { MapPin, Clock, IndianRupee, Route, Plus, X, ChevronLeft, ChevronRight, Images, MessageCircle, Instagram, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { PageTransition } from '@/components/layout/PageTransition';
+import { MobileHeroSlideshow } from '@/components/property/MobileHeroSlideshow';
+import { MobileGalleryButton } from '@/components/property/MobileGalleryButton';
+import { PhotoGallery } from '@/components/property/PhotoGallery';
 import { usePackage } from '@/hooks/usePackage';
 import { usePackages } from '@/hooks/usePackages';
+import type { PropertyImage } from '@/lib/types';
 
 const WHATSAPP_PHONE = '919847012345';
 
@@ -55,6 +59,17 @@ const PackageDetail: React.FC = () => {
     ...(pkg.gallery ?? []).map(g => g.image_url),
   ].filter(Boolean);
 
+  // Adapt images for property components: first image as cover, rest as PropertyImage[]
+  const coverImage = allImages[0] ?? null;
+  const propertyImages: PropertyImage[] = allImages.slice(1).map((url, i) => ({
+    id: `pkg-img-${i}`,
+    image_url: url,
+    alt_text: `${pkg.name} — ${i + 2}`,
+    sort_order: i,
+    property_id: null,
+    created_at: null,
+  }));
+
   const coords = pkg.coordinates as { lat?: number; lng?: number } | null;
   const lat = coords?.lat ?? 10.0;
   const lng = coords?.lng ?? 76.5;
@@ -65,28 +80,57 @@ const PackageDetail: React.FC = () => {
       <Navbar />
       <PageTransition>
         <main className="bg-hc-bg">
-          {/* Hero Slideshow */}
-          <HeroSlideshow
-            images={allImages}
-            packageName={pkg.name}
-            location={pkg.location}
+
+          {/* ═══ MOBILE LAYOUT ═══ */}
+          <MobileHeroSlideshow
+            coverImage={coverImage}
+            images={propertyImages}
+            propertyName={pkg.name}
+            district={pkg.location ?? ''}
+            maxGuests={0}
+            amenityNames={pkg.tags ?? []}
+            backLink="/packages"
+            backLabel="All Experiences"
+          />
+          <MobileGalleryButton
+            coverImage={coverImage}
+            images={propertyImages}
+            propertyName={pkg.name}
           />
 
-          {/* Info Bar (desktop) */}
-          <div className="hidden md:flex items-center justify-center gap-8 py-5 px-8 max-w-[1280px] mx-auto">
-            {pkg.location && (
-              <span className="flex items-center gap-1.5 text-hc-text text-sm font-body">
-                <MapPin size={14} strokeWidth={1.5} className="text-hc-secondary" />
-                {pkg.location}
-              </span>
-            )}
-            <span className="w-px h-5 bg-hc-text-light/30" />
-            {pkg.duration_days && pkg.duration_nights && (
-              <span className="text-hc-text text-sm font-body">
-                {pkg.duration_days} D / {pkg.duration_nights} N
-              </span>
-            )}
-          </div>
+          {/* ═══ DESKTOP LAYOUT ═══ */}
+          {/* Desktop Header */}
+          <section className="hidden md:block pt-28 pb-6 px-8 max-w-[1280px] mx-auto">
+            <Link
+              to="/packages"
+              className="inline-flex items-center gap-2 text-hc-text-light hover:text-hc-primary font-body text-sm mb-6 transition-colors"
+            >
+              <ArrowLeft size={14} /> All Experiences
+            </Link>
+            <h1 className="font-headline text-hc-primary text-4xl md:text-6xl tracking-tight mb-3">
+              {pkg.name}
+            </h1>
+            <div className="flex flex-wrap items-center gap-6 text-sm text-hc-text font-body">
+              {pkg.location && (
+                <span className="flex items-center gap-1.5">
+                  <MapPin size={14} strokeWidth={1.5} className="text-hc-secondary" /> {pkg.location}
+                </span>
+              )}
+              {pkg.duration_days && pkg.duration_nights && (
+                <span>{pkg.duration_days} Days / {pkg.duration_nights} Nights</span>
+              )}
+            </div>
+          </section>
+
+          {/* Desktop Photo Gallery */}
+          <section className="hidden md:block px-8 max-w-[1280px] mx-auto mb-12">
+            <PhotoGallery
+              coverImage={coverImage}
+              images={propertyImages}
+              propertyName={pkg.name}
+            />
+          </section>
+
 
           {/* Stats Section */}
           <section className="px-5 md:px-8 max-w-[1280px] mx-auto py-8">
@@ -182,139 +226,6 @@ const PackageDetail: React.FC = () => {
 /*  Sub-Components                                                */
 /* ═══════════════════════════════════════════════════════════════ */
 
-/* ── Hero Slideshow ── */
-const HeroSlideshow: React.FC<{
-  images: string[];
-  packageName: string;
-  location: string | null;
-}> = ({ images, packageName, location }) => {
-  const [current, setCurrent] = useState(0);
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const touchStart = useRef<number | null>(null);
-  const touchDelta = useRef(0);
-  const imgs = images.length > 0 ? images : ['/placeholder.svg'];
-
-  // Auto-advance
-  useEffect(() => {
-    if (imgs.length <= 1) return;
-    const timer = setInterval(() => setCurrent(i => (i + 1) % imgs.length), 4000);
-    return () => clearInterval(timer);
-  }, [imgs.length]);
-
-  const handleTouchStart = (e: React.TouchEvent) => { touchStart.current = e.touches[0].clientX; touchDelta.current = 0; };
-  const handleTouchMove = (e: React.TouchEvent) => { if (touchStart.current !== null) touchDelta.current = e.touches[0].clientX - touchStart.current; };
-  const handleTouchEnd = () => {
-    if (Math.abs(touchDelta.current) > 50) {
-      setCurrent(i => touchDelta.current < 0 ? (i + 1) % imgs.length : (i - 1 + imgs.length) % imgs.length);
-    }
-    touchStart.current = null;
-    touchDelta.current = 0;
-  };
-
-  const prevLb = useCallback(() => setLightboxIndex(i => i === null ? 0 : (i - 1 + imgs.length) % imgs.length), [imgs.length]);
-  const nextLb = useCallback(() => setLightboxIndex(i => i === null ? 0 : (i + 1) % imgs.length), [imgs.length]);
-
-  useEffect(() => {
-    if (lightboxIndex === null) return;
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') prevLb();
-      if (e.key === 'ArrowRight') nextLb();
-      if (e.key === 'Escape') setLightboxIndex(null);
-    };
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', handler);
-    return () => { document.body.style.overflow = ''; window.removeEventListener('keydown', handler); };
-  }, [lightboxIndex, prevLb, nextLb]);
-
-  return (
-    <>
-      <div
-        className="relative w-full h-[70vh] md:h-[60vh] overflow-hidden rounded-b-[32px]"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        {imgs.map((src, i) => (
-          <img
-            key={src + i}
-            src={src}
-            alt={`${packageName} — ${i + 1}`}
-            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[600ms] ease-in-out"
-            style={{ opacity: i === current ? 1 : 0 }}
-            draggable={false}
-          />
-        ))}
-
-        {/* Dark gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
-
-        {/* Back button */}
-        <Link
-          to="/packages"
-          className="absolute top-[calc(3.5rem+30px)] left-5 flex items-center gap-1.5 text-white text-xs font-body z-10 bg-white/15 backdrop-blur-xl px-3 py-1.5 rounded-full"
-        >
-          <ChevronLeft size={12} /> All Experiences
-        </Link>
-
-        {/* Gallery icon */}
-        {imgs.length > 1 && (
-          <button
-            onClick={() => setLightboxIndex(0)}
-            className="absolute top-[calc(3.5rem+30px)] right-5 z-10 bg-white/15 backdrop-blur-xl w-10 h-10 rounded-full flex items-center justify-center"
-            aria-label="View gallery"
-          >
-            <Images size={16} className="text-white" />
-          </button>
-        )}
-
-        {/* Mobile overlay text */}
-        <div className="absolute bottom-0 left-0 right-0 px-6 pb-6 z-10 md:hidden">
-          <h1 className="font-headline text-3xl text-white font-bold leading-tight mb-1">{packageName}</h1>
-          {location && (
-            <p className="flex items-center gap-1 text-white/70 text-sm font-body">
-              <MapPin size={13} strokeWidth={1.5} /> {location}
-            </p>
-          )}
-        </div>
-      </div>
-
-      {/* Lightbox */}
-      {lightboxIndex !== null && (
-        <div className="fixed inset-0 z-[200] bg-black/96 flex items-center justify-center" onClick={() => setLightboxIndex(null)}>
-          <button
-            onClick={e => { e.stopPropagation(); setLightboxIndex(null); }}
-            className="absolute top-5 right-5 w-11 h-11 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center"
-            aria-label="Close gallery"
-          >
-            <X size={18} className="text-white" />
-          </button>
-          <button
-            onClick={e => { e.stopPropagation(); prevLb(); }}
-            className="absolute left-5 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center"
-          >
-            <ChevronLeft size={22} className="text-white" />
-          </button>
-          <img
-            src={imgs[lightboxIndex]}
-            alt={`${packageName} — ${lightboxIndex + 1}`}
-            className="max-h-[85vh] max-w-[88vw] object-contain rounded-xl select-none"
-            onClick={e => e.stopPropagation()}
-            draggable={false}
-          />
-          <button
-            onClick={e => { e.stopPropagation(); nextLb(); }}
-            className="absolute right-5 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center"
-          >
-            <ChevronRight size={22} className="text-white" />
-          </button>
-          <span className="absolute bottom-5 text-white/50 font-body text-sm tabular-nums">
-            {lightboxIndex + 1} / {imgs.length}
-          </span>
-        </div>
-      )}
-    </>
-  );
-};
 
 /* ── Stat Card ── */
 const StatCard: React.FC<{ icon: React.ReactNode; label: string; value: string }> = ({ icon, label, value }) => (
