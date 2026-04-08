@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MapPin, Clock, IndianRupee, Route, Plus, X, ChevronLeft, ChevronRight, Images, MessageCircle, Instagram, ArrowRight } from 'lucide-react';
+import { MapPin, Clock, IndianRupee, Route, Plus, X, ChevronLeft, ChevronRight, Images, MessageCircle, Instagram, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { PageTransition } from '@/components/layout/PageTransition';
+import { MobileHeroSlideshow } from '@/components/property/MobileHeroSlideshow';
+import { MobileGalleryButton } from '@/components/property/MobileGalleryButton';
+import { PhotoGallery } from '@/components/property/PhotoGallery';
 import { usePackage } from '@/hooks/usePackage';
 import { usePackages } from '@/hooks/usePackages';
+import type { PropertyImage } from '@/lib/types';
 
 const WHATSAPP_PHONE = '919847012345';
 
