@@ -112,8 +112,15 @@ const Packages: React.FC = () => {
             </div>
           )}
 
+          {/* Showing count */}
+          {!isLoading && packages && (
+            <p className="text-center font-headline italic text-sm text-hc-secondary underline mt-4 mb-6 text-primary">
+              Showing {packages.length} {packages.length === 1 ? 'experience' : 'experiences'}
+            </p>
+          )}
+
           {/* Cards Grid */}
-          <section className="px-5 md:px-8 max-w-[1280px] mx-auto pt-10 pb-12">
+          <section className="px-5 md:px-8 max-w-[1280px] mx-auto pb-12">
             {isLoading ? (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {Array.from({ length: 6 }).map((_, i) => (
