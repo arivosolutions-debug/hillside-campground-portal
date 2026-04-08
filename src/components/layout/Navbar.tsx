@@ -8,7 +8,7 @@ const WHATSAPP_URL =
 
 const NAV_LINKS = [
   { label: 'Stays',    to: '/listings',  exact: ['/listings'] },
-  { label: 'Packages', to: '/packages',  exact: ['/packages'] },
+  { label: 'Experiences', to: '/experiences',  exact: ['/experiences'] },
   { label: 'Discover', to: '/about',     exact: ['/about'] },
   { label: 'Journal',  to: '/blog',      exact: ['/blog', '/journal'] },
 ];
@@ -19,7 +19,7 @@ const MOBILE_NAV_LINKS = [
 ];
 
 /* Pages with dark hero backgrounds where navbar text should be white when not scrolled */
-const DARK_HERO_PAGES = ['/', '/packages', '/about'];
+const DARK_HERO_PAGES = ['/', '/experiences', '/about'];
 
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled]   = useState(false);

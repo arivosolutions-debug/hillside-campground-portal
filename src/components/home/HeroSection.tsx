@@ -113,8 +113,8 @@ export const HeroSection: React.FC = () => {
             <Link to="/listings" className="md:hidden flex-1 inline-flex items-center justify-center gap-2 bg-white text-hc-primary px-8 py-3 rounded-full font-semibold text-sm active:scale-[0.97]">
               Stays
             </Link>
-            <Link to="/packages" className="md:hidden flex-1 inline-flex items-center justify-center gap-2 bg-white text-hc-primary px-8 py-3 rounded-full font-semibold text-sm active:scale-[0.97]">
-              Packages
+            <Link to="/experiences" className="md:hidden flex-1 inline-flex items-center justify-center gap-2 bg-white text-hc-primary px-8 py-3 rounded-full font-semibold text-sm active:scale-[0.97]">
+              Experiences
             </Link>
             <Link to="/listings" className="hidden md:inline-flex items-center gap-2 bg-hc-primary text-white px-8 py-4 rounded-full font-bold text-sm hover:bg-hc-primary-deep transition-all active:scale-[0.97] group">
               Explore Properties
