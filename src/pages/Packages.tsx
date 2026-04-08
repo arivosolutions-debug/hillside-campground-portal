@@ -4,11 +4,9 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { PageTransition } from '@/components/layout/PageTransition';
 import { usePackages } from '@/hooks/usePackages';
-import { MapPin, ArrowRight } from 'lucide-react';
+import { MapPin, ArrowRight, Users } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
-
-const HERO_BG =
-  'https://images.unsplash.com/photo-1501854140801-74d5b45bd3c7?auto=format&fit=crop&w=1920&q=80';
+import experiencesHeroBg from '@/assets/experiences-hero-bg.jpg';
 
 const PAGE_SIZE = 8;
 
@@ -71,10 +69,10 @@ const Packages: React.FC = () => {
           {/* Hero Section */}
           <section ref={heroRef} className="relative h-[calc(40vh+80px)] md:h-[calc(50vh+80px)] overflow-hidden rounded-b-[32px]">
             <img
-              src={HERO_BG}
-              alt="Western Ghats forest"
-              className="absolute inset-0 w-full h-full object-cover scale-[1.6]"
-              style={{ objectPosition: 'calc(50% + 50px) calc(50% - 20px)' }}
+              src={experiencesHeroBg}
+              alt="Trekkers in Western Ghats forest"
+              className="absolute inset-0 w-full h-full object-cover object-bottom"
+              style={{ objectPosition: 'center calc(100% - 20px)' }}
               width={1920}
               height={1080}
             />
