@@ -72,7 +72,7 @@ className="absolute inset-0 w-full h-full object-cover scale-[1.6]"
                 <span className="italic font-normal">Your Escape</span>
               </h1>
               <p className="text-sm md:text-base text-white/70 mt-2 font-body font-semibold">
-                A curated experience made just for you!
+                A curated stays made just for you!
               </p>
             </div>
 
