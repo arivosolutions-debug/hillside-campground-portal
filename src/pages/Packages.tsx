@@ -72,7 +72,7 @@ const Packages: React.FC = () => {
               src={experiencesHeroBg}
               alt="Trekkers in Western Ghats forest"
               className="absolute inset-0 w-full h-full object-cover object-bottom"
-              style={{ objectPosition: 'center calc(100% - 20px)' }}
+              style={{ objectPosition: 'calc(50% + 15px) calc(100% - 25px)' }}
               width={1920}
               height={1080}
             />
