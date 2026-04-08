@@ -16,6 +16,7 @@ const Packages: React.FC = () => {
   const [region, setRegion] = useState('');
   const [page, setPage] = useState(0);
   const [isSticky, setIsSticky] = useState(false);
+  const heroRef = useRef<HTMLDivElement>(null);
   const filterSentinelRef = useRef<HTMLDivElement>(null);
 
   const { data: packages, isLoading } = usePackages({
@@ -67,33 +68,35 @@ const Packages: React.FC = () => {
       <Navbar />
       <PageTransition>
         <main className="min-h-screen bg-hc-bg">
-          {/* Hero */}
-          <section className="relative h-[40vh] md:h-[50vh] overflow-hidden">
+          {/* Hero Section */}
+          <section ref={heroRef} className="relative h-[calc(40vh+80px)] md:h-[calc(50vh+80px)] overflow-hidden rounded-b-[32px]">
             <img
               src={HERO_BG}
               alt="Western Ghats forest"
-              className="absolute inset-0 w-full h-full object-cover brightness-[0.45]"
+              className="absolute inset-0 w-full h-full object-cover scale-[1.6]"
+              style={{ objectPosition: 'calc(50% + 50px) calc(50% - 20px)' }}
+              width={1920}
+              height={1080}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
 
-            <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
-              <span className="font-body uppercase tracking-[0.3em] text-white/50 text-xs mb-3">
-                Discover
-              </span>
-              <h1 className="font-headline italic text-white text-5xl md:text-7xl leading-[0.95] tracking-tight">
-                Your Experience
+            {/* Hero Content */}
+            <div className="relative z-10 h-full flex flex-col justify-center px-6 md:px-8 max-w-[1280px] mx-auto pb-20 md:pb-24 pt-[55px]">
+              <h1 className="font-headline text-3xl md:text-7xl leading-none mb-2 font-bold text-primary">
+                Discover<br />
+                <span className="italic font-normal">Your Experience</span>
               </h1>
-              <p className="text-white/60 text-sm md:text-base mt-4 font-body max-w-md">
+              <p className="text-sm md:text-base text-white/70 mt-2 font-body font-semibold">
                 Curated experiences made just for you!
               </p>
             </div>
 
+            {/* Filter bar sentinel */}
             <div ref={filterSentinelRef} className="absolute bottom-0 left-0 right-0 h-1" />
 
-            {/* Filter bar overlapping hero bottom */}
+            {/* Filter bar inside hero, overlapping bottom */}
             {!isSticky && (
-              <div className="absolute bottom-6 left-0 right-0 z-30 px-5 md:px-8">
-                <div className="max-w-[1280px] mx-auto">
+              <div className="absolute bottom-[70px] left-0 right-0 translate-y-1/2 z-30 px-5 md:px-8">
+                <div className="max-w-[1280px] mx-auto opacity-80">
                   {filterBar}
                 </div>
               </div>
@@ -109,8 +112,15 @@ const Packages: React.FC = () => {
             </div>
           )}
 
+          {/* Showing count */}
+          {!isLoading && packages && (
+            <p className="text-center font-headline italic text-sm text-hc-secondary underline mt-4 mb-6 text-primary">
+              Showing {packages.length} {packages.length === 1 ? 'experience' : 'experiences'}
+            </p>
+          )}
+
           {/* Cards Grid */}
-          <section className="px-5 md:px-8 max-w-[1280px] mx-auto pt-10 pb-12">
+          <section className="px-5 md:px-8 max-w-[1280px] mx-auto pb-12">
             {isLoading ? (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {Array.from({ length: 6 }).map((_, i) => (
