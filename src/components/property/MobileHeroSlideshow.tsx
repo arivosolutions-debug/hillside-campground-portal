@@ -97,9 +97,11 @@ export const MobileHeroSlideshow: React.FC<MobileHeroSlideshowProps> = ({
           <span className="flex items-center gap-1">
             <MapPin size={13} strokeWidth={1.5} /> {district}, Keralam
           </span>
-          <span className="flex items-center gap-1">
-            <Users size={13} strokeWidth={1.5} /> Up to {maxGuests} Guests
-          </span>
+          {maxGuests > 0 && (
+            <span className="flex items-center gap-1">
+              <Users size={13} strokeWidth={1.5} /> Up to {maxGuests} Guests
+            </span>
+          )}
         </div>
         {pills.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-3">
