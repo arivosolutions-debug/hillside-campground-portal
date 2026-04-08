@@ -204,20 +204,19 @@ const PackageCard: React.FC<PackageCardProps> = ({ pkg }) => {
         {pkg.name}
       </h3>
 
-      {/* Location */}
-      {pkg.location && (
-        <p className="flex items-center gap-1 text-hc-text-light text-xs font-body mb-2">
-          <MapPin size={12} />
-          {pkg.location}
-        </p>
-      )}
-
-      {/* Duration badge */}
-      {pkg.duration_days && pkg.duration_nights && (
-        <span className="inline-block bg-hc-bg-alt text-hc-text text-[11px] font-body font-medium px-3 py-1 rounded-full mb-3">
-          {pkg.duration_days} D / {pkg.duration_nights} N
+      {/* Location & Guests row */}
+      <div className="flex items-center gap-3 text-hc-text-light text-xs font-body mb-2">
+        {pkg.location && (
+          <span className="flex items-center gap-1">
+            <MapPin size={12} />
+            {pkg.location}
+          </span>
+        )}
+        <span className="flex items-center gap-1">
+          <Users size={12} />
+          4 to 5
         </span>
-      )}
+      </div>
 
       {/* Tags */}
       {pkg.tags && pkg.tags.length > 0 && (
