@@ -147,6 +147,104 @@ export type Database = {
           },
         ]
       }
+      package_gallery: {
+        Row: {
+          alt_text: string | null
+          display_order: number | null
+          id: string
+          image_url: string
+          package_id: string
+        }
+        Insert: {
+          alt_text?: string | null
+          display_order?: number | null
+          id?: string
+          image_url: string
+          package_id: string
+        }
+        Update: {
+          alt_text?: string | null
+          display_order?: number | null
+          id?: string
+          image_url?: string
+          package_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "package_gallery_package_id_fkey"
+            columns: ["package_id"]
+            isOneToOne: false
+            referencedRelation: "packages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      packages: {
+        Row: {
+          coordinates: Json | null
+          created_at: string | null
+          distance_km: number | null
+          duration_days: number | null
+          duration_nights: number | null
+          hero_images: string[] | null
+          id: string
+          instagram_hashtag: string | null
+          is_featured: boolean | null
+          itinerary: Json | null
+          location: string | null
+          name: string
+          price_inr: number | null
+          region: string | null
+          slug: string
+          tags: string[] | null
+          terms_conditions: string[] | null
+          updated_at: string | null
+          whats_not_included: string[] | null
+        }
+        Insert: {
+          coordinates?: Json | null
+          created_at?: string | null
+          distance_km?: number | null
+          duration_days?: number | null
+          duration_nights?: number | null
+          hero_images?: string[] | null
+          id?: string
+          instagram_hashtag?: string | null
+          is_featured?: boolean | null
+          itinerary?: Json | null
+          location?: string | null
+          name: string
+          price_inr?: number | null
+          region?: string | null
+          slug: string
+          tags?: string[] | null
+          terms_conditions?: string[] | null
+          updated_at?: string | null
+          whats_not_included?: string[] | null
+        }
+        Update: {
+          coordinates?: Json | null
+          created_at?: string | null
+          distance_km?: number | null
+          duration_days?: number | null
+          duration_nights?: number | null
+          hero_images?: string[] | null
+          id?: string
+          instagram_hashtag?: string | null
+          is_featured?: boolean | null
+          itinerary?: Json | null
+          location?: string | null
+          name?: string
+          price_inr?: number | null
+          region?: string | null
+          slug?: string
+          tags?: string[] | null
+          terms_conditions?: string[] | null
+          updated_at?: string | null
+          whats_not_included?: string[] | null
+        }
+        Relationships: []
+      }
       properties: {
         Row: {
           cover_image: string | null
