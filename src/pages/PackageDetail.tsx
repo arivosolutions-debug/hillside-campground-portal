@@ -229,7 +229,7 @@ const HeroSlideshow: React.FC<{
   return (
     <>
       <div
-        className="relative w-full h-[70vh] md:h-[60vh] overflow-hidden"
+        className="relative w-full h-[70vh] md:h-[60vh] overflow-hidden rounded-b-[32px]"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
