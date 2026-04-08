@@ -202,4 +202,8 @@
   /* Hide scrollbar for carousels */
   .hide-scrollbar::-webkit-scrollbar { display: none; }
   .hide-scrollbar { scrollbar-width: none; }
+
+  /* No-scrollbar utility */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
 }

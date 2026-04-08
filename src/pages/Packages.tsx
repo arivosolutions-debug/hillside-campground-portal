@@ -1,93 +1,235 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { PageTransition } from '@/components/layout/PageTransition';
-import { ArrowRight } from 'lucide-react';
+import { usePackages } from '@/hooks/usePackages';
+import { MapPin, ArrowRight } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
-const BG =
-  'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=1920&q=80';
+const HERO_BG =
+  'https://images.unsplash.com/photo-1501854140801-74d5b45bd3c7?auto=format&fit=crop&w=1920&q=80';
+
+const PAGE_SIZE = 8;
 
 const Packages: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const [region, setRegion] = useState('');
+  const [page, setPage] = useState(0);
+  const [isSticky, setIsSticky] = useState(false);
+  const filterSentinelRef = useRef<HTMLDivElement>(null);
 
-  const handleNotify = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    setSubmitted(true);
-  };
+  const { data: packages, isLoading } = usePackages({
+    region: region || undefined,
+  });
+
+  useEffect(() => setPage(0), [region]);
+
+  // Sticky observer
+  useEffect(() => {
+    const sentinel = filterSentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsSticky(!entry.isIntersecting),
+      { threshold: 0, rootMargin: '-72px 0px 0px 0px' }
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, []);
+
+  const totalPages = Math.ceil((packages?.length ?? 0) / PAGE_SIZE);
+  const paged = packages?.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE) ?? [];
+
+  const filterBar = (
+    <div className={`bg-[#17341e]/80 backdrop-blur-xl rounded-2xl px-6 py-4 flex items-center justify-between gap-4 ${isSticky ? '' : ''}`}>
+      <div className="flex items-center gap-6">
+        <span className="text-white/40 text-[10px] font-body uppercase tracking-[0.2em]">Locations</span>
+        <select
+          value={region}
+          onChange={(e) => setRegion(e.target.value)}
+          className="bg-transparent text-white font-body text-sm border-none outline-none cursor-pointer appearance-none pr-4"
+          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right center' }}
+        >
+          <option value="" className="text-black">All Regions</option>
+          <option value="South India" className="text-black">South India</option>
+          <option value="North India" className="text-black">North India</option>
+        </select>
+      </div>
+      {!isLoading && packages && (
+        <span className="text-white/50 text-xs font-body">
+          Showing {packages.length} {packages.length === 1 ? 'package' : 'packages'}
+        </span>
+      )}
+    </div>
+  );
 
   return (
     <>
       <Navbar />
       <PageTransition>
-        <main className="bg-hc-bg font-body">
+        <main className="min-h-screen bg-hc-bg">
           {/* Hero */}
-          <section className="relative min-h-screen flex items-center justify-center overflow-hidden pb-16 -mb-16">
-            {/* Background image */}
+          <section className="relative h-[40vh] md:h-[50vh] overflow-hidden">
             <img
-              src={BG}
-              alt="Misty Western Ghats"
-              className="absolute inset-0 w-full h-full object-cover brightness-[0.4]"
+              src={HERO_BG}
+              alt="Western Ghats forest"
+              className="absolute inset-0 w-full h-full object-cover brightness-[0.45]"
             />
-            {/* Gradient overlay — bottom fade into page bg */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050a07] via-transparent to-[#050a07]/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
 
-            {/* Content */}
-            <div className="relative z-10 flex flex-col items-center text-center px-6 py-32 max-w-2xl mx-auto gap-6">
-              {/* Overline */}
-              <span className="font-label text-[#924a29] uppercase tracking-[0.25em] text-xs">
-                Curated Experiences
+            <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
+              <span className="font-body uppercase tracking-[0.3em] text-white/50 text-xs mb-3">
+                Discover
               </span>
-
-              {/* Headline */}
-              <h1 className="font-headline italic text-white text-6xl md:text-7xl leading-[0.95] tracking-tight">
-                Packages
+              <h1 className="font-headline italic text-white text-5xl md:text-7xl leading-[0.95] tracking-tight">
+                Your Experience
               </h1>
-
-              {/* Coming Soon badge */}
-              <span className="inline-block bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-8 py-3 text-white font-bold tracking-wider text-sm">
-                Coming Soon
-              </span>
-
-              {/* Subtitle */}
-              <p className="text-white/70 text-base leading-relaxed max-w-lg font-body">
-                We're crafting exclusive wilderness packages — from guided dawn walks to
-                spice trail expeditions. Stay tuned.
+              <p className="text-white/60 text-sm md:text-base mt-4 font-body max-w-md">
+                Curated experiences made just for you!
               </p>
-
-              {/* Notify Me form */}
-              {submitted ? (
-                <div className="mt-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-8 py-4 text-white font-body text-sm">
-                  ✓ You're on the list — we'll reach out when packages go live.
-                </div>
-              ) : (
-                <form
-                  onSubmit={handleNotify}
-                  className="mt-2 flex items-center gap-0 w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/15 rounded-full overflow-hidden pr-1.5 py-1.5 pl-6"
-                >
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    required
-                    placeholder="your@email.com"
-                    className="flex-1 bg-transparent text-white placeholder:text-white/40 text-sm font-body focus:outline-none"
-                  />
-                  <button
-                    type="submit"
-                    className="flex items-center gap-2 bg-[#924a29] text-white text-sm font-bold rounded-full px-6 py-2.5 hover:brightness-110 active:scale-[0.97] transition-all shrink-0"
-                  >
-                    Notify Me <ArrowRight size={14} />
-                  </button>
-                </form>
-              )}
             </div>
+
+            <div ref={filterSentinelRef} className="absolute bottom-0 left-0 right-0 h-1" />
+
+            {/* Filter bar overlapping hero bottom */}
+            {!isSticky && (
+              <div className="absolute bottom-6 left-0 right-0 z-30 px-5 md:px-8">
+                <div className="max-w-[1280px] mx-auto">
+                  {filterBar}
+                </div>
+              </div>
+            )}
+          </section>
+
+          {/* Sticky filter bar */}
+          {isSticky && (
+            <div className="sticky top-[72px] z-40 px-5 md:px-8">
+              <div className="max-w-[1280px] mx-auto">
+                {filterBar}
+              </div>
+            </div>
+          )}
+
+          {/* Cards Grid */}
+          <section className="px-5 md:px-8 max-w-[1280px] mx-auto pt-10 pb-12">
+            {isLoading ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="space-y-3">
+                    <Skeleton className="aspect-[4/3] rounded-xl" />
+                    <Skeleton className="h-6 w-3/4" />
+                    <Skeleton className="h-4 w-1/2" />
+                  </div>
+                ))}
+              </div>
+            ) : paged.length === 0 ? (
+              <div className="text-center py-20">
+                <p className="font-headline italic text-2xl text-hc-text/50">No experiences found</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {paged.map((pkg) => (
+                  <PackageCard key={pkg.id} pkg={pkg} />
+                ))}
+              </div>
+            )}
+
+            {/* Pagination */}
+            {!isLoading && totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-12">
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => { setPage(i); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                    className={`w-10 h-10 rounded-full text-sm font-medium transition-colors ${
+                      page === i
+                        ? 'bg-hc-primary text-white'
+                        : 'bg-transparent text-hc-primary border border-hc-text-light/30 hover:bg-hc-bg-alt'
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+            )}
           </section>
         </main>
         <Footer />
       </PageTransition>
     </>
+  );
+};
+
+/* ── Package Card ── */
+interface PackageCardProps {
+  pkg: {
+    id: string;
+    name: string;
+    slug: string;
+    location: string | null;
+    duration_days: number | null;
+    duration_nights: number | null;
+    tags: string[] | null;
+    hero_images: string[] | null;
+  };
+}
+
+const PackageCard: React.FC<PackageCardProps> = ({ pkg }) => {
+  const image = pkg.hero_images?.[0] ?? '/placeholder.svg';
+
+  return (
+    <Link
+      to={`/packages/${pkg.slug}`}
+      className="group block"
+    >
+      {/* Image */}
+      <div className="aspect-[4/3] rounded-xl overflow-hidden mb-4">
+        <img
+          src={image}
+          alt={pkg.name}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+        />
+      </div>
+
+      {/* Name */}
+      <h3 className="font-headline text-lg text-hc-primary leading-snug mb-1">
+        {pkg.name}
+      </h3>
+
+      {/* Location */}
+      {pkg.location && (
+        <p className="flex items-center gap-1 text-hc-text-light text-xs font-body mb-2">
+          <MapPin size={12} />
+          {pkg.location}
+        </p>
+      )}
+
+      {/* Duration badge */}
+      {pkg.duration_days && pkg.duration_nights && (
+        <span className="inline-block bg-hc-bg-alt text-hc-text text-[11px] font-body font-medium px-3 py-1 rounded-full mb-3">
+          {pkg.duration_days} D / {pkg.duration_nights} N
+        </span>
+      )}
+
+      {/* Tags */}
+      {pkg.tags && pkg.tags.length > 0 && (
+        <div className="flex gap-1.5 overflow-x-auto no-scrollbar mb-3">
+          {pkg.tags.map((tag) => (
+            <span
+              key={tag}
+              className="shrink-0 bg-hc-primary text-white text-[10px] font-body px-2.5 py-1 rounded-full capitalize"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* Learn More */}
+      <span className="inline-flex items-center gap-1 text-hc-secondary text-xs font-body font-medium group-hover:underline">
+        Learn More <ArrowRight size={12} />
+      </span>
+    </Link>
   );
 };
 
