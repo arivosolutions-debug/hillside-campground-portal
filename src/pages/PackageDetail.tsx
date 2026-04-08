@@ -89,6 +89,8 @@ const PackageDetail: React.FC = () => {
             district={pkg.location ?? ''}
             maxGuests={0}
             amenityNames={pkg.tags ?? []}
+            backLink="/packages"
+            backLabel="All Experiences"
           />
           <MobileGalleryButton
             coverImage={coverImage}
