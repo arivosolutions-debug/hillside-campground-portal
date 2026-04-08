@@ -187,10 +187,10 @@ const PackageCard: React.FC<PackageCardProps> = ({ pkg }) => {
   return (
     <Link
       to={`/packages/${pkg.slug}`}
-      className="group block"
+      className="group block overflow-hidden"
     >
       {/* Image */}
-      <div className="aspect-[4/3] rounded-xl overflow-hidden mb-4">
+      <div className="aspect-[4/3] rounded-t-2xl overflow-hidden">
         <img
           src={image}
           alt={pkg.name}
@@ -199,43 +199,46 @@ const PackageCard: React.FC<PackageCardProps> = ({ pkg }) => {
         />
       </div>
 
-      {/* Name */}
-      <h3 className="font-headline text-lg text-hc-primary leading-snug mb-1">
-        {pkg.name}
-      </h3>
+      {/* Card body with light background and rounded bottom */}
+      <div className="bg-surface-low rounded-b-2xl px-4 py-4">
+        {/* Name */}
+        <h3 className="font-headline text-lg text-hc-primary leading-snug mb-1">
+          {pkg.name}
+        </h3>
 
-      {/* Location & Guests row */}
-      <div className="flex items-center gap-3 text-hc-text-light text-xs font-body mb-2">
-        {pkg.location && (
-          <span className="flex items-center gap-1">
-            <MapPin size={12} />
-            {pkg.location}
-          </span>
-        )}
-        <span className="flex items-center gap-1">
-          <Users size={12} />
-          4 to 5
-        </span>
-      </div>
-
-      {/* Tags */}
-      {pkg.tags && pkg.tags.length > 0 && (
-        <div className="flex gap-1.5 overflow-x-auto no-scrollbar mb-3">
-          {pkg.tags.map((tag) => (
-            <span
-              key={tag}
-              className="shrink-0 bg-hc-primary text-white text-[10px] font-body px-2.5 py-1 rounded-full capitalize"
-            >
-              {tag}
+        {/* Location & Guests row */}
+        <div className="flex items-center gap-3 text-hc-text-light text-xs font-body mb-2">
+          {pkg.location && (
+            <span className="flex items-center gap-1">
+              <MapPin size={12} />
+              {pkg.location}
             </span>
-          ))}
+          )}
+          <span className="flex items-center gap-1">
+            <Users size={12} />
+            4 to 5
+          </span>
         </div>
-      )}
 
-      {/* Learn More */}
-      <div className="flex items-center justify-between mt-1">
-        <span className="text-hc-text text-xs font-body font-medium">Learn More</span>
-        <ArrowRight size={14} className="text-hc-secondary" />
+        {/* Tags */}
+        {pkg.tags && pkg.tags.length > 0 && (
+          <div className="flex gap-1.5 overflow-x-auto no-scrollbar mb-3">
+            {pkg.tags.map((tag) => (
+              <span
+                key={tag}
+                className="shrink-0 bg-hc-secondary text-white text-[10px] font-body px-2.5 py-1 rounded-full capitalize"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Learn More */}
+        <div className="flex items-center justify-between mt-1">
+          <span className="text-hc-text text-xs font-body font-medium">Learn More</span>
+          <ArrowRight size={14} className="text-hc-secondary" />
+        </div>
       </div>
     </Link>
   );
