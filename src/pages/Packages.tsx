@@ -4,11 +4,9 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { PageTransition } from '@/components/layout/PageTransition';
 import { usePackages } from '@/hooks/usePackages';
-import { MapPin, ArrowRight } from 'lucide-react';
+import { MapPin, ArrowRight, Users } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
-
-const HERO_BG =
-  'https://images.unsplash.com/photo-1501854140801-74d5b45bd3c7?auto=format&fit=crop&w=1920&q=80';
+import experiencesHeroBg from '@/assets/experiences-hero-bg.jpg';
 
 const PAGE_SIZE = 8;
 
@@ -71,10 +69,10 @@ const Packages: React.FC = () => {
           {/* Hero Section */}
           <section ref={heroRef} className="relative h-[calc(40vh+80px)] md:h-[calc(50vh+80px)] overflow-hidden rounded-b-[32px]">
             <img
-              src={HERO_BG}
-              alt="Western Ghats forest"
-              className="absolute inset-0 w-full h-full object-cover scale-[1.6]"
-              style={{ objectPosition: 'calc(50% + 50px) calc(50% - 20px)' }}
+              src={experiencesHeroBg}
+              alt="Trekkers in Western Ghats forest"
+              className="absolute inset-0 w-full h-full object-cover object-bottom"
+              style={{ objectPosition: 'center calc(100% - 20px)' }}
               width={1920}
               height={1080}
             />
@@ -206,20 +204,19 @@ const PackageCard: React.FC<PackageCardProps> = ({ pkg }) => {
         {pkg.name}
       </h3>
 
-      {/* Location */}
-      {pkg.location && (
-        <p className="flex items-center gap-1 text-hc-text-light text-xs font-body mb-2">
-          <MapPin size={12} />
-          {pkg.location}
-        </p>
-      )}
-
-      {/* Duration badge */}
-      {pkg.duration_days && pkg.duration_nights && (
-        <span className="inline-block bg-hc-bg-alt text-hc-text text-[11px] font-body font-medium px-3 py-1 rounded-full mb-3">
-          {pkg.duration_days} D / {pkg.duration_nights} N
+      {/* Location & Guests row */}
+      <div className="flex items-center gap-3 text-hc-text-light text-xs font-body mb-2">
+        {pkg.location && (
+          <span className="flex items-center gap-1">
+            <MapPin size={12} />
+            {pkg.location}
+          </span>
+        )}
+        <span className="flex items-center gap-1">
+          <Users size={12} />
+          4 to 5
         </span>
-      )}
+      </div>
 
       {/* Tags */}
       {pkg.tags && pkg.tags.length > 0 && (
@@ -236,9 +233,10 @@ const PackageCard: React.FC<PackageCardProps> = ({ pkg }) => {
       )}
 
       {/* Learn More */}
-      <span className="inline-flex items-center gap-1 text-hc-secondary text-xs font-body font-medium group-hover:underline">
-        Learn More <ArrowRight size={12} />
-      </span>
+      <div className="flex items-center justify-between mt-1">
+        <span className="text-hc-text text-xs font-body font-medium">Learn More</span>
+        <ArrowRight size={14} className="text-hc-secondary" />
+      </div>
     </Link>
   );
 };
