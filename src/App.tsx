@@ -24,20 +24,20 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/"                element={<Index />} />
-          <Route path="/listings"        element={<Listings />} />
-          <Route path="/property/:slug"  element={<PropertyDetail />} />
-          <Route path="/about"           element={<About />} />
-          <Route path="/contact"         element={<Contact />} />
-          <Route path="/experiences"     element={<Experiences />} />
-          <Route path="/packages"        element={<Experiences />} />
-          <Route path="/packages/:slug"  element={<PackageDetail />} />
-          <Route path="/blog"            element={<Blog />} />
-          <Route path="/blog/:slug"      element={<BlogPost />} />
-          <Route path="/journal"         element={<Blog />} />
-          <Route path="/journal/:slug"   element={<BlogPost />} />
-          <Route path="*"               element={<NotFound />} />
-          <Route path="/admin" element={<Admin />} /
+          <Route path="/" element={<Index />} />
+          <Route path="/listings" element={<Listings />} />
+          <Route path="/property/:slug" element={<PropertyDetail />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/experiences" element={<Experiences />} />
+          <Route path="/packages" element={<Experiences />} />
+          <Route path="/packages/:slug" element={<PackageDetail />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/journal" element={<Blog />} />
+          <Route path="/journal/:slug" element={<BlogPost />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
         <WhatsAppWidget />
       </BrowserRouter>
