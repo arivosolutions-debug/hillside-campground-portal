@@ -288,24 +288,28 @@ const MultiImageUpload: React.FC<{
       {items.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {items.map((img, i) => (
-            <div key={i} className="relative group">
-              <img src={img.image_url} alt="" className="w-full aspect-square object-cover rounded-xl"
-                onError={e => (e.currentTarget.style.display = 'none')} />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center gap-1">
-                <button onClick={() => move(i, -1)} className="w-7 h-7 bg-white/80 rounded-full flex items-center justify-center text-hc-primary">
-                  <ChevronUp size={14} />
-                </button>
-                <button onClick={() => move(i, 1)} className="w-7 h-7 bg-white/80 rounded-full flex items-center justify-center text-hc-primary">
-                  <ChevronDown size={14} />
-                </button>
-                <button onClick={() => onChange(items.filter((_, j) => j !== i))}
-                  className="w-7 h-7 bg-red-500/90 rounded-full flex items-center justify-center text-white">
-                  <X size={14} />
-                </button>
+            <div key={i} className="flex flex-col gap-1">
+              {/* Image with hover controls — alt text is OUTSIDE this div */}
+              <div className="relative group aspect-square">
+                <img src={img.image_url} alt="" className="w-full h-full object-cover rounded-xl"
+                  onError={e => (e.currentTarget.style.display = 'none')} />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center gap-1">
+                  <button onClick={() => move(i, -1)} className="w-7 h-7 bg-white/80 rounded-full flex items-center justify-center text-hc-primary">
+                    <ChevronUp size={14} />
+                  </button>
+                  <button onClick={() => move(i, 1)} className="w-7 h-7 bg-white/80 rounded-full flex items-center justify-center text-hc-primary">
+                    <ChevronDown size={14} />
+                  </button>
+                  <button onClick={() => onChange(items.filter((_, j) => j !== i))}
+                    className="w-7 h-7 bg-red-500/90 rounded-full flex items-center justify-center text-white">
+                    <X size={14} />
+                  </button>
+                </div>
               </div>
+              {/* Alt text below image — never covered by overlay */}
               <input placeholder="Alt text" value={img.alt_text}
                 onChange={e => { const n = [...items]; n[i].alt_text = e.target.value; onChange(n); }}
-                className="w-full mt-1 border border-hc-text-light/30 rounded-lg px-2 py-1 text-xs font-body focus:outline-none" />
+                className="w-full border border-hc-text-light/30 rounded-lg px-2 py-1 text-xs font-body focus:outline-none" />
             </div>
           ))}
         </div>
@@ -1671,6 +1675,134 @@ const BlogTab: React.FC<{ onToast: (msg: string, type: 'success' | 'error') => v
   );
 };
 
+// ─── Collection Editor ────────────────────────────────────────────
+
+const CollectionEditor: React.FC = () => {
+  const [types, setTypes] = useState<any[]>([]);
+  const [editing, setEditing] = useState<string | null>(null);
+  const [form, setForm] = useState<{ name: string; collection: string; subtitle: string; cover_image: string; cover_image_file?: File }>({
+    name: '', collection: '', subtitle: '', cover_image: '',
+  });
+  const [saving, setSaving] = useState(false);
+  const [newName, setNewName] = useState('');
+
+  const load = () => {
+    (supabase.from('property_types' as any) as any).select('*').order('sort_order').then(({ data }: any) => {
+      if (data) setTypes(data);
+    });
+  };
+
+  useEffect(() => { load(); }, []);
+
+  const startEdit = (type: any) => {
+    setEditing(type.id);
+    setForm({ name: type.name, collection: type.collection ?? '', subtitle: type.subtitle ?? '', cover_image: type.cover_image ?? '' });
+  };
+
+  const save = async () => {
+    if (!editing) return;
+    setSaving(true);
+    try {
+      let imageUrl = form.cover_image;
+      if (form.cover_image_file) {
+        imageUrl = await uploadFile(form.cover_image_file, 'general', 'collections/');
+      }
+      await (supabase.from('property_types' as any) as any).update({
+        name: form.name, collection: form.collection || null,
+        subtitle: form.subtitle || null, cover_image: imageUrl || null,
+      }).eq('id', editing);
+      setEditing(null);
+      load();
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const add = async () => {
+    if (!newName.trim()) return;
+    await (supabase.from('property_types' as any) as any).insert({ name: newName.trim(), slug: toSlug(newName.trim()) });
+    setNewName('');
+    load();
+  };
+
+  const del = async (id: string, name: string) => {
+    if (!confirm(`Delete property type "${name}"? This may affect existing properties.`)) return;
+    await (supabase.from('property_types' as any) as any).delete().eq('id', id);
+    load();
+  };
+
+  const move = async (i: number, dir: -1 | 1) => {
+    const j = i + dir;
+    if (j < 0 || j >= types.length) return;
+    await Promise.all([
+      (supabase.from('property_types' as any) as any).update({ sort_order: types[j].sort_order ?? j }).eq('id', types[i].id),
+      (supabase.from('property_types' as any) as any).update({ sort_order: types[i].sort_order ?? i }).eq('id', types[j].id),
+    ]);
+    load();
+  };
+
+  return (
+    <div className="bg-white border border-hc-text-light/15 rounded-2xl p-5">
+      <h3 className="font-headline text-hc-primary text-base mb-4">Property Types & Collections</h3>
+      <p className="text-xs text-hc-text-light font-body mb-4">The first 4 types (by sort order) appear in the homepage Collections grid. Set an image and subtitle for each.</p>
+
+      <div className="flex gap-2 mb-4">
+        <input value={newName} onChange={e => setNewName(e.target.value)} placeholder="Add new property type"
+          onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), add())}
+          className="flex-1 border border-hc-text-light/30 rounded-xl px-3 py-2 text-sm font-body bg-white focus:outline-none" />
+        <Btn onClick={add} size="sm"><Plus size={14} />Add</Btn>
+      </div>
+
+      <div className="flex flex-col gap-3">
+        {types.map((type, i) => (
+          <div key={type.id}>
+            <div className="flex items-center gap-2 bg-hc-bg-alt rounded-xl px-3 py-2">
+              <div className="flex flex-col gap-0.5">
+                <button onClick={() => move(i, -1)} disabled={i === 0} className="text-hc-text-light hover:text-hc-primary disabled:opacity-30"><ChevronUp size={12} /></button>
+                <button onClick={() => move(i, 1)} disabled={i === types.length - 1} className="text-hc-text-light hover:text-hc-primary disabled:opacity-30"><ChevronDown size={12} /></button>
+              </div>
+              {type.cover_image && (
+                <img src={type.cover_image} alt="" className="w-10 h-10 object-cover rounded-lg shrink-0"
+                  onError={e => (e.currentTarget.style.display = 'none')} />
+              )}
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-body text-hc-text font-medium">{type.name}</p>
+                {type.collection && <p className="text-xs font-body text-hc-text-light">{type.collection}</p>}
+              </div>
+              {i < 4 && <span className="text-[10px] font-body bg-hc-accent-light text-hc-secondary px-2 py-0.5 rounded-full">Homepage</span>}
+              <button onClick={() => editing === type.id ? setEditing(null) : startEdit(type)}
+                className="p-1.5 rounded-lg hover:bg-hc-bg text-hc-text-light hover:text-hc-primary transition-colors">
+                <Edit2 size={14} />
+              </button>
+              <button onClick={() => del(type.id, type.name)}
+                className="p-1.5 rounded-lg hover:bg-red-50 text-hc-text-light hover:text-red-500 transition-colors">
+                <Trash2 size={14} />
+              </button>
+            </div>
+
+            {editing === type.id && (
+              <div className="border border-hc-text-light/15 rounded-xl p-4 mt-1 flex flex-col gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <Input label="Display Name" value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} />
+                  <Input label="Collection Label" value={form.collection} onChange={e => setForm(p => ({ ...p, collection: e.target.value }))} placeholder="e.g. Canopy Retreats" />
+                </div>
+                <Input label="Subtitle (shown on hover)" value={form.subtitle} onChange={e => setForm(p => ({ ...p, subtitle: e.target.value }))} placeholder="e.g. Sleep 40 feet above the forest floor." />
+                <ImageUpload label="Collection Cover Image" value={form.cover_image}
+                  onChange={(url, file) => setForm(p => ({ ...p, cover_image: url, cover_image_file: file }))}
+                  bucket="general" />
+                <div className="flex gap-2">
+                  <Btn onClick={() => setEditing(null)} variant="secondary" size="sm">Cancel</Btn>
+                  <Btn onClick={save} disabled={saving} size="sm"><Save size={14} />{saving ? 'Saving...' : 'Save'}</Btn>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 // ─── Settings Tab ─────────────────────────────────────────────────
 
 const SettingsTab: React.FC<{ onToast: (msg: string, type: 'success' | 'error') => void }> = ({ onToast }) => {
@@ -1755,7 +1887,7 @@ const SettingsTab: React.FC<{ onToast: (msg: string, type: 'success' | 'error') 
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <LookupManager title="Districts" table="districts" />
-        <LookupManager title="Property Types" table="property_types" extraField="collection" extraLabel="Collection (e.g. Canopy Retreats)" />
+        <CollectionEditor />
         <LookupManager title="Regions" table="regions" />
         <LookupManager title="Amenities" table="amenities" extraField="category" extraLabel="Category" />
       </div>
