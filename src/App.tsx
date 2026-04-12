@@ -13,6 +13,7 @@ import Experiences from "./pages/Packages";
 import PackageDetail from "./pages/PackageDetail";
 import { Blog, BlogPost } from "./pages/Blog";
 import NotFound from "./pages/NotFound";
+import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/journal"         element={<Blog />} />
           <Route path="/journal/:slug"   element={<BlogPost />} />
           <Route path="*"               element={<NotFound />} />
+          <Route path="/admin" element={<Admin />} /
         </Routes>
         <WhatsAppWidget />
       </BrowserRouter>
