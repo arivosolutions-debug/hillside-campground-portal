@@ -82,15 +82,6 @@ export const Navbar: React.FC = () => {
             >
               <Search size={20} strokeWidth={1.75} />
             </button>
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden md:inline-flex items-center gap-2 bg-hc-secondary text-white px-6 py-2.5 rounded-full font-bold text-sm hover:brightness-110 transition-all active:scale-[0.97]"
-            >
-              <MessageCircle size={15} />
-              Book Now
-            </a>
             <button
               className={`md:hidden ${textPrimary} p-1`}
               onClick={() => setMenuOpen(!menuOpen)}
@@ -119,15 +110,6 @@ export const Navbar: React.FC = () => {
               {link.label}
             </Link>
           ))}
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 w-64 inline-flex items-center justify-center gap-2 bg-hc-secondary text-white px-8 py-4 rounded-full font-bold text-base"
-          >
-            <MessageCircle size={18} />
-            Book Now
-          </a>
         </nav>
       </div>
     </>
