@@ -175,6 +175,13 @@ const PropertyDetail = () => {
             <RoomTypesList rooms={property.room_types} coverImage={property.cover_image} />
           </section>
 
+          {/* Desktop Book Now */}
+          <section className="hidden md:flex justify-center px-8 max-w-[1280px] mx-auto mb-12">
+            <div className="w-1/2">
+              <BookNowModal propertyName={property.name} phone={WHATSAPP_PHONE} rooms={property.room_types} />
+            </div>
+          </section>
+
           {/* Desktop Amenities */}
           <section className="hidden md:block px-8 max-w-[1280px] mx-auto mb-12">
             <AmenitiesGrid amenities={property.amenities} />
