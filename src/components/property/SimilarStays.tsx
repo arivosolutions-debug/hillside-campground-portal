@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { DISTRICT_LABELS, type District, type PropertyType } from '@/lib/types';
+import { DISTRICT_LABELS } from '@/lib/types';
 
 interface SimilarStaysProps {
   currentSlug: string;
-  district: District;
-  propertyType: PropertyType;
+  district: string;
+  propertyType: string;
 }
 
 export const SimilarStays: React.FC<SimilarStaysProps> = ({ currentSlug, district, propertyType }) => {
