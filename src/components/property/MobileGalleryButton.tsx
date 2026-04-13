@@ -130,28 +130,11 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
         </div>
       )}
 
-      {/* ── Fullscreen Single Photo View ────────────────────── */}
+      {/* ── Fullscreen Scrollable Photo View ──────────────────── */}
       {fullscreenIndex !== null && (
-        <div
-          className="fixed inset-0 z-[210] bg-black/95 flex flex-col"
-          onClick={() => setFullscreenIndex(null)}
-          onTouchStart={(e) => {
-            touchStartX.current = e.touches[0].clientX;
-            touchStartY.current = e.touches[0].clientY;
-          }}
-          onTouchEnd={(e) => {
-            if (touchStartX.current === null || touchStartY.current === null) return;
-            const dx = e.changedTouches[0].clientX - touchStartX.current;
-            const dy = e.changedTouches[0].clientY - touchStartY.current;
-            touchStartX.current = null;
-            touchStartY.current = null;
-            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
-              if (dx < 0) next(); else prev();
-            }
-          }}
-        >
+        <div className="fixed inset-0 z-[210] bg-black/95 flex flex-col">
           {/* Top bar */}
-          <div className="flex items-center justify-between px-5 pt-[calc(1.25rem+45px)] pb-3">
+          <div className="flex items-center justify-between px-5 pt-[calc(1.25rem+45px)] pb-3 shrink-0">
             <button
               onClick={(e) => { e.stopPropagation(); setFullscreenIndex(null); }}
               className="flex items-center gap-2 text-white/80 font-body text-sm"
@@ -169,42 +152,28 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
             </button>
           </div>
 
-          {/* Image */}
-          <div className="flex-1 flex items-center justify-center px-4" style={{ maxHeight: '85vh' }}>
-            <img
-              src={allImages[fullscreenIndex]}
-              alt={`${propertyName} — ${fullscreenIndex + 1}`}
-              className="max-w-full object-contain rounded-xl"
-              style={{ maxHeight: '75vh' }}
-              draggable={false}
-              onClick={(e) => e.stopPropagation()}
-            />
+          {/* Scrollable image list — min-height grows with photo count */}
+          <div
+            className="flex-1 overflow-y-auto px-4 pb-8 space-y-4"
+            style={{ minHeight: `${Math.max(50, Math.min(allImages.length * 30, 100))}vh` }}
+          >
+            {allImages.map((src, i) => (
+              <div key={i} className="flex justify-center">
+                <img
+                  src={src}
+                  alt={`${propertyName} — ${i + 1} of ${allImages.length}`}
+                  className="max-w-full max-h-[85vh] object-contain rounded-xl select-none"
+                  draggable={false}
+                  loading={i > 2 ? 'lazy' : 'eager'}
+                />
+              </div>
+            ))}
           </div>
 
-          {/* Nav arrows */}
-          {allImages.length > 1 && (
-            <>
-              <button
-                onClick={(e) => { e.stopPropagation(); prev(); }}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center"
-                aria-label="Previous photo"
-              >
-                <ChevronLeft size={20} className="text-white" />
-              </button>
-              <button
-                onClick={(e) => { e.stopPropagation(); next(); }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center"
-                aria-label="Next photo"
-              >
-                <ChevronRight size={20} className="text-white" />
-              </button>
-            </>
-          )}
-
           {/* Counter */}
-          <div className="py-4 text-center">
+          <div className="py-3 text-center shrink-0">
             <span className="text-white/60 font-body text-sm tabular-nums">
-              {fullscreenIndex + 1} / {allImages.length}
+              {allImages.length} photos
             </span>
           </div>
         </div>
