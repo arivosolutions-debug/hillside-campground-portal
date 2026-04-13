@@ -45,6 +45,14 @@ export interface PropertyImage {
   created_at: string;
 }
 
+export interface RoomTypeImage {
+  id: string;
+  room_type_id: string;
+  image_url: string;
+  alt_text: string | null;
+  sort_order: number | null;
+}
+
 export interface RoomType {
   id: string;
   property_id: string;
@@ -53,6 +61,7 @@ export interface RoomType {
   max_guests: number;
   description: string | null;
   created_at: string;
+  room_type_images?: RoomTypeImage[];
 }
 
 export interface Amenity {

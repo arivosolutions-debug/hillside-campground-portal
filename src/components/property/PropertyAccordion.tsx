@@ -51,13 +51,19 @@ export const HighlightsAccordion: React.FC<HighlightsAccordionProps> = ({ highli
   );
 };
 
-export const TermsAccordion: React.FC = () => (
-  <PropertyAccordion title="Terms & Conditions">
-    <div className="space-y-3 text-sm text-[#424842] font-body">
-      <p><strong>Check-in:</strong> 2:00 PM — <strong>Check-out:</strong> 11:00 AM</p>
-      <p><strong>Cancellation:</strong> Free cancellation up to 7 days before check-in. 50% refund for cancellations within 3–7 days. No refund for cancellations within 3 days.</p>
-      <p><strong>House Rules:</strong> No smoking indoors. Pets allowed on select properties only. Quiet hours from 10 PM to 7 AM. Guests are responsible for any damage to property.</p>
-      <p><strong>Payment:</strong> A 30% advance is required to confirm your booking. Balance payable at check-in.</p>
-    </div>
-  </PropertyAccordion>
-);
+interface TermsAccordionProps {
+  terms: string[] | null;
+}
+
+export const TermsAccordion: React.FC<TermsAccordionProps> = ({ terms }) => {
+  if (!terms?.length) return null;
+  return (
+    <PropertyAccordion title="Terms & Conditions">
+      <div className="space-y-3 text-sm text-[#424842] font-body">
+        {terms.map((t, i) => (
+          <p key={i}>{t}</p>
+        ))}
+      </div>
+    </PropertyAccordion>
+  );
+};
