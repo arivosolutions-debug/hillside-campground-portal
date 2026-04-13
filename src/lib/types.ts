@@ -29,6 +29,7 @@ export interface Property {
   latitude: number | null;
   longitude: number | null;
   location: string | null;
+  terms_conditions: string[] | null;
   cover_image: string | null;
   is_featured: boolean;
   is_published: boolean;
