@@ -19,8 +19,8 @@ export interface Property {
   id: string;
   name: string;
   slug: string;
-  district: District;
-  property_type: PropertyType;
+  district: string;
+  property_type: string;
   tagline: string | null;
   description: string | null;
   highlights: string[] | null;
@@ -35,6 +35,11 @@ export interface Property {
   is_published: boolean;
   created_at: string;
   updated_at: string;
+  nearest_airport: string | null;
+  nearest_airport_distance: string | null;
+  nearest_railway: string | null;
+  nearest_railway_distance: string | null;
+  travel_tips: string | null;
 }
 
 export interface PropertyImage {
@@ -111,7 +116,7 @@ export interface Enquiry {
   property_id?: string;
 }
 
-export const PROPERTY_TYPE_LABELS: Record<PropertyType, string> = {
+export const PROPERTY_TYPE_LABELS: Record<string, string> = {
   tree_house:         'Canopy Retreat',
   backwater_villa:    'Floating Villa',
   mountain_lookout:   'High Range',
@@ -120,7 +125,7 @@ export const PROPERTY_TYPE_LABELS: Record<PropertyType, string> = {
   riverside_cottage:  'Riverside Cottage',
 };
 
-export const DISTRICT_LABELS: Record<District, string> = {
+export const DISTRICT_LABELS: Record<string, string> = {
   wayanad:   'Wayanad',
   munnar:    'Munnar',
   alleppey:  'Alleppey',
