@@ -68,7 +68,7 @@ const PropertyDetail = () => {
             coverImage={property.cover_image}
             images={property.property_images}
             propertyName={property.name}
-            district={districtLabel}
+            location={property.location}
             maxGuests={property.max_guests}
             amenityNames={amenityNames}
           />
