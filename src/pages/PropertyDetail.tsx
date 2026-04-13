@@ -92,7 +92,10 @@ const PropertyDetail = () => {
           {/* 4. Rooms (mobile) */}
           <MobileRoomCards rooms={property.room_types} coverImage={property.cover_image} />
 
-          {/* 5. Book Now (desktop only) */}
+          {/* 5. Book Now (mobile only, above amenities) */}
+          <div className="md:hidden">
+            <BookNowModal propertyName={property.name} phone={WHATSAPP_PHONE} rooms={property.room_types} />
+          </div>
 
           {/* 6. Amenities (mobile) */}
           <div className="md:hidden">
