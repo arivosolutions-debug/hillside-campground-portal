@@ -34,7 +34,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
 
         <p className="text-sm text-hc-text flex items-center gap-1.5 mb-0.5 font-body">
           <MapPin size={13} strokeWidth={1.5} />
-          {DISTRICT_LABELS[property.district]}, Kerala
+          {(property as any).location || DISTRICT_LABELS[property.district]}
         </p>
         <p className="text-sm text-hc-text flex items-center gap-1.5 font-body">
           <Users size={13} strokeWidth={1.5} />

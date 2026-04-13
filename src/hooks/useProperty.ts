@@ -31,8 +31,9 @@ export function useProperty(slug: string | undefined) {
           .order('sort_order'),
         supabase
           .from('room_types')
-          .select('*')
-          .eq('property_id', property.id),
+          .select('*, room_type_images(*)')
+          .eq('property_id', property.id)
+          .order('sort_order'),
         supabase
           .from('property_amenities')
           .select('amenities(*)')

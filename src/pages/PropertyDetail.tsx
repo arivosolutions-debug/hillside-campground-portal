@@ -115,7 +115,7 @@ const PropertyDetail = () => {
           {/* 8 & 9. Accordions (both) */}
           <div className="mt-10 md:px-8 md:max-w-[1280px] md:mx-auto">
             <HighlightsAccordion highlights={property.highlights} />
-            <TermsAccordion />
+            <TermsAccordion terms={property.terms_conditions ?? null} />
           </div>
 
           {/* 10. Similar Stays */}
