@@ -28,6 +28,7 @@ export interface Property {
   price_per_night: number | null;
   latitude: number | null;
   longitude: number | null;
+  location: string | null;
   cover_image: string | null;
   is_featured: boolean;
   is_published: boolean;

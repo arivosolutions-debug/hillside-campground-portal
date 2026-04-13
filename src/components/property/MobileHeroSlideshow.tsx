@@ -7,7 +7,7 @@ interface MobileHeroSlideshowProps {
   coverImage: string | null;
   images: PropertyImage[];
   propertyName: string;
-  district: string;
+  location: string | null;
   maxGuests: number;
   amenityNames?: string[];
   backLink?: string;
@@ -15,7 +15,7 @@ interface MobileHeroSlideshowProps {
 }
 
 export const MobileHeroSlideshow: React.FC<MobileHeroSlideshowProps> = ({
-  coverImage, images, propertyName, district, maxGuests, amenityNames = [], backLink = '/listings', backLabel = 'All Stays',
+  coverImage, images, propertyName, location, maxGuests, amenityNames = [], backLink = '/listings', backLabel = 'All Stays',
 }) => {
   const allImages: string[] = [
     coverImage ?? '/placeholder.svg',
@@ -94,9 +94,11 @@ export const MobileHeroSlideshow: React.FC<MobileHeroSlideshowProps> = ({
           {propertyName}
         </h1>
         <div className="flex items-center gap-4 text-sm text-white/80 mb-3">
-          <span className="flex items-center gap-1">
-            <MapPin size={13} strokeWidth={1.5} /> {district}, Keralam
-          </span>
+          {location && (
+            <span className="flex items-center gap-1">
+              <MapPin size={13} strokeWidth={1.5} /> {location}
+            </span>
+          )}
           {maxGuests > 0 && (
             <span className="flex items-center gap-1">
               <Users size={13} strokeWidth={1.5} /> Up to {maxGuests} Guests
