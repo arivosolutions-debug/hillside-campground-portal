@@ -48,7 +48,7 @@ export const SimilarStays: React.FC<SimilarStaysProps> = ({ currentSlug, distric
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <span className="absolute top-3 left-3 bg-[#17341e]/80 text-white text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full font-body">
-                {DISTRICT_LABELS[p.district as District]}
+                {DISTRICT_LABELS[p.district as string]}
               </span>
               <p className="absolute bottom-3 left-3 right-3 font-headline text-white text-sm font-bold leading-tight">
                 {p.name}
@@ -74,7 +74,7 @@ export const SimilarStays: React.FC<SimilarStaysProps> = ({ currentSlug, distric
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <span className="absolute top-3 left-3 bg-[#17341e]/80 text-white text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full font-body">
-                {DISTRICT_LABELS[p.district as District]}
+                {DISTRICT_LABELS[p.district as string]}
               </span>
               <p className="absolute bottom-3 left-3 right-3 font-headline text-white text-sm font-bold leading-tight">
                 {p.name}
