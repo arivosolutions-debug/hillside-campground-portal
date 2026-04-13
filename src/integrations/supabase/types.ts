@@ -330,6 +330,10 @@ export type Database = {
           max_guests: number
           min_nights: number | null
           name: string
+          nearest_airport: string | null
+          nearest_airport_distance: string | null
+          nearest_railway: string | null
+          nearest_railway_distance: string | null
           price_per_night: number | null
           property_type: string
           slug: string
@@ -337,6 +341,7 @@ export type Database = {
           tagline: string | null
           tags: string[] | null
           terms_conditions: string[] | null
+          travel_tips: string | null
           updated_at: string | null
         }
         Insert: {
@@ -354,6 +359,10 @@ export type Database = {
           max_guests?: number
           min_nights?: number | null
           name: string
+          nearest_airport?: string | null
+          nearest_airport_distance?: string | null
+          nearest_railway?: string | null
+          nearest_railway_distance?: string | null
           price_per_night?: number | null
           property_type: string
           slug: string
@@ -361,6 +370,7 @@ export type Database = {
           tagline?: string | null
           tags?: string[] | null
           terms_conditions?: string[] | null
+          travel_tips?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -378,6 +388,10 @@ export type Database = {
           max_guests?: number
           min_nights?: number | null
           name?: string
+          nearest_airport?: string | null
+          nearest_airport_distance?: string | null
+          nearest_railway?: string | null
+          nearest_railway_distance?: string | null
           price_per_night?: number | null
           property_type?: string
           slug?: string
@@ -385,6 +399,7 @@ export type Database = {
           tagline?: string | null
           tags?: string[] | null
           terms_conditions?: string[] | null
+          travel_tips?: string | null
           updated_at?: string | null
         }
         Relationships: []

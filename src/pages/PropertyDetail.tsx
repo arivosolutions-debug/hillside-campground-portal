@@ -110,6 +110,11 @@ const PropertyDetail = () => {
             latitude={property.latitude}
             longitude={property.longitude}
             district={districtLabel}
+            nearestAirport={property.nearest_airport}
+            nearestAirportDistance={property.nearest_airport_distance}
+            nearestRailway={property.nearest_railway}
+            nearestRailwayDistance={property.nearest_railway_distance}
+            travelTips={property.travel_tips}
           />
 
           {/* ═══════════════════ DESKTOP LAYOUT ═══════════════════ */}
@@ -186,6 +191,11 @@ const PropertyDetail = () => {
               latitude={property.latitude}
               longitude={property.longitude}
               district={districtLabel}
+              nearestAirport={property.nearest_airport}
+              nearestAirportDistance={property.nearest_airport_distance}
+              nearestRailway={property.nearest_railway}
+              nearestRailwayDistance={property.nearest_railway_distance}
+              travelTips={property.travel_tips}
             />
           </section>
 

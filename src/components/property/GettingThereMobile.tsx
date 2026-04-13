@@ -1,17 +1,30 @@
 import React from 'react';
-import { MapPin, Plane, Train } from 'lucide-react';
+import { MapPin, Plane, Train, Car } from 'lucide-react';
 
 interface GettingThereMobileProps {
   latitude: number | null;
   longitude: number | null;
   district: string;
+  nearestAirport?: string | null;
+  nearestAirportDistance?: string | null;
+  nearestRailway?: string | null;
+  nearestRailwayDistance?: string | null;
+  travelTips?: string | null;
 }
 
-export const GettingThereMobile: React.FC<GettingThereMobileProps> = ({ latitude, longitude, district }) => {
+export const GettingThereMobile: React.FC<GettingThereMobileProps> = ({
+  latitude, longitude, district,
+  nearestAirport, nearestAirportDistance,
+  nearestRailway, nearestRailwayDistance,
+  travelTips,
+}) => {
   const lat = latitude ?? 11.7;
   const lng = longitude ?? 76.1;
   const bbox = `${(lng - 0.1).toFixed(4)}%2C${(lat - 0.1).toFixed(4)}%2C${(lng + 0.1).toFixed(4)}%2C${(lat + 0.1).toFixed(4)}`;
   const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lng}`;
+
+  const airportName = nearestAirport || 'Contact us for details';
+  const railwayName = nearestRailway || 'Contact us for details';
 
   return (
     <div className="md:hidden px-5 mt-10">
@@ -30,18 +43,28 @@ export const GettingThereMobile: React.FC<GettingThereMobileProps> = ({ latitude
           <div className="flex items-start gap-3 mb-3">
             <MapPin size={16} strokeWidth={1.5} className="text-[#924a29] mt-0.5 shrink-0" />
             <div>
-              <p className="text-sm font-body font-semibold text-[#17341e]">{district}, Keralam</p>
+              <p className="text-sm font-body font-semibold text-[#17341e]">{district}</p>
               <p className="text-xs text-[#424842] font-body mt-0.5">{lat.toFixed(5)}° N, {lng.toFixed(5)}° E</p>
             </div>
           </div>
           <div className="flex items-start gap-3 mb-2">
             <Plane size={14} strokeWidth={1.5} className="text-[#424842] mt-0.5 shrink-0" />
-            <p className="text-xs text-[#424842] font-body">Nearest Airport: ~2.5 hrs</p>
+            <p className="text-xs text-[#424842] font-body">
+              {airportName}{nearestAirportDistance ? ` — ${nearestAirportDistance}` : ''}
+            </p>
           </div>
-          <div className="flex items-start gap-3">
+          <div className="flex items-start gap-3 mb-2">
             <Train size={14} strokeWidth={1.5} className="text-[#424842] mt-0.5 shrink-0" />
-            <p className="text-xs text-[#424842] font-body">Nearest Railway: ~2.5 hrs</p>
+            <p className="text-xs text-[#424842] font-body">
+              {railwayName}{nearestRailwayDistance ? ` — ${nearestRailwayDistance}` : ''}
+            </p>
           </div>
+          {travelTips && (
+            <div className="flex items-start gap-3">
+              <Car size={14} strokeWidth={1.5} className="text-[#424842] mt-0.5 shrink-0" />
+              <p className="text-xs text-[#424842] font-body">{travelTips}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
