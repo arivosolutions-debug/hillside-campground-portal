@@ -325,6 +325,7 @@ export type Database = {
           is_featured: boolean | null
           is_published: boolean | null
           latitude: number | null
+          location: string | null
           longitude: number | null
           max_guests: number
           min_nights: number | null
@@ -348,6 +349,7 @@ export type Database = {
           is_featured?: boolean | null
           is_published?: boolean | null
           latitude?: number | null
+          location?: string | null
           longitude?: number | null
           max_guests?: number
           min_nights?: number | null
@@ -371,6 +373,7 @@ export type Database = {
           is_featured?: boolean | null
           is_published?: boolean | null
           latitude?: number | null
+          location?: string | null
           longitude?: number | null
           max_guests?: number
           min_nights?: number | null
@@ -454,27 +457,33 @@ export type Database = {
       property_types: {
         Row: {
           collection: string | null
+          cover_image: string | null
           created_at: string | null
           id: string
           name: string
           slug: string
           sort_order: number | null
+          subtitle: string | null
         }
         Insert: {
           collection?: string | null
+          cover_image?: string | null
           created_at?: string | null
           id?: string
           name: string
           slug: string
           sort_order?: number | null
+          subtitle?: string | null
         }
         Update: {
           collection?: string | null
+          cover_image?: string | null
           created_at?: string | null
           id?: string
           name?: string
           slug?: string
           sort_order?: number | null
+          subtitle?: string | null
         }
         Relationships: []
       }

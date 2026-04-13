@@ -149,50 +149,35 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ coverImage, images, 
 
       {/* ── Lightbox ───────────────────────────────────────────────── */}
       {lightboxIndex !== null && (
-        <div
-          className="fixed inset-0 z-[200] bg-black/96 flex items-center justify-center"
-          onClick={closeLightbox}
-        >
-          {/* Close */}
-          <button
-            onClick={(e) => { e.stopPropagation(); closeLightbox(); }}
-            className="absolute top-5 right-5 w-11 h-11 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
-            aria-label="Close gallery"
-          >
-            <X size={18} className="text-white" />
-          </button>
+        <div className="fixed inset-0 z-[200] bg-black/96 flex flex-col">
+          {/* Top bar */}
+          <div className="flex items-center justify-between px-5 py-4 shrink-0">
+            <span className="text-white/50 font-body text-sm tabular-nums">
+              {lightboxIndex + 1} / {allImages.length}
+            </span>
+            <button
+              onClick={closeLightbox}
+              className="w-11 h-11 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+              aria-label="Close gallery"
+            >
+              <X size={18} className="text-white" />
+            </button>
+          </div>
 
-          {/* Prev */}
-          <button
-            onClick={(e) => { e.stopPropagation(); prev(); }}
-            className="absolute left-5 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
-            aria-label="Previous photo"
-          >
-            <ChevronLeft size={22} className="text-white" />
-          </button>
-
-          {/* Image */}
-          <img
-            src={allImages[lightboxIndex]}
-            alt={`${propertyName} — ${lightboxIndex + 1} of ${allImages.length}`}
-            className="max-h-[88vh] max-w-[88vw] object-contain rounded-xl select-none"
-            onClick={e => e.stopPropagation()}
-            draggable={false}
-          />
-
-          {/* Next */}
-          <button
-            onClick={(e) => { e.stopPropagation(); next(); }}
-            className="absolute right-5 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
-            aria-label="Next photo"
-          >
-            <ChevronRight size={22} className="text-white" />
-          </button>
-
-          {/* Counter */}
-          <span className="absolute bottom-5 text-white/50 font-body text-sm tabular-nums">
-            {lightboxIndex + 1} / {allImages.length}
-          </span>
+          {/* Scrollable image list */}
+          <div className="flex-1 overflow-y-auto px-4 pb-8 space-y-4">
+            {allImages.map((src, i) => (
+              <div key={i} className="flex justify-center">
+                <img
+                  src={src}
+                  alt={`${propertyName} — ${i + 1} of ${allImages.length}`}
+                  className="max-w-full max-h-[85vh] object-contain rounded-xl select-none"
+                  draggable={false}
+                  loading={i > 2 ? 'lazy' : 'eager'}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </>
