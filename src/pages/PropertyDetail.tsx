@@ -92,8 +92,7 @@ const PropertyDetail = () => {
           {/* 4. Rooms (mobile) */}
           <MobileRoomCards rooms={property.room_types} coverImage={property.cover_image} />
 
-          {/* 5. Book Now (both) */}
-          <BookNowModal propertyName={property.name} phone={WHATSAPP_PHONE} rooms={property.room_types} />
+          {/* 5. Book Now (desktop only) */}
 
           {/* 6. Amenities (mobile) */}
           <div className="md:hidden">
