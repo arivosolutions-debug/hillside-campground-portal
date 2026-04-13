@@ -1,29 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Quote } from 'lucide-react';
+import { useReviews, type Review } from '@/hooks/useReviews';
 
-const TESTIMONIALS = [
-  {
-    quote: 'The Canopy at Vythiri converted me from a sceptic into a believer. I have stayed in luxury hotels on four continents. Nothing has come close to waking in a mist-shrouded treehouse with the forest alive around you.',
-    name: 'Rohan Mehta',
-    title: 'Architect, Mumbai',
-    stayedAt: 'Canopy at Vythiri',
-    initials: 'RM',
-    image: 'https://images.unsplash.com/photo-1566753323558-f4e0952af115?w=200&q=80',
-  },
-  {
-    quote: 'Meesapulimala is not a destination. It is a decision to stop rushing. The naturalist, the food, the silence — I left a different person and I say that without any irony.',
-    name: 'Shreya Rao',
-    title: 'Writer, Bangalore',
-    stayedAt: 'Meesapulimala Lookout',
-    initials: 'SR',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80',
-  },
-];
+const getInitials = (name: string) =>
+  name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+
+const Avatar = ({ review, className = '' }: { review: Review; className?: string }) => (
+  <div className={`w-12 h-12 rounded-full bg-hc-secondary/20 flex items-center justify-center shrink-0 ${className}`}>
+    <span className="font-body font-bold text-hc-primary text-sm">
+      {review.initials ?? getInitials(review.guest_name)}
+    </span>
+  </div>
+);
 
 export const TestimonialsSection: React.FC = () => {
   const ref = useRef<HTMLElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const { data: reviews = [] } = useReviews(true);
 
   useEffect(() => {
     const section = ref.current;
@@ -39,7 +33,7 @@ export const TestimonialsSection: React.FC = () => {
       observer.observe(item);
     });
     return () => observer.disconnect();
-  }, []);
+  }, [reviews]);
 
   const handleScroll = () => {
     const el = scrollRef.current;
@@ -47,6 +41,8 @@ export const TestimonialsSection: React.FC = () => {
     const max = el.scrollWidth - el.clientWidth;
     setScrollProgress(max > 0 ? el.scrollLeft / max : 0);
   };
+
+  if (reviews.length === 0) return null;
 
   return (
     <section ref={ref} className="relative py-16 md:py-32 px-5 md:px-8">
@@ -75,18 +71,18 @@ export const TestimonialsSection: React.FC = () => {
 
         {/* Desktop grid */}
         <div className="hidden md:grid grid-cols-2 gap-10">
-          {TESTIMONIALS.map((t) => (
-            <div key={t.name} className="testimonial-card group bg-white rounded-[2rem] p-10 flex flex-col shadow-card">
+          {reviews.map((review) => (
+            <div key={review.id} className="testimonial-card group bg-white rounded-[2rem] p-10 flex flex-col shadow-card">
               <div className="h-0.5 w-10 group-hover:w-20 bg-hc-secondary mb-8 transition-all duration-500 ease-out" />
               <Quote size={36} className="text-hc-secondary/20 mb-4 group-hover:text-hc-secondary/40 transition-colors duration-500" />
               <blockquote className="font-headline text-hc-primary text-xl italic leading-relaxed mb-10 flex-1">
-                "{t.quote}"
+                "{review.quote}"
               </blockquote>
               <div className="flex items-center gap-4">
-                <img src={t.image} alt={t.name} className="w-12 h-12 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                <Avatar review={review} className="grayscale group-hover:grayscale-0 transition-all duration-700" />
                 <div>
-                  <div className="font-body font-bold text-hc-primary text-sm">{t.name}</div>
-                  <div className="font-body text-xs text-hc-text-light">{t.title}</div>
+                  <div className="font-body font-bold text-hc-primary text-sm">{review.guest_name}</div>
+                  <div className="font-body text-xs text-hc-text-light">{review.guest_title ?? ''}</div>
                 </div>
               </div>
             </div>
@@ -101,21 +97,20 @@ export const TestimonialsSection: React.FC = () => {
             className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4"
             style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
           >
-            {TESTIMONIALS.map((t) => (
-              <div key={t.name} className="min-w-[85vw] snap-start" style={{ scrollSnapStop: 'always' }}>
+            {reviews.map((review) => (
+              <div key={review.id} className="min-w-[85vw] snap-start" style={{ scrollSnapStop: 'always' }}>
                 <div className="testimonial-card bg-white/80 backdrop-blur-xl rounded-2xl p-6 relative">
-                  {/* Avatar peeking from top-right */}
-                  <img
-                    src={t.image}
-                    alt={t.name}
-                    className="absolute -top-4 right-4 w-14 h-14 rounded-full object-cover border-2 border-white shadow-lg"
-                  />
+                  <div className="absolute -top-4 right-4">
+                    <Avatar review={review} className="border-2 border-white shadow-lg w-14 h-14" />
+                  </div>
                   <Quote size={28} className="text-hc-secondary/30 mb-3" />
                   <blockquote className="font-headline text-hc-primary text-lg italic leading-relaxed mb-6">
-                    "{t.quote}"
+                    "{review.quote}"
                   </blockquote>
-                  <div className="font-body font-bold text-hc-primary text-sm">{t.name}</div>
-                  <div className="font-body text-xs text-hc-secondary">stayed at {t.stayedAt}</div>
+                  <div className="font-body font-bold text-hc-primary text-sm">{review.guest_name}</div>
+                  {review.stayed_at && (
+                    <div className="font-body text-xs text-hc-secondary">stayed at {review.stayed_at}</div>
+                  )}
                 </div>
               </div>
             ))}
