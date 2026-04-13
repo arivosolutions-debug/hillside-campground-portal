@@ -51,6 +51,7 @@ interface PropertyForm {
   longitude: string;
   cover_image: string;
   cover_image_file?: File;
+  location: string;
   is_featured: boolean;
   is_published: boolean;
   sort_order: number;
@@ -705,7 +706,7 @@ const HeroImagesEditor: React.FC<{ items: { url: string; file?: File }[]; onChan
 const emptyProperty = (): PropertyForm => ({
   name: '', slug: '', district: '', property_type: '', tagline: '', description: '',
   highlights: [], tags: [], terms_conditions: [], max_guests: 2, price_per_night: '',
-  latitude: '', longitude: '', cover_image: '', is_featured: false, is_published: false,
+  latitude: '', longitude: '', cover_image: '', location: '', is_featured: false, is_published: false,
   sort_order: 0, property_images: [], room_types: [], amenity_ids: [], nearby_attractions: [],
 });
 
@@ -738,6 +739,7 @@ const PropertyFormPage: React.FC<{
       const payload = {
         name: form.name, slug: form.slug, district: form.district, property_type: form.property_type,
         tagline: form.tagline || null, description: form.description || null,
+        location: form.location || null,
         highlights: form.highlights.length ? form.highlights : null,
         tags: form.tags.length ? form.tags : null,
         terms_conditions: form.terms_conditions.length ? form.terms_conditions : null,
@@ -846,6 +848,7 @@ const PropertyFormPage: React.FC<{
             <DynamicSelect label="District *" value={form.district} onChange={v => set('district', v)} table="districts" valueField="slug" />
             <DynamicSelect label="Property Type *" value={form.property_type} onChange={v => set('property_type', v)} table="property_types" valueField="slug" />
             <Input label="Tagline" value={form.tagline} onChange={e => set('tagline', e.target.value)} placeholder="Nature meets comfort above the clouds" />
+            <Input label="Location" value={form.location} onChange={e => set('location', e.target.value)} placeholder="e.g. Vythiri Village, Wayanad" />
             <Input label="Max Guests" type="number" value={form.max_guests} onChange={e => set('max_guests', parseInt(e.target.value) || 1)} />
             <Input label="Price Per Night (₹)" type="number" value={form.price_per_night} onChange={e => set('price_per_night', e.target.value)} placeholder="Leave blank = Contact for Pricing" />
             <Input label="Sort Order" type="number" value={form.sort_order} onChange={e => set('sort_order', parseInt(e.target.value) || 0)} />
@@ -1110,6 +1113,7 @@ const PropertiesTab: React.FC<{ onToast: (msg: string, type: 'success' | 'error'
       price_per_night: prop.price_per_night?.toString() ?? '',
       latitude: prop.latitude?.toString() ?? '',
       longitude: prop.longitude?.toString() ?? '',
+      location: prop.location ?? '',
       highlights: prop.highlights ?? [],
       tags: prop.tags ?? [],
       terms_conditions: prop.terms_conditions ?? [],
