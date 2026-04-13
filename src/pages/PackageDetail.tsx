@@ -86,7 +86,7 @@ const PackageDetail: React.FC = () => {
             coverImage={coverImage}
             images={propertyImages}
             propertyName={pkg.name}
-            district={pkg.location ?? ''}
+            location={pkg.location ?? ''}
             maxGuests={0}
             amenityNames={pkg.tags ?? []}
             backLink="/packages"
