@@ -46,7 +46,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
           {tags.map((tag) => (
             <span
               key={tag}
-              className="bg-hc-primary text-white text-[10px] uppercase tracking-wider font-bold px-3 py-1 rounded-full font-body"
+              className="bg-hc-accent-light text-hc-primary border border-hc-primary/10 text-[10px] uppercase tracking-wider font-bold px-3 py-1 rounded-full font-body"
             >
               {tag}
             </span>

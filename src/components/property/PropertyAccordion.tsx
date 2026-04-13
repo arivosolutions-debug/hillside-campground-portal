@@ -60,9 +60,18 @@ export const TermsAccordion: React.FC<TermsAccordionProps> = ({ terms }) => {
   return (
     <PropertyAccordion title="Terms & Conditions">
       <div className="space-y-3 text-sm text-[#424842] font-body">
-        {terms.map((t, i) => (
-          <p key={i}>{t}</p>
-        ))}
+        {terms.map((t, i) => {
+          const colonIdx = t.indexOf(':');
+          if (colonIdx > 0 && colonIdx < 30) {
+            return (
+              <p key={i}>
+                <strong className="text-hc-primary">{t.slice(0, colonIdx)}</strong>
+                {t.slice(colonIdx)}
+              </p>
+            );
+          }
+          return <p key={i}>{t}</p>;
+        })}
       </div>
     </PropertyAccordion>
   );

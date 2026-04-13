@@ -45,17 +45,7 @@ export const TestimonialsSection: React.FC = () => {
   if (reviews.length === 0) return null;
 
   return (
-    <section ref={ref} className="relative py-16 md:py-32 px-5 md:px-8">
-      {/* Mobile: mountain background */}
-      <div className="md:hidden absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=1200&q=80"
-          alt="Mountains"
-          className="w-full h-full object-cover brightness-50"
-        />
-        <div className="absolute inset-0 bg-black/30" />
-      </div>
-
+    <section ref={ref} className="relative py-16 md:py-32 px-5 md:px-8 bg-hc-bg">
       <div className="relative z-10 max-w-content mx-auto">
         {/* Label */}
         <div className="flex items-center gap-4 mb-6">
@@ -64,7 +54,7 @@ export const TestimonialsSection: React.FC = () => {
         </div>
 
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 md:mb-16">
-          <h2 className="font-headline text-3xl md:text-5xl leading-tight max-w-sm text-white md:text-hc-primary">
+          <h2 className="font-headline text-3xl md:text-5xl leading-tight max-w-sm text-hc-primary">
             Words from those<br /><em>who stayed.</em>
           </h2>
         </div>
