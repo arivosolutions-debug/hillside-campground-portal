@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { BedDouble, Users, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { RoomType } from '@/lib/types';
+import { ImageLightbox } from '@/components/property/ImageLightbox';
 
 interface RoomTypesListProps {
   rooms:      RoomType[];
   coverImage: string | null;
 }
 
-const RoomCarousel: React.FC<{ images: string[]; alt: string }> = ({ images, alt }) => {
+const RoomCarousel: React.FC<{
+  images: string[];
+  alt: string;
+  onImageClick: (index: number) => void;
+}> = ({ images, alt, onImageClick }) => {
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
@@ -17,7 +22,10 @@ const RoomCarousel: React.FC<{ images: string[]; alt: string }> = ({ images, alt
   }, [images.length]);
 
   return (
-    <div className="relative w-full h-full">
+    <div
+      className="relative w-full h-full cursor-pointer"
+      onClick={() => onImageClick(current)}
+    >
       {images.map((src, i) => (
         <img
           key={src + i}
@@ -29,16 +37,15 @@ const RoomCarousel: React.FC<{ images: string[]; alt: string }> = ({ images, alt
       ))}
       {images.length > 1 && (
         <>
-          <button
-            onClick={() => setCurrent(i => (i - 1 + images.length) % images.length)}
+          <button onClick={(e) => { e.stopPropagation(); setCurrent(i => (i - 1 + images.length) % images.length); }}
             className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-1 z-10 transition-colors"
-          >
+            >
             <ChevronLeft size={16} />
           </button>
-          <button
-            onClick={() => setCurrent(i => (i + 1) % images.length)}
+          <button onClick={(e) => { e.stopPropagation(); setCurrent(i => (i + 1) % images.length); }}
             className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-1 z-10 transition-colors"
-          >
+            >
+
             <ChevronRight size={16} />
           </button>
           <div className="absolute bottom-2 left-0 right-0 flex items-center justify-center gap-1.5 z-10">
@@ -57,6 +64,12 @@ const RoomCarousel: React.FC<{ images: string[]; alt: string }> = ({ images, alt
 };
 
 export const RoomTypesList: React.FC<RoomTypesListProps> = ({ rooms, coverImage }) => {
+  const [lightbox, setLightbox] = useState<{
+    images: string[];
+    index: number;
+    roomName: string;
+  } | null>(null);
+
   if (!rooms.length) return null;
 
   return (
@@ -75,7 +88,13 @@ export const RoomTypesList: React.FC<RoomTypesListProps> = ({ rooms, coverImage 
               className="bg-hc-bg-alt rounded-2xl overflow-hidden flex group hover:shadow-card transition-shadow duration-300"
             >
               <div className="w-[45%] shrink-0 relative overflow-hidden">
-                <RoomCarousel images={images} alt={room.name} />
+                <RoomCarousel
+                images={images}
+                alt={room.name}
+                onImageClick={(idx) =>
+                  setLightbox({ images, index: idx, roomName: room.name })
+                }
+              />
               </div>
 
               <div className="flex-1 p-5 flex flex-col justify-between min-h-[180px]">
@@ -114,6 +133,15 @@ export const RoomTypesList: React.FC<RoomTypesListProps> = ({ rooms, coverImage 
           );
         })}
       </div>
+    {lightbox && (
+        <ImageLightbox
+          images={lightbox.images}
+          index={lightbox.index}
+          title={lightbox.roomName}
+          onClose={() => setLightbox(null)}
+          onNavigate={(i) => setLightbox(lb => lb ? { ...lb, index: i } : null)}
+        />
+      )}
     </div>
   );
 };

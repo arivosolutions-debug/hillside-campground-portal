@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { BedDouble, Users } from 'lucide-react';
 import type { RoomType } from '@/lib/types';
+import { ImageLightbox } from '@/components/property/ImageLightbox';
 
 interface MobileRoomCardsProps {
   rooms: RoomType[];
@@ -44,6 +45,13 @@ const RoomImageCarousel: React.FC<{ images: string[]; alt: string }> = ({ images
 
 export const MobileRoomCards: React.FC<MobileRoomCardsProps> = ({ rooms, coverImage }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [lightbox, setLightbox] = useState<{
+    images: string[];
+    index: number;
+    roomName: string;
+  } | null>(null);
+
+  if (!rooms.length) return null;
 
   if (!rooms.length) return null;
 
@@ -64,8 +72,11 @@ export const MobileRoomCards: React.FC<MobileRoomCardsProps> = ({ rooms, coverIm
 
             return (
               <div key={room.id} className="min-w-[85vw] snap-start" style={{ scrollSnapStop: 'always' }}>
-                <div className="relative rounded-2xl overflow-hidden aspect-[16/9]">
-                  <RoomImageCarousel images={images} alt={room.name} />
+                 <div
+                className="relative rounded-2xl overflow-hidden aspect-[16/9] cursor-pointer"
+                onClick={() => setLightbox({ images, index: 0, roomName: room.name })}
+              >
+                <RoomImageCarousel images={images} alt={room.name} />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
                   <div className="absolute bottom-0 left-0 right-0 px-5 pb-4 z-10">
                     <h3 className="font-headline text-xl text-white font-bold mb-1">{room.name}</h3>
@@ -88,6 +99,15 @@ export const MobileRoomCards: React.FC<MobileRoomCardsProps> = ({ rooms, coverIm
           })}
         </div>
       </div>
+    {lightbox && (
+        <ImageLightbox
+          images={lightbox.images}
+          index={lightbox.index}
+          title={lightbox.roomName}
+          onClose={() => setLightbox(null)}
+          onNavigate={(i) => setLightbox(lb => lb ? { ...lb, index: i } : null)}
+        />
+      )}
     </div>
   );
 };
