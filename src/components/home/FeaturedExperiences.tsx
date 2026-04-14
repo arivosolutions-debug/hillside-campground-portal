@@ -85,7 +85,7 @@ export const FeaturedExperiences: React.FC = () => {
   );
 
   return (
-    <section ref={ref} className="bg-hc-bg md:py-32 px-5 md:px-8 py-0 pt-[10px]">
+    <section ref={ref} className="bg-hc-bg md:py-32 px-5 md:px-8 py-0 pb-[50px] pt-[10px]">
       <div className="max-w-content mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-2 md:gap-6 mb-10 md:mb-16">
