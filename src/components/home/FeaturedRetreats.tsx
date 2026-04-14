@@ -1,44 +1,44 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Users } from 'lucide-react';
-import { useProperties } from '@/hooks/useProperties';
+import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowRight, Users } from "lucide-react";
+import { useProperties } from "@/hooks/useProperties";
 
 const FALLBACK_CARDS = [
   {
-    image: '/lovable-uploads/d9024755-5800-41b6-9aaa-b2133b6d9f87.jpg',
-    badge: 'Canopy Retreat',
-    district: 'Wayanad',
-    name: 'Canopy at Vythiri',
-    guests: '2 Guests',
-    amenity: 'Jungle Canopy',
-    slug: 'canopy-vythiri',
+    image: "/lovable-uploads/d9024755-5800-41b6-9aaa-b2133b6d9f87.jpg",
+    badge: "Canopy Retreat",
+    district: "Wayanad",
+    name: "Canopy at Vythiri",
+    guests: "2 Guests",
+    amenity: "Jungle Canopy",
+    slug: "canopy-vythiri",
   },
   {
-    image: 'https://images.unsplash.com/photo-1587922546307-776227941871?w=800&q=80',
-    badge: 'Floating Villa',
-    district: 'Alleppey',
-    name: 'Kettuvallam on the Backwaters',
-    guests: '4 Guests',
-    amenity: 'Private Deck',
-    slug: 'kettuvallam-alleppey',
+    image: "https://images.unsplash.com/photo-1587922546307-776227941871?w=800&q=80",
+    badge: "Floating Villa",
+    district: "Alleppey",
+    name: "Kettuvallam on the Backwaters",
+    guests: "4 Guests",
+    amenity: "Private Deck",
+    slug: "kettuvallam-alleppey",
   },
   {
-    image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80',
+    image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80",
     badge: "Planter's Legacy",
-    district: 'Munnar',
-    name: 'Silver Oak Estate',
-    guests: '2 Guests',
-    amenity: 'Tea Plantation',
-    slug: 'silver-oak-munnar',
+    district: "Munnar",
+    name: "Silver Oak Estate",
+    guests: "2 Guests",
+    amenity: "Tea Plantation",
+    slug: "silver-oak-munnar",
   },
   {
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
-    badge: 'Heritage Bungalow',
-    district: 'Kannur',
-    name: 'Pallikkunnu Bungalow',
-    guests: '6 Guests',
-    amenity: 'Heritage Grounds',
-    slug: 'pallikkunnu-kannur',
+    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
+    badge: "Heritage Bungalow",
+    district: "Kannur",
+    name: "Pallikkunnu Bungalow",
+    guests: "6 Guests",
+    amenity: "Heritage Grounds",
+    slug: "pallikkunnu-kannur",
   },
 ];
 
@@ -51,13 +51,16 @@ export const FeaturedRetreats: React.FC = () => {
   useEffect(() => {
     const section = ref.current;
     if (!section) return;
-    const items = section.querySelectorAll<HTMLElement>('.retreat-card');
+    const items = section.querySelectorAll<HTMLElement>(".retreat-card");
     const observer = new IntersectionObserver(
-      (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); }),
-      { threshold: 0.08 }
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add("in-view");
+        }),
+      { threshold: 0.08 },
     );
     items.forEach((item, i) => {
-      item.classList.add('section-fade-up');
+      item.classList.add("section-fade-up");
       item.style.transitionDelay = `${i * 80}ms`;
       observer.observe(item);
     });
@@ -73,18 +76,18 @@ export const FeaturedRetreats: React.FC = () => {
 
   const cards =
     properties && properties.length > 0
-      ? properties.slice(0, 4).map(p => ({
-          image: p.cover_image ?? '/placeholder.svg',
-          badge: p.property_type.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+      ? properties.slice(0, 4).map((p) => ({
+          image: p.cover_image ?? "/placeholder.svg",
+          badge: p.property_type.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
           district: p.district.charAt(0).toUpperCase() + p.district.slice(1),
           name: p.name,
           guests: `${p.max_guests} Guests`,
-          amenity: p.highlights?.[0] ?? 'Luxury Stay',
+          amenity: p.highlights?.[0] ?? "Luxury Stay",
           slug: p.slug,
         }))
       : FALLBACK_CARDS;
 
-  const CardContent = ({ card }: { card: typeof cards[0] }) => (
+  const CardContent = ({ card }: { card: (typeof cards)[0] }) => (
     <Link
       to={`/property/${card.slug}`}
       className="retreat-card bg-hc-bg-alt rounded-2xl overflow-hidden group block flex flex-col"
@@ -113,24 +116,23 @@ export const FeaturedRetreats: React.FC = () => {
           </span>
         </div>
         <div className="mt-auto pt-3 flex items-center justify-between">
-          <span className="text-hc-primary font-bold tracking-tight text-sm font-body">
-            Contact for Pricing
-          </span>
-          <ArrowRight size={14} className="text-hc-primary group-hover:translate-x-1 transition-transform duration-200" />
+          <span className="text-hc-primary font-bold tracking-tight text-sm font-body">Contact for Pricing</span>
+          <ArrowRight
+            size={14}
+            className="text-hc-primary group-hover:translate-x-1 transition-transform duration-200"
+          />
         </div>
       </div>
     </Link>
   );
 
   return (
-    <section ref={ref} className="bg-hc-bg px-5 md:px-8 pt-8 pb-0 md:pt-20 md:pb-10">
+    <section ref={ref} className="bg-hc-bg px-5 md:px-8 pt-8 pb-0 md:pt-10 md:pb-10">
       <div className="max-w-content mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-2 md:gap-6 mb-6 md:mb-16">
           <div>
-            <h2 className="font-headline text-hc-primary text-3xl md:text-5xl mb-1 md:mb-4">
-              Featured Retreats
-            </h2>
+            <h2 className="font-headline text-hc-primary text-3xl md:text-5xl mb-1 md:mb-4">Featured Retreats</h2>
             <p className="text-hc-text text-base md:text-lg max-w-xl hidden md:block">
               From the heights of Wayanad to the tranquil backwaters, find your perfect escape.
             </p>
@@ -157,10 +159,10 @@ export const FeaturedRetreats: React.FC = () => {
             ref={scrollRef}
             onScroll={handleScroll}
             className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 overscroll-x-contain"
-            style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
+            style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
           >
             {cards.map((card) => (
-              <div key={card.slug} className="min-w-[85vw] snap-start" style={{ scrollSnapStop: 'always' }}>
+              <div key={card.slug} className="min-w-[85vw] snap-start" style={{ scrollSnapStop: "always" }}>
                 <CardContent card={card} />
               </div>
             ))}
