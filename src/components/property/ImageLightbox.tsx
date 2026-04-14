@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface ImageLightboxProps {
@@ -19,12 +20,13 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
     onNavigate((index - 1 + images.length) % images.length),
     [index, images.length, onNavigate]
   );
+
   const next = useCallback(() =>
     onNavigate((index + 1) % images.length),
     [index, images.length, onNavigate]
   );
 
-  // Keyboard navigation
+  // Keyboard nav
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') prev();
@@ -37,15 +39,23 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
 
   // Lock body scroll
   useEffect(() => {
-    const prev = document.body.style.overflow;
+    const original = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = prev; };
+    return () => { document.body.style.overflow = original; };
   }, []);
 
-  return (
+  const src = images[index];
+
+  const content = (
     <div
-      className="fixed z-[9999] bg-black/95 flex flex-col"
-      style={{ top: 0, left: 0, right: 0, bottom: 0 }}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 99999,
+        backgroundColor: 'rgba(0,0,0,0.96)',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
       onClick={onClose}
       onTouchStart={(e) => {
         touchStartX.current = e.touches[0].clientX;
@@ -57,79 +67,128 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
         const dy = e.changedTouches[0].clientY - touchStartY.current;
         touchStartX.current = null;
         touchStartY.current = null;
-        // Only treat as swipe if horizontal movement dominates and is large enough
         if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 60) {
           dx < 0 ? next() : prev();
         }
       }}
     >
-      {/* Top bar — stop click from closing */}
+      {/* Top bar */}
       <div
-        className="flex items-center justify-between px-5 py-4 shrink-0"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '16px 20px',
+          flexShrink: 0,
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         <div>
-          <p className="text-white font-body text-sm font-semibold leading-snug">
+          <p style={{ color: 'white', fontSize: 14, fontWeight: 600, margin: 0 }}>
             {title}
           </p>
-          <span className="text-white/50 font-body text-xs tabular-nums">
+          <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12 }}>
             {index + 1} / {images.length}
           </span>
         </div>
         <button
           onClick={(e) => { e.stopPropagation(); onClose(); }}
-          className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full
-                     flex items-center justify-center transition-colors"
+          style={{
+            width: 40, height: 40,
+            borderRadius: '50%',
+            background: 'rgba(255,255,255,0.1)',
+            border: 'none',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
           aria-label="Close"
         >
-          <X size={18} className="text-white" />
+          <X size={18} color="white" />
         </button>
       </div>
 
-      {/* Image — centered, contained, stops backdrop click */}
+      {/* Image area */}
       <div
-        className="flex-1 flex items-center justify-center px-12"
-        style={{ minHeight: 0, overflow: 'hidden' }}
+        style={{
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '0 56px',
+          overflow: 'hidden',
+        }}
         onClick={(e) => e.stopPropagation()}
       >
-        <img
-          key={images[index]}
-          src={images[index]}
-          alt={`${title} — ${index + 1} of ${images.length}`}
-          className="select-none rounded-xl object-contain"
-          style={{
-            maxWidth: '100%',
-            maxHeight: 'calc(100svh - 120px)',
-            width: 'auto',
-            height: 'auto',
-          }}
-          draggable={false}
-        />
+        {src ? (
+          <img
+            src={src}
+            alt={`${title} — ${index + 1} of ${images.length}`}
+            style={{
+              maxWidth: '100%',
+              maxHeight: 'calc(100vh - 130px)',
+              objectFit: 'contain',
+              borderRadius: 12,
+              userSelect: 'none',
+              display: 'block',
+            }}
+            draggable={false}
+          />
+        ) : (
+          <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: 14 }}>
+            No image
+          </div>
+        )}
       </div>
 
-      {/* Prev / Next arrows — stop backdrop click */}
+      {/* Arrows */}
       {images.length > 1 && (
         <>
           <button
             onClick={(e) => { e.stopPropagation(); prev(); }}
-            className="absolute left-2 top-1/2 -translate-y-1/2 w-11 h-11
-                       bg-white/10 hover:bg-white/20 rounded-full flex items-center
-                       justify-center transition-colors"
-            aria-label="Previous image"
+            style={{
+              position: 'absolute',
+              left: 8,
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: 44, height: 44,
+              borderRadius: '50%',
+              background: 'rgba(255,255,255,0.12)',
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            aria-label="Previous"
           >
-            <ChevronLeft size={22} className="text-white" />
+            <ChevronLeft size={22} color="white" />
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); next(); }}
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-11 h-11
-                       bg-white/10 hover:bg-white/20 rounded-full flex items-center
-                       justify-center transition-colors"
-            aria-label="Next image"
+            style={{
+              position: 'absolute',
+              right: 8,
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: 44, height: 44,
+              borderRadius: '50%',
+              background: 'rgba(255,255,255,0.12)',
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            aria-label="Next"
           >
-            <ChevronRight size={22} className="text-white" />
+            <ChevronRight size={22} color="white" />
           </button>
         </>
       )}
     </div>
   );
+
+  return ReactDOM.createPortal(content, document.body);
 };
