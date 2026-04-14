@@ -127,7 +127,7 @@ export const FeaturedRetreats: React.FC = () => {
   );
 
   return (
-    <section ref={ref} className="bg-hc-bg px-5 md:px-8 pt-8 pb-0 md:pt-2 md:pb-10">
+    <section ref={ref} className="bg-hc-bg px-5 md:px-2 pt-8 pb-0 md:pt-1 md:pb-10">
       <div className="max-w-content mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-2 md:gap-6 mb-6 md:mb-16">
