@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { X, ChevronLeft, ChevronRight, Images } from 'lucide-react';
+import React, { useState } from 'react';
+import { Images } from 'lucide-react';
 import type { PropertyImage } from '@/lib/types';
+import { ImageLightbox } from '@/components/property/ImageLightbox';
 
 interface PhotoGalleryProps {
   coverImage:   string | null;
@@ -11,35 +12,16 @@ interface PhotoGalleryProps {
 export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ coverImage, images, propertyName }) => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  // Combined list: cover first, then gallery images ordered by sort_order
   const allImages: string[] = [
     coverImage ?? '/placeholder.svg',
     ...images.map(i => i.image_url),
   ].filter(Boolean);
 
-  // Mosaic uses up to 5 images
   const mosaic = allImages.slice(0, 5);
-  // Pad to 5 with placeholder if fewer images
   while (mosaic.length < 5) mosaic.push('/placeholder.svg');
 
   const openLightbox  = (idx: number) => setLightboxIndex(idx);
   const closeLightbox = () => setLightboxIndex(null);
-  const prev = useCallback(() =>
-    setLightboxIndex(i => (i === null ? 0 : (i - 1 + allImages.length) % allImages.length)), [allImages.length]);
-  const next = useCallback(() =>
-    setLightboxIndex(i => (i === null ? 0 : (i + 1) % allImages.length)), [allImages.length]);
-
-  // Keyboard navigation
-  useEffect(() => {
-    if (lightboxIndex === null) return;
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft')  prev();
-      if (e.key === 'ArrowRight') next();
-      if (e.key === 'Escape')     closeLightbox();
-    };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [lightboxIndex, prev, next]);
 
   return (
     <>
@@ -111,7 +93,6 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ coverImage, images, 
               alt={`${propertyName} — photo 5`}
               className="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700"
             />
-            {/* Dark overlay always visible when there are more than 5 photos */}
             <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${allImages.length > 5 ? 'bg-hc-primary-dark/60' : 'bg-black/0 group-hover:bg-black/20'}`}>
               {allImages.length > 5 && (
                 <div className="text-center">
@@ -149,37 +130,13 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ coverImage, images, 
 
       {/* ── Lightbox ───────────────────────────────────────────────── */}
       {lightboxIndex !== null && (
-        <div className="fixed inset-0 z-[200] bg-black/96 flex flex-col" style={{ height: '100dvh' }}>
-          {/* Top bar */}
-          <div className="flex items-center justify-between px-5 py-4 shrink-0">
-            <span className="text-white/50 font-body text-sm tabular-nums">
-              {lightboxIndex + 1} / {allImages.length}
-            </span>
-            <button
-              onClick={closeLightbox}
-              className="w-11 h-11 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
-              aria-label="Close gallery"
-            >
-              <X size={18} className="text-white" />
-            </button>
-          </div>
-
-          {/* Scrollable image list */}
-          <div className="flex-1 overflow-y-auto px-4 pb-8 space-y-4">
-            {allImages.map((src, i) => (
-              <div key={i} className="flex justify-center">
-                <img
-                  src={src}
-                  alt={`${propertyName} — ${i + 1} of ${allImages.length}`}
-                  className="max-w-full object-contain rounded-xl select-none"
-                  style={{ maxHeight: 'calc(100dvh - 100px)' }}
-                  draggable={false}
-                  loading={i > 2 ? 'lazy' : 'eager'}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+        <ImageLightbox
+          images={allImages}
+          index={lightboxIndex}
+          title={propertyName}
+          onClose={closeLightbox}
+          onNavigate={setLightboxIndex}
+        />
       )}
     </>
   );
