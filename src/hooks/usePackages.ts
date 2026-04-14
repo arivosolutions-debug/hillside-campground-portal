@@ -25,6 +25,7 @@ export interface Package {
 
 export interface PackageFilters {
   region?: string;
+  featured?: boolean;
 }
 
 export function usePackages(filters: PackageFilters = {}) {
@@ -39,6 +40,10 @@ export function usePackages(filters: PackageFilters = {}) {
 
       if (filters.region) {
         query = query.eq('region', filters.region);
+      }
+
+      if (filters.featured === true) {
+        query = query.eq('is_featured', true);
       }
 
       const { data, error } = await query;

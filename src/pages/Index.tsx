@@ -5,6 +5,7 @@ import { PageTransition } from '@/components/layout/PageTransition';
 import { HeroSection } from '@/components/home/HeroSection';
 import { FloatingSearch } from '@/components/home/FloatingSearch';
 import { FeaturedRetreats } from '@/components/home/FeaturedRetreats';
+import { FeaturedExperiences } from '@/components/home/FeaturedExperiences';
 import { PhilosophySection } from '@/components/home/PhilosophySection';
 import { CollectionsGrid } from '@/components/home/CollectionsGrid';
 import { TestimonialsSection } from '@/components/home/TestimonialsSection';
@@ -19,6 +20,7 @@ const Index = () => {
           <HeroSection />
           <FloatingSearch />
           <FeaturedRetreats />
+          <FeaturedExperiences />
           <PhilosophySection />
           <CollectionsGrid />
           <TestimonialsSection />
