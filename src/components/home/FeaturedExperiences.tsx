@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
-import { usePackages, type Package } from '@/hooks/usePackages';
+import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { usePackages, type Package } from "@/hooks/usePackages";
 
 export const FeaturedExperiences: React.FC = () => {
   const { data: packages } = usePackages({ featured: true });
@@ -14,13 +14,16 @@ export const FeaturedExperiences: React.FC = () => {
   useEffect(() => {
     const section = ref.current;
     if (!section) return;
-    const items = section.querySelectorAll<HTMLElement>('.retreat-card');
+    const items = section.querySelectorAll<HTMLElement>(".retreat-card");
     const observer = new IntersectionObserver(
-      (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); }),
-      { threshold: 0.08 }
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add("in-view");
+        }),
+      { threshold: 0.08 },
     );
     items.forEach((item, i) => {
-      item.classList.add('section-fade-up');
+      item.classList.add("section-fade-up");
       item.style.transitionDelay = `${i * 80}ms`;
       observer.observe(item);
     });
@@ -43,7 +46,7 @@ export const FeaturedExperiences: React.FC = () => {
     >
       <div className="relative overflow-hidden rounded-2xl">
         <img
-          src={card.hero_images?.[0] ?? '/placeholder.svg'}
+          src={card.hero_images?.[0] ?? "/placeholder.svg"}
           alt={card.name}
           className="w-full h-[280px] md:h-[280px] aspect-[4/3] md:aspect-auto object-cover transition-transform duration-700 group-hover:scale-105 brightness-90 group-hover:brightness-100"
         />
@@ -75,24 +78,23 @@ export const FeaturedExperiences: React.FC = () => {
           </div>
         )}
         <div className="mt-auto pt-3 flex items-center justify-between">
-          <span className="text-hc-primary font-bold tracking-tight text-sm font-body">
-            View Experience
-          </span>
-          <ArrowRight size={14} className="text-hc-primary group-hover:translate-x-1 transition-transform duration-200" />
+          <span className="text-hc-primary font-bold tracking-tight text-sm font-body">View Experience</span>
+          <ArrowRight
+            size={14}
+            className="text-hc-primary group-hover:translate-x-1 transition-transform duration-200"
+          />
         </div>
       </div>
     </Link>
   );
 
   return (
-    <section ref={ref} className="bg-hc-bg px-5 md:px-8 pt-4 pb-8 md:pt-10 md:pb-20">
+    <section ref={ref} className="bg-hc-bg px-5 md:px-8 pt-4 pb-8 md:pt-10 md:pb-10">
       <div className="max-w-content mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-2 md:gap-6 mb-6 md:mb-16">
           <div>
-            <h2 className="font-headline text-hc-primary text-3xl md:text-5xl mb-1 md:mb-4">
-              Featured Experiences
-            </h2>
+            <h2 className="font-headline text-hc-primary text-3xl md:text-5xl mb-1 md:mb-4">Featured Experiences</h2>
             <p className="text-hc-text text-base md:text-lg max-w-xl hidden md:block">
               Curated journeys through Kerala's wilderness — guided, immersive, unforgettable.
             </p>
@@ -119,10 +121,10 @@ export const FeaturedExperiences: React.FC = () => {
             ref={scrollRef}
             onScroll={handleScroll}
             className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 overscroll-x-contain"
-            style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
+            style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
           >
             {cards.map((card) => (
-              <div key={card.slug} className="min-w-[85vw] snap-start" style={{ scrollSnapStop: 'always' }}>
+              <div key={card.slug} className="min-w-[85vw] snap-start" style={{ scrollSnapStop: "always" }}>
                 <CardContent card={card} />
               </div>
             ))}
