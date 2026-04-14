@@ -74,20 +74,20 @@ const PropertyDetail = () => {
             amenityNames={amenityNames}
           />
 
-          {/* 2. Mobile Share Row */}
+          {/* 2. Gallery Icon Button */}
+          <MobileGalleryButton
+            coverImage={property.cover_image}
+            images={property.property_images}
+            propertyName={property.name}
+          />
+
+          {/* 3. Mobile Share Row */}
           <div className="md:hidden flex items-center justify-between px-5 pt-3 pb-1">
             <span className="font-body text-xs text-hc-text-light uppercase tracking-widest">
               Share this retreat
             </span>
             <ShareSheet title={property.name} variant="pill" />
           </div>
-
-            {/* 3. Gallery Icon Button */}
-            <MobileGalleryButton
-            coverImage={property.cover_image}
-            images={property.property_images}
-            propertyName={property.name}
-          />
 
           {/* 3. Description (mobile) */}
           <div className="md:hidden px-5 mt-6">
