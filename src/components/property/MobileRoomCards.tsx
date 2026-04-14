@@ -123,30 +123,13 @@ export const MobileRoomCards: React.FC<MobileRoomCardsProps> = ({ rooms, coverIm
 
             return (
               <div key={room.id} className="min-w-[85vw] snap-start" style={{ scrollSnapStop: 'always' }}>
-                 <RoomImageCarouselClickable
-                images={images}
-                alt={room.name}
-                onImageClick={(idx) =>
-                  setLightbox({ images, index: idx, roomName: room.name })
-                }
-              />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
-                  <div className="absolute bottom-0 left-0 right-0 px-5 pb-4 z-10">
-                    <h3 className="font-headline text-xl text-white font-bold mb-1">{room.name}</h3>
-                    <div className="flex items-center gap-3 text-sm text-white/80">
-                      {room.bed_type && (
-                        <span className="flex items-center gap-1">
-                          <BedDouble size={13} strokeWidth={1.5} /> {room.bed_type}
-                        </span>
-                      )}
-                      {room.max_guests && (
-                        <span className="flex items-center gap-1">
-                          <Users size={13} strokeWidth={1.5} /> {room.max_guests} Max
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
+                <RoomImageCarouselClickable
+                  images={images}
+                  alt={room.name}
+                  onImageClick={(idx) =>
+                    setLightbox({ images, index: idx, roomName: room.name })
+                  }
+                />
               </div>
             );
           })}
