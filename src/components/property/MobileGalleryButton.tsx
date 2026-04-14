@@ -79,9 +79,9 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
 
       {/* ── Grid Gallery View ───────────────────────────────── */}
       {open && fullscreenIndex === null && (
-        <div className="fixed inset-0 z-[200] bg-hc-bg flex flex-col">
+        <div className="fixed inset-0 z-[200] bg-hc-bg flex flex-col" style={{ height: '100dvh' }}>
           {/* Header */}
-          <div className="flex items-center justify-between px-5 pt-[calc(3.5rem+30px)] pb-3 bg-hc-bg/90 backdrop-blur-md sticky top-0 z-10">
+          <div className="flex items-center justify-between px-5 pb-3 bg-hc-bg/90 backdrop-blur-md sticky top-0 z-10" style={{ paddingTop: 'max(calc(3.5rem + env(safe-area-inset-top, 16px)), 72px)' }}>
             <button
               onClick={() => setOpen(false)}
               className="flex items-center gap-2 text-hc-primary font-body text-sm"
@@ -134,6 +134,7 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
       {fullscreenIndex !== null && (
         <div
           className="fixed inset-0 z-[210] bg-black/95 flex flex-col"
+          style={{ height: '100dvh' }}
           onClick={() => setFullscreenIndex(null)}
           onTouchStart={(e) => {
             touchStartX.current = e.touches[0].clientX;
@@ -151,7 +152,7 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
           }}
         >
           {/* Top bar */}
-          <div className="flex items-center justify-between px-5 pt-[calc(1.25rem+45px)] pb-3">
+          <div className="flex items-center justify-between px-5 pb-3" style={{ paddingTop: 'max(calc(1.25rem + env(safe-area-inset-top, 20px)), 56px)' }}>
             <button
               onClick={(e) => { e.stopPropagation(); setFullscreenIndex(null); }}
               className="flex items-center gap-2 text-white/80 font-body text-sm"
@@ -170,12 +171,12 @@ export const MobileGalleryButton: React.FC<MobileGalleryButtonProps> = ({
           </div>
 
           {/* Image */}
-          <div className="flex-1 flex items-center justify-center px-4" style={{ maxHeight: '85vh' }}>
+          <div className="flex-1 flex items-center justify-center px-4" style={{ flex: 1, minHeight: 0 }}>
             <img
               src={allImages[fullscreenIndex]}
               alt={`${propertyName} — ${fullscreenIndex + 1}`}
               className="max-w-full object-contain rounded-xl"
-              style={{ maxHeight: '75vh' }}
+              style={{ maxHeight: 'calc(100dvh - 180px)', width: '100%', objectFit: 'contain' }}
               draggable={false}
               onClick={(e) => e.stopPropagation()}
             />

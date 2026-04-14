@@ -83,7 +83,8 @@ export const MobileHeroSlideshow: React.FC<MobileHeroSlideshowProps> = ({
       {/* Breadcrumb */}
       <Link
         to={backLink}
-        className="absolute top-[calc(3.5rem+30px)] left-5 flex items-center gap-1.5 text-white text-xs font-body z-10 bg-white/15 backdrop-blur-xl px-3 py-1.5 rounded-full"
+        className="absolute left-5 flex items-center gap-1.5 text-white text-xs font-body z-10 bg-white/15 backdrop-blur-xl px-3 py-1.5 rounded-full"
+        style={{ top: 'max(calc(3.5rem + env(safe-area-inset-top, 16px)), 72px)' }}
       >
         <ArrowLeft size={12} /> {backLabel}
       </Link>
