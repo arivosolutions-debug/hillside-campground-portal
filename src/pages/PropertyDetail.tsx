@@ -20,6 +20,7 @@ import { HighlightsAccordion, TermsAccordion } from '@/components/property/Prope
 import { SimilarStays } from '@/components/property/SimilarStays';
 import { useProperty } from '@/hooks/useProperty';
 import { DISTRICT_LABELS, PROPERTY_TYPE_LABELS } from '@/lib/types';
+import { ShareSheet } from '@/components/shared/ShareSheet';
 
 const WHATSAPP_PHONE = '919847012345';
 
@@ -73,8 +74,16 @@ const PropertyDetail = () => {
             amenityNames={amenityNames}
           />
 
-          {/* 2. Gallery Icon Button */}
-          <MobileGalleryButton
+          {/* 2. Mobile Share Row */}
+          <div className="md:hidden flex items-center justify-between px-5 pt-3 pb-1">
+            <span className="font-body text-xs text-hc-text-light uppercase tracking-widest">
+              Share this retreat
+            </span>
+            <ShareSheet title={property.name} variant="pill" />
+          </div>
+
+            {/* 3. Gallery Icon Button */}
+            <MobileGalleryButton
             coverImage={property.cover_image}
             images={property.property_images}
             propertyName={property.name}
@@ -142,9 +151,14 @@ const PropertyDetail = () => {
                     </span>
                   )}
                 </div>
-                <h1 className="font-headline text-hc-primary text-4xl md:text-6xl tracking-tight mb-3">
-                  {property.name}
-                </h1>
+                <div className="flex items-start gap-4">
+                  <h1 className="font-headline text-hc-primary text-4xl md:text-6xl tracking-tight mb-3 flex-1">
+                    {property.name}
+                  </h1>
+                  <div className="pt-2 shrink-0">
+                    <ShareSheet title={property.name} variant="icon" />
+                  </div>
+                </div>
                 <div className="flex flex-wrap items-center gap-6 text-sm text-hc-text font-body">
                   <span className="flex items-center gap-1.5">
                     <Users size={16} strokeWidth={1.5} /> Up to {property.max_guests} Guests

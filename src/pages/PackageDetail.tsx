@@ -8,6 +8,7 @@ import { MobileHeroSlideshow } from '@/components/property/MobileHeroSlideshow';
 import { MobileGalleryButton } from '@/components/property/MobileGalleryButton';
 import { PhotoGallery } from '@/components/property/PhotoGallery';
 import { usePackage } from '@/hooks/usePackage';
+import { ShareSheet } from '@/components/shared/ShareSheet';
 import { usePackages } from '@/hooks/usePackages';
 import type { PropertyImage } from '@/lib/types';
 
@@ -98,6 +99,14 @@ const PackageDetail: React.FC = () => {
             propertyName={pkg.name}
           />
 
+          {/* Mobile Share Row */}
+          <div className="md:hidden flex items-center justify-between px-5 pt-3 pb-1">
+            <span className="font-body text-xs text-hc-text-light uppercase tracking-widest">
+              Share this experience
+            </span>
+            <ShareSheet title={pkg.name} variant="pill" />
+          </div>
+
           {/* ═══ DESKTOP LAYOUT ═══ */}
           {/* Desktop Header */}
           <section className="hidden md:block pt-28 pb-6 px-8 max-w-[1280px] mx-auto">
@@ -107,9 +116,14 @@ const PackageDetail: React.FC = () => {
             >
               <ArrowLeft size={14} /> All Experiences
             </Link>
-            <h1 className="font-headline text-hc-primary text-4xl md:text-6xl tracking-tight mb-3">
+            <div className="flex items-start gap-4">
+            <h1 className="font-headline text-hc-primary text-4xl md:text-6xl tracking-tight mb-3 flex-1">
               {pkg.name}
             </h1>
+            <div className="pt-2 shrink-0">
+              <ShareSheet title={pkg.name} variant="icon" />
+            </div>
+          </div>
             <div className="flex flex-wrap items-center gap-6 text-sm text-hc-text font-body">
               {pkg.location && (
                 <span className="flex items-center gap-1.5">
