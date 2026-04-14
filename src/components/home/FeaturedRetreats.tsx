@@ -156,7 +156,7 @@ export const FeaturedRetreats: React.FC = () => {
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-[50px]"
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-[50px] overscroll-x-contain"
             style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
           >
             {cards.map((card) => (

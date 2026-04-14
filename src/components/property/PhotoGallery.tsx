@@ -149,7 +149,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ coverImage, images, 
 
       {/* ── Lightbox ───────────────────────────────────────────────── */}
       {lightboxIndex !== null && (
-        <div className="fixed inset-0 z-[200] bg-black/96 flex flex-col">
+        <div className="fixed inset-0 z-[200] bg-black/96 flex flex-col" style={{ height: '100dvh' }}>
           {/* Top bar */}
           <div className="flex items-center justify-between px-5 py-4 shrink-0">
             <span className="text-white/50 font-body text-sm tabular-nums">
@@ -171,7 +171,8 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ coverImage, images, 
                 <img
                   src={src}
                   alt={`${propertyName} — ${i + 1} of ${allImages.length}`}
-                  className="max-w-full max-h-[85vh] object-contain rounded-xl select-none"
+                  className="max-w-full object-contain rounded-xl select-none"
+                  style={{ maxHeight: 'calc(100dvh - 100px)' }}
                   draggable={false}
                   loading={i > 2 ? 'lazy' : 'eager'}
                 />
