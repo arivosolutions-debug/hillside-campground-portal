@@ -112,19 +112,18 @@ export const ShareSheet: React.FC<ShareSheetProps> = ({
                 {opt.label}
               </a>
             ))}
-          </div>
-
-          <div className="h-px bg-hc-primary/10 mx-3" />
-
           <button
-            onClick={copyLink}
-            className="flex items-center gap-3 px-4.5 py-2.5 w-full
-                       hover:bg-hc-bg transition-colors font-body
-                       text-sm text-hc-text"
-          >
-            <Link2 size={18} strokeWidth={1.75} />
-            Copy link
-          </button>
+        onClick={copyLink}
+        className="flex items-center gap-3 px-3 py-2 rounded-xl
+                   hover:bg-hc-bg transition-colors font-body text-sm
+                   text-hc-text w-full text-left"
+      >
+        <span className="text-hc-text-light">
+          <Link2 size={16} />
+        </span>
+        Copy link
+      </button>
+    </div>
         </div>
       )}
     </div>
