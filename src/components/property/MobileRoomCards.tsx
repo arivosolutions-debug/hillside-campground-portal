@@ -104,8 +104,6 @@ export const MobileRoomCards: React.FC<MobileRoomCardsProps> = ({ rooms, coverIm
 
   if (!rooms.length) return null;
 
-  if (!rooms.length) return null;
-
   return (
     <div className="md:hidden mt-10">
       <h2 className="font-headline text-hc-primary text-2xl mb-4 px-5">Rooms</h2>
