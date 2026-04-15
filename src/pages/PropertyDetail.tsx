@@ -20,6 +20,7 @@ import { HighlightsAccordion, TermsAccordion } from '@/components/property/Prope
 import { SimilarStays } from '@/components/property/SimilarStays';
 import { useProperty } from '@/hooks/useProperty';
 import { DISTRICT_LABELS, PROPERTY_TYPE_LABELS } from '@/lib/types';
+import { Helmet } from 'react-helmet-async';
 import { ShareSheet } from '@/components/shared/ShareSheet';
 
 const WHATSAPP_PHONE = '919847012345';
@@ -58,6 +59,21 @@ const PropertyDetail = () => {
 
   return (
     <>
+        <Helmet>
+          <title>{property.name} — Hills Camp Kerala</title>
+          <meta property="og:title" content={`${property.name} — Hills Camp Kerala`} />
+          <meta property="og:description" content={property.description ?? 'A luxury wilderness retreat in Kerala\'s Western Ghats.'} />
+          {property.cover_image && (
+            <meta property="og:image" content={property.cover_image} />
+          )}
+          <meta property="og:type" content="website" />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={`${property.name} — Hills Camp Kerala`} />
+          <meta name="twitter:description" content={property.description ?? 'A luxury wilderness retreat in Kerala\'s Western Ghats.'} />
+          {property.cover_image && (
+            <meta name="twitter:image" content={property.cover_image} />
+          )}
+        </Helmet>
       <Navbar />
       <PageTransition>
         <main className="bg-hc-bg">

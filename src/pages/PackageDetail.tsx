@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MapPin, Clock, IndianRupee, Route, Plus, X, ChevronLeft, ChevronRight, Images, MessageCircle, Instagram, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
+import { Helmet } from 'react-helmet-async';
 import { Footer } from '@/components/layout/Footer';
 import { PageTransition } from '@/components/layout/PageTransition';
 import { MobileHeroSlideshow } from '@/components/property/MobileHeroSlideshow';
@@ -78,6 +79,19 @@ const PackageDetail: React.FC = () => {
 
   return (
     <>
+        <Helmet>
+          <title>{pkg.name} — Hills Camp Kerala</title>
+          <meta property="og:title" content={`${pkg.name} — Hills Camp Kerala`} />
+          {pkg.hero_images?.[0] && (
+            <meta property="og:image" content={pkg.hero_images[0]} />
+          )}
+          <meta property="og:type" content="website" />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={`${pkg.name} — Hills Camp Kerala`} />
+          {pkg.hero_images?.[0] && (
+            <meta name="twitter:image" content={pkg.hero_images[0]} />
+          )}
+        </Helmet>
       <Navbar />
       <PageTransition>
         <main className="bg-hc-bg">
