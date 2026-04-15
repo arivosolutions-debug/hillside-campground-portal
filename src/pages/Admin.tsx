@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { Logo } from '@/components/shared/Logo';
 import {
   Plus, Trash2, Edit2, Eye, EyeOff, X, Save, LogOut,
   Home, Package, Star, Settings, ChevronUp, ChevronDown,
