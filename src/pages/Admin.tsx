@@ -1916,8 +1916,8 @@ const PasswordGate: React.FC<{ onUnlock: () => void }> = ({ onUnlock }) => {
     <div className="min-h-screen bg-hc-bg flex items-center justify-center px-4">
       <div className="bg-white rounded-3xl p-10 w-full max-w-sm shadow-sm border border-hc-text-light/10">
         <div className="text-center mb-8">
-          <h1 className="font-logo text-hc-primary text-5xl mb-1">Hillscamp</h1>
-          <p className="font-body text-hc-text-light text-sm">Admin Panel</p>
+          <Logo variant="dark" className="h-16 mx-auto" />
+          <p className="font-body text-hc-text-light text-sm mt-4">Admin Panel</p>
         </div>
         <div className="flex flex-col gap-4">
           <div className="relative">
@@ -1969,7 +1969,7 @@ const Admin: React.FC = () => {
       <header className="bg-white border-b border-hc-text-light/10 sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <span className="font-logo text-hc-primary text-3xl">Hillscamp</span>
+            <Logo variant="dark" className="h-10" />
             <span className="text-xs font-body text-hc-text-light bg-hc-bg-alt px-2 py-1 rounded-full">Admin</span>
           </div>
           <div className="flex items-center gap-2">
