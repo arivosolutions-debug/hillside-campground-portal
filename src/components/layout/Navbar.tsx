@@ -92,7 +92,7 @@ export const Navbar: React.FC = () => {
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
             >
-              {menuOpen ? <X size={22} /> : <Menu size={22} />}
+              {menuOpen ? <X size={33} /> : <Menu size={33} />}
             </button>
           </div>
         </div>
